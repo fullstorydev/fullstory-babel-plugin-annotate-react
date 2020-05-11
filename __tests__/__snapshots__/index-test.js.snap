@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches expectations 1`] = `
+"import React, { Component } from 'react';
+
+class componentName extends Component {
+  render() {
+    return /*#__PURE__*/React.createElement(\\"div\\", {
+      \\"data-element\\": \\"div\\",
+      \\"data-component\\": \\"componentName\\"
+    }, /*#__PURE__*/React.createElement(\\"h1\\", {
+      \\"data-element\\": \\"h1\\"
+    }, \\"Hello world\\"));
+  }
+
+}
+
+export default componentName;"
+`;
+
+exports[`matches expectations 2`] = `
+"import React, { Component, Fragment } from 'react';
+
+const componentName = () => {
+  return (() => /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(\\"h1\\", null, \\"Hello world\\")))();
+};
+
+export default componentName;"
+`;

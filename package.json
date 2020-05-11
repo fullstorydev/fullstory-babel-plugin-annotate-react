@@ -1,0 +1,16 @@
+{
+  "name": "babel-react-data-annotate",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "FullStory",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/preset-react": "^7.9.4",
+    "babel-core": "^7.0.0-0",
+    "jest": "^26.0.1"
+  }
+}

@@ -4,4 +4,6 @@ This repo will hold a Babel plugin that annotates React components with two attr
 ​
 This plugin will work with both web and native React applications.  
 ​
-* Status: This is a work-in-progress and is not yet ready for production use. *
+Status: This is a work-in-progress and is not yet ready for production use.
+
+Much of the logic for adding the attributes originated in the [transform-react-qa-classes](https://github.com/davesnx/babel-plugin-transform-react-qa-classes/) plugin.
