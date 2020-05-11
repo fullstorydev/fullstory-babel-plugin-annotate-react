@@ -16,12 +16,6 @@ it('matches expectations', () => {
   }
 });
 
-/*
-
-THIS IS WHERE I STOPPED
-Munge the actual.js entries from the mn repo into a JS array and them above.
-https://github.com/cowpaths/mn/tree/master/projects/fullstory/nativemobile/ReactNative/babel-plugin-react-fullstory/test/fixtures/react
-*/
 const expectations = [
   {
     input: `
