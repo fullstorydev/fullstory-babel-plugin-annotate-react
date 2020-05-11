@@ -1,6 +1,104 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`matches expectations 1`] = `
+exports[`arrow snapshot matches 1`] = `
+"import React, { Component } from 'react';
+
+const componentName = () => {
+  return /*#__PURE__*/React.createElement(\\"div\\", {
+    \\"data-element\\": \\"div\\"
+  }, /*#__PURE__*/React.createElement(\\"h1\\", {
+    \\"data-element\\": \\"h1\\"
+  }, \\"Hello world\\"));
+};
+
+export default componentName;"
+`;
+
+exports[`arrow-anonymous-fragment snapshot matches 1`] = `
+"import React, { Component, Fragment } from 'react';
+
+const componentName = () => {
+  return (() => /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(\\"h1\\", null, \\"Hello world\\")))();
+};
+
+export default componentName;"
+`;
+
+exports[`arrow-anonymous-react-fragment snapshot matches 1`] = `
+"import React, { Component } from 'react';
+
+const componentName = () => {
+  return (() => /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(\\"h1\\", null, \\"Hello world\\")))();
+};
+
+export default componentName;"
+`;
+
+exports[`arrow-fragment snapshot matches 1`] = `
+"import React, { Component, Fragment } from 'react';
+
+const componentName = () => {
+  return /*#__PURE__*/React.createElement(Fragment, {
+    \\"data-element\\": \\"Fragment\\"
+  }, /*#__PURE__*/React.createElement(\\"h1\\", {
+    \\"data-element\\": \\"h1\\"
+  }, \\"Hello world\\"));
+};
+
+export default componentName;"
+`;
+
+exports[`arrow-noreturn snapshot matches 1`] = `
+"import React, { Component } from 'react';
+
+const componentName = () => /*#__PURE__*/React.createElement(\\"div\\", {
+  \\"data-element\\": \\"div\\"
+}, /*#__PURE__*/React.createElement(\\"h1\\", {
+  \\"data-element\\": \\"h1\\"
+}, \\"Hello world\\"));
+
+export default componentName;"
+`;
+
+exports[`arrow-noreturn-fragment snapshot matches 1`] = `
+"import React, { Component, Fragment } from 'react';
+
+const componentName = () => /*#__PURE__*/React.createElement(Fragment, {
+  \\"data-element\\": \\"Fragment\\"
+}, /*#__PURE__*/React.createElement(\\"h1\\", {
+  \\"data-element\\": \\"h1\\"
+}, \\"Hello world\\"));
+
+export default componentName;"
+`;
+
+exports[`arrow-noreturn-react-fragment snapshot matches 1`] = `
+"import React, { Component } from 'react';
+
+const componentName = () => /*#__PURE__*/React.createElement(React.Fragment, {
+  \\"data-element\\": \\"unknown\\"
+}, /*#__PURE__*/React.createElement(\\"h1\\", {
+  \\"data-element\\": \\"h1\\"
+}, \\"Hello world\\"));
+
+export default componentName;"
+`;
+
+exports[`arrow-react-fragment snapshot matches 1`] = `
+"import React, { Component } from 'react';
+
+const componentName = () => {
+  return /*#__PURE__*/React.createElement(React.Fragment, {
+    \\"data-element\\": \\"unknown\\"
+  }, /*#__PURE__*/React.createElement(\\"h1\\", {
+    \\"data-element\\": \\"h1\\"
+  }, \\"Hello world\\"));
+};
+
+export default componentName;"
+`;
+
+exports[`component snapshot matches 1`] = `
 "import React, { Component } from 'react';
 
 class componentName extends Component {
@@ -18,12 +116,276 @@ class componentName extends Component {
 export default componentName;"
 `;
 
-exports[`matches expectations 2`] = `
+exports[`component-fragment snapshot matches 1`] = `
 "import React, { Component, Fragment } from 'react';
 
+class componentName extends Component {
+  render() {
+    return /*#__PURE__*/React.createElement(Fragment, {
+      \\"data-element\\": \\"Fragment\\"
+    }, \\"A\\");
+  }
+
+}
+
+export default componentName;"
+`;
+
+exports[`component-react-fragment snapshot matches 1`] = `
+"import React, { Component } from 'react';
+
+class componentName extends Component {
+  render() {
+    return /*#__PURE__*/React.createElement(React.Fragment, {
+      \\"data-element\\": \\"unknown\\"
+    }, \\"A\\");
+  }
+
+}
+
+export default componentName;"
+`;
+
+exports[`nonJSX snapshot matches 1`] = `
+"import React, { Component } from 'react';
+
+class TestClass extends Component {
+  test() {
+    return true;
+  }
+
+}
+
+export default TestClass;"
+`;
+
+exports[`option-attribute snapshot matches 1`] = `
+"import React, { Component } from 'react';
+
 const componentName = () => {
-  return (() => /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(\\"h1\\", null, \\"Hello world\\")))();
+  return /*#__PURE__*/React.createElement(\\"div\\", {
+    \\"data-element\\": \\"div\\"
+  }, /*#__PURE__*/React.createElement(\\"h1\\", {
+    \\"data-element\\": \\"h1\\"
+  }, \\"Hello world\\"));
 };
 
 export default componentName;"
+`;
+
+exports[`option-format snapshot matches 1`] = `
+"import React, { Component } from 'react';
+
+const componentName = () => {
+  return /*#__PURE__*/React.createElement(\\"div\\", {
+    \\"data-element\\": \\"div\\"
+  }, /*#__PURE__*/React.createElement(\\"h1\\", {
+    \\"data-element\\": \\"h1\\"
+  }, \\"Hello world\\"));
+};
+
+export default componentName;"
+`;
+
+exports[`pure snapshot matches 1`] = `
+"import React from 'react';
+
+class PureComponentName extends React.PureComponent {
+  render() {
+    return /*#__PURE__*/React.createElement(\\"div\\", {
+      \\"data-element\\": \\"div\\",
+      \\"data-component\\": \\"PureComponentName\\"
+    }, /*#__PURE__*/React.createElement(\\"h1\\", {
+      \\"data-element\\": \\"h1\\"
+    }, \\"Hello world\\"));
+  }
+
+}
+
+export default PureComponentName;"
+`;
+
+exports[`pureComponent-fragment snapshot matches 1`] = `
+"import React, { Fragment } from 'react';
+
+class PureComponentName extends React.PureComponent {
+  render() {
+    return /*#__PURE__*/React.createElement(Fragment, {
+      \\"data-element\\": \\"Fragment\\"
+    }, /*#__PURE__*/React.createElement(\\"h1\\", {
+      \\"data-element\\": \\"h1\\"
+    }, \\"Hello world\\"));
+  }
+
+}
+
+export default PureComponentName;"
+`;
+
+exports[`pureComponent-react-fragment snapshot matches 1`] = `
+"import React from 'react';
+
+class PureComponentName extends React.PureComponent {
+  render() {
+    return /*#__PURE__*/React.createElement(React.Fragment, {
+      \\"data-element\\": \\"unknown\\"
+    }, /*#__PURE__*/React.createElement(\\"h1\\", {
+      \\"data-element\\": \\"h1\\"
+    }, \\"Hello world\\"));
+  }
+
+}
+
+export default PureComponentName;"
+`;
+
+exports[`rawfunction snapshot matches 1`] = `
+"import React, { Component } from 'react';
+
+function SubComponent() {
+  return /*#__PURE__*/React.createElement(\\"div\\", {
+    \\"data-element\\": \\"div\\"
+  }, \\"Sub\\");
+}
+
+const componentName = () => {
+  return /*#__PURE__*/React.createElement(\\"div\\", {
+    \\"data-element\\": \\"div\\"
+  }, /*#__PURE__*/React.createElement(SubCoponent, {
+    \\"data-element\\": \\"SubCoponent\\"
+  }));
+};
+
+export default componentName;"
+`;
+
+exports[`rawfunction-fragment snapshot matches 1`] = `
+"import React, { Component, Fragment } from 'react';
+
+function SubComponent() {
+  return /*#__PURE__*/React.createElement(Fragment, {
+    \\"data-element\\": \\"Fragment\\"
+  }, \\"Sub\\");
+}
+
+const componentName = () => {
+  return /*#__PURE__*/React.createElement(Fragment, {
+    \\"data-element\\": \\"Fragment\\"
+  }, /*#__PURE__*/React.createElement(SubCoponent, {
+    \\"data-element\\": \\"SubCoponent\\"
+  }));
+};
+
+export default componentName;"
+`;
+
+exports[`rawfunction-react-fragment snapshot matches 1`] = `
+"import React, { Component } from 'react';
+
+function SubComponent() {
+  return /*#__PURE__*/React.createElement(React.Fragment, {
+    \\"data-element\\": \\"unknown\\"
+  }, \\"Sub\\");
+}
+
+const componentName = () => {
+  return /*#__PURE__*/React.createElement(React.Fragment, {
+    \\"data-element\\": \\"unknown\\"
+  }, /*#__PURE__*/React.createElement(SubCoponent, {
+    \\"data-element\\": \\"SubCoponent\\"
+  }));
+};
+
+export default componentName;"
+`;
+
+exports[`tags snapshot matches 1`] = `
+"import React, { Component } from 'react';
+import { StyleSheet, Text, TextInput, View, Image, UIManager } from 'react-native';
+UIManager.getViewManagerConfig('RCTView').NativeProps.fsClass = \\"String\\";
+
+class Bananas extends Component {
+  render() {
+    let pic = {
+      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
+    };
+    return /*#__PURE__*/React.createElement(Image, {
+      source: pic,
+      style: {
+        width: 193,
+        height: 110,
+        marginTop: 10
+      },
+      fsClass: \\"test-class\\",
+      \\"data-element\\": \\"Image\\",
+      \\"data-component\\": \\"Bananas\\"
+    });
+  }
+
+}
+
+class PizzaTranslator extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      text: ''
+    };
+  }
+
+  render() {
+    return /*#__PURE__*/React.createElement(View, {
+      style: {
+        padding: 10
+      },
+      \\"data-element\\": \\"View\\",
+      \\"data-component\\": \\"PizzaTranslator\\"
+    }, /*#__PURE__*/React.createElement(TextInput, {
+      style: {
+        backgroundColor: '#000',
+        color: '#eee',
+        padding: 8
+      },
+      placeholder: \\"Type here to translate!\\" // not supported on iOS
+      ,
+      onChangeText: text => this.setState({
+        text
+      }),
+      value: this.state.text,
+      \\"data-element\\": \\"TextInput\\"
+    }), /*#__PURE__*/React.createElement(Text, {
+      style: {
+        padding: 10,
+        fontSize: 42
+      },
+      \\"data-element\\": \\"Text\\"
+    }, this.state.text.split(' ').map(word => word && '🍕').join(' ')));
+  }
+
+}
+
+export default function App() {
+  return /*#__PURE__*/React.createElement(View, {
+    style: styles.container,
+    \\"data-element\\": \\"View\\"
+  }, /*#__PURE__*/React.createElement(Text, {
+    style: {
+      color: '#eee'
+    },
+    \\"data-element\\": \\"Text\\"
+  }, \\"FullStory ReactNative testing app\\"), /*#__PURE__*/React.createElement(Bananas, {
+    \\"data-element\\": \\"Bananas\\"
+  }), /*#__PURE__*/React.createElement(PizzaTranslator, {
+    \\"data-element\\": \\"PizzaTranslator\\"
+  }));
+}
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'stretch',
+    backgroundColor: '#222',
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+});"
 `;
