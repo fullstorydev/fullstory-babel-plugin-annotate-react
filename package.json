@@ -1,8 +1,12 @@
 {
-  "name": "babel-react-data-annotate",
+  "name": "fullstory-babel-plugin-annotate-react",
   "version": "0.1.0",
-  "description": "",
+  "description": "A Babel plugin that annotates React components, making them easier to target with FullStory search",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fullstory-babel-plugin-annotate-react.git"
+  },
   "scripts": {
     "test": "jest"
   },
