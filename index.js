@@ -1,5 +1,9 @@
-let parentName = 'data-component';
-let elementName = 'data-element';
+const webParentName = 'data-component';
+const webElementName = 'data-element';
+const nativeParentName = 'dataComponent';
+const nativeElementName = 'dataElement';
+
+const nativeOptionName = 'native';
 
 module.exports = function({ types: t }) {
 	return {
@@ -7,12 +11,14 @@ module.exports = function({ types: t }) {
 			FunctionDeclaration(path, state) {
 				if (!path.node.id || !path.node.id.name) return
 				const componentName = path.node.id.name
-				functionBodyPushAttributes(t, path, componentName)
+				let [parentAttributeName, elementAttributeName] = attributeNamesFromState(state)
+				functionBodyPushAttributes(t, path, componentName, elementAttributeName)
 			},
 			ArrowFunctionExpression(path, state) {
 				if (!path.parent.id || !path.parent.id.name) return
 				const componentName = path.parent.id.name
-				functionBodyPushAttributes(t, path, componentName)
+				let [parentAttributeName, elementAttributeName] = attributeNamesFromState(state)
+				functionBodyPushAttributes(t, path, componentName, elementAttributeName)
 			},
 			ClassDeclaration(path, state) {
 				const name = path.get('id')
@@ -25,16 +31,17 @@ module.exports = function({ types: t }) {
 				})
 				if (!render || !render.traverse) return
 
+				let [parentAttributeName, elementAttributeName] = attributeNamesFromState(state)
 				render.traverse({
 					ReturnStatement(returnStatement) {
 						const arg = returnStatement.get('argument')
 						if (!arg.isJSXElement()) return
-						processJSXElement(t, arg)
+						processJSXElement(t, arg, elementAttributeName)
 						const openingElement = arg.get('openingElement')
 						if (isReactFragment(openingElement)) return
 						openingElement.node.attributes.push(
 							t.jSXAttribute(
-								t.jSXIdentifier(parentName),
+								t.jSXIdentifier(parentAttributeName),
 								t.stringLiteral((name.node && name.node.name) || 'unknown')
 							)
 						)
@@ -43,6 +50,13 @@ module.exports = function({ types: t }) {
 			},
 		}
 	}
+}
+
+function attributeNamesFromState(state) {
+	if(state.opts[nativeOptionName] === true) {
+		return [nativeParentName, nativeElementName]
+	}
+	return [webParentName, webElementName]
 }
 
 function isReactFragment(openingElement) {
@@ -54,31 +68,31 @@ function isReactFragment(openingElement) {
 	)
 }
 
-function addAttributesToJSXElement(t, jsxElement) {
+function addAttributesToJSXElement(t, jsxElement, elementAttributeName) {
 	if (!jsxElement || !jsxElement.node || !jsxElement.node.name) {
 		return
 	}
 	jsxElement.node.attributes = jsxElement.node.attributes || []
 	jsxElement.node.attributes.push(
 		t.jSXAttribute(
-			t.jSXIdentifier(elementName),
+			t.jSXIdentifier(elementAttributeName),
 			t.stringLiteral(jsxElement.node.name.name || 'unknown')
 		)
 	)
 }
 
-function processJSXElement(t, jsxElement) {
+function processJSXElement(t, jsxElement, elementAttributeName) {
 	if (!jsxElement) {
 		return
 	}
-	addAttributesToJSXElement(t, jsxElement.get('openingElement'))
+	addAttributesToJSXElement(t, jsxElement.get('openingElement'), elementAttributeName)
 	const children = jsxElement.get('children')
 	if (children && children.length) {
-		children.forEach(element => processJSXElement(t, element))
+		children.forEach(element => processJSXElement(t, element, elementAttributeName))
 	}
 }
 
-function functionBodyPushAttributes(t, path, componentName) {
+function functionBodyPushAttributes(t, path, componentName, elementAttributeName) {
 	let jsxElement = null
 	const functionBody = path.get('body').get('body')
 	if (functionBody.parent && functionBody.parent.type === 'JSXElement') {
@@ -100,5 +114,5 @@ function functionBodyPushAttributes(t, path, componentName) {
 		}
 		jsxElement = arg
 	}
-	processJSXElement(t, jsxElement)
+	processJSXElement(t, jsxElement, elementAttributeName)
 }

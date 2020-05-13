@@ -131,6 +131,21 @@ class componentName extends Component {
 export default componentName;"
 `;
 
+exports[`component-fragment-native snapshot matches 1`] = `
+"import React, { Component, Fragment } from 'react';
+
+class componentName extends Component {
+  render() {
+    return /*#__PURE__*/React.createElement(Fragment, {
+      dataElement: \\"Fragment\\"
+    }, \\"A\\");
+  }
+
+}
+
+export default componentName;"
+`;
+
 exports[`component-react-fragment snapshot matches 1`] = `
 "import React, { Component } from 'react';
 
@@ -197,6 +212,24 @@ class PureComponentName extends React.PureComponent {
       \\"data-component\\": \\"PureComponentName\\"
     }, /*#__PURE__*/React.createElement(\\"h1\\", {
       \\"data-element\\": \\"h1\\"
+    }, \\"Hello world\\"));
+  }
+
+}
+
+export default PureComponentName;"
+`;
+
+exports[`pure-native snapshot matches 1`] = `
+"import React from 'react';
+
+class PureComponentName extends React.PureComponent {
+  render() {
+    return /*#__PURE__*/React.createElement(\\"div\\", {
+      dataElement: \\"div\\",
+      dataComponent: \\"PureComponentName\\"
+    }, /*#__PURE__*/React.createElement(\\"h1\\", {
+      dataElement: \\"h1\\"
     }, \\"Hello world\\"));
   }
 

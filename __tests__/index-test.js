@@ -506,3 +506,51 @@ export default PureComponentName;
 });
 
 
+it('component-fragment-native snapshot matches', () => {
+  const { code } = babel.transform(
+`import React, { Component, Fragment } from 'react';
+
+class componentName extends Component {
+  render() {
+    return <Fragment>A</Fragment>;
+  }
+}
+
+export default componentName;
+`,
+    {
+      presets: ["@babel/preset-react"],
+      plugins: [
+        [plugin, { native: true }]
+      ]
+    },
+  );
+  expect(code).toMatchSnapshot();
+});
+
+
+it('pure-native snapshot matches', () => {
+  const { code } = babel.transform(
+`import React from 'react';
+
+class PureComponentName extends React.PureComponent {
+    render() {
+        return <div>
+            <h1>Hello world</h1>
+        </div>;
+    }
+}
+
+export default PureComponentName;
+`,
+    {
+      presets: ["@babel/preset-react"],
+      plugins: [
+        [plugin, { native: true }]
+      ]
+    },
+  );
+  expect(code).toMatchSnapshot();
+});
+
+
