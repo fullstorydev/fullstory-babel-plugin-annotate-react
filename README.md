@@ -16,7 +16,7 @@ Example input:
 
 Example output:
 
-	class componentName extends Component {
+	class HelloComponent extends Component {
 		render() {
 			return React.createElement("div", {
 				"data-element": "div",
