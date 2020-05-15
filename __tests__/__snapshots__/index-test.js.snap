@@ -227,7 +227,8 @@ class PureComponentName extends React.PureComponent {
   render() {
     return /*#__PURE__*/React.createElement(\\"div\\", {
       dataElement: \\"div\\",
-      dataComponent: \\"PureComponentName\\"
+      dataComponent: \\"PureComponentName\\",
+      dataSourceFile: \\"filename-test.js\\"
     }, /*#__PURE__*/React.createElement(\\"h1\\", {
       dataElement: \\"h1\\"
     }, \\"Hello world\\"));
@@ -351,7 +352,8 @@ class Bananas extends Component {
       },
       fsClass: \\"test-class\\",
       \\"data-element\\": \\"Image\\",
-      \\"data-component\\": \\"Bananas\\"
+      \\"data-component\\": \\"Bananas\\",
+      \\"data-source-file\\": \\"filename-test.js\\"
     });
   }
 
@@ -371,7 +373,8 @@ class PizzaTranslator extends Component {
         padding: 10
       },
       \\"data-element\\": \\"View\\",
-      \\"data-component\\": \\"PizzaTranslator\\"
+      \\"data-component\\": \\"PizzaTranslator\\",
+      \\"data-source-file\\": \\"filename-test.js\\"
     }, /*#__PURE__*/React.createElement(TextInput, {
       style: {
         backgroundColor: '#000',

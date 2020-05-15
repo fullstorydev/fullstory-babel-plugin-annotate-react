@@ -1,7 +1,10 @@
 const webParentName = 'data-component';
 const webElementName = 'data-element';
+const webSourceFileName = 'data-source-file';
+
 const nativeParentName = 'dataComponent';
 const nativeElementName = 'dataElement';
+const nativeSourceFileName = 'dataSourceFile';
 
 const nativeOptionName = 'native';
 
@@ -11,14 +14,12 @@ module.exports = function({ types: t }) {
       FunctionDeclaration(path, state) {
         if (!path.node.id || !path.node.id.name) return
         const componentName = path.node.id.name
-        let [parentAttributeName, elementAttributeName] = attributeNamesFromState(state)
-        functionBodyPushAttributes(t, path, componentName, elementAttributeName)
+        functionBodyPushAttributes(t, path, componentName, attributeNamesFromState(state)[1])
       },
       ArrowFunctionExpression(path, state) {
         if (!path.parent.id || !path.parent.id.name) return
         const componentName = path.parent.id.name
-        let [parentAttributeName, elementAttributeName] = attributeNamesFromState(state)
-        functionBodyPushAttributes(t, path, componentName, elementAttributeName)
+        functionBodyPushAttributes(t, path, componentName, attributeNamesFromState(state)[1])
       },
       ClassDeclaration(path, state) {
         const name = path.get('id')
@@ -31,7 +32,11 @@ module.exports = function({ types: t }) {
         })
         if (!render || !render.traverse) return
 
-        let [parentAttributeName, elementAttributeName] = attributeNamesFromState(state)
+        const [
+          parentAttributeName,
+          elementAttributeName,
+          sourceFileAttributeName
+        ] = attributeNamesFromState(state)
         render.traverse({
           ReturnStatement(returnStatement) {
             const arg = returnStatement.get('argument')
@@ -39,12 +44,24 @@ module.exports = function({ types: t }) {
             processJSXElement(t, arg, elementAttributeName)
             const openingElement = arg.get('openingElement')
             if (isReactFragment(openingElement)) return
+            // Add a stable attribute for the Component parent name
             openingElement.node.attributes.push(
               t.jSXAttribute(
                 t.jSXIdentifier(parentAttributeName),
                 t.stringLiteral((name.node && name.node.name) || 'unknown')
               )
             )
+            if (typeof state.file.opts.parserOpts.sourceFileName === 'string') {
+              // Add a stable attribute for the source file name
+              // Note: this will be undefined in some cases like tests so we ignore it there
+              const fileName = state.file.opts.parserOpts.sourceFileName.split('/').pop()
+              openingElement.node.attributes.push(
+                t.jSXAttribute(
+                  t.jSXIdentifier(sourceFileAttributeName),
+                  t.stringLiteral(fileName)
+                )
+              )
+            }
           }
         })
       },
@@ -54,9 +71,9 @@ module.exports = function({ types: t }) {
 
 function attributeNamesFromState(state) {
   if(state.opts[nativeOptionName] === true) {
-    return [nativeParentName, nativeElementName]
+    return [nativeParentName, nativeElementName, nativeSourceFileName]
   }
-  return [webParentName, webElementName]
+  return [webParentName, webElementName, webSourceFileName]
 }
 
 function isReactFragment(openingElement) {

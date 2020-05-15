@@ -15,6 +15,7 @@ class componentName extends Component {
 export default componentName;
 `,
     {
+      filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [plugin]
     },
@@ -36,6 +37,7 @@ class componentName extends Component {
 export default componentName;
 `,
     {
+      filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [plugin]
     },
@@ -56,6 +58,7 @@ const componentName = () => (
 export default componentName;
 `,
     {
+      filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [plugin]
     },
@@ -299,6 +302,7 @@ const styles = StyleSheet.create({
 });
 `,
     {
+      filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [plugin]
     },
@@ -544,6 +548,7 @@ class PureComponentName extends React.PureComponent {
 export default PureComponentName;
 `,
     {
+      filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
         [plugin, { native: true }]
@@ -552,5 +557,3 @@ export default PureComponentName;
   );
   expect(code).toMatchSnapshot();
 });
-
-
