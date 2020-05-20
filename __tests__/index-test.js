@@ -304,7 +304,9 @@ const styles = StyleSheet.create({
     {
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
-      plugins: [plugin]
+      plugins: [
+        [plugin, { native: true }]
+      ]
     },
   );
   expect(code).toMatchSnapshot();

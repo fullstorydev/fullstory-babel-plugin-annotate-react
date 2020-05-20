@@ -5,7 +5,8 @@ exports[`arrow snapshot matches 1`] = `
 
 const componentName = () => {
   return /*#__PURE__*/React.createElement(\\"div\\", {
-    \\"data-element\\": \\"div\\"
+    \\"data-element\\": \\"div\\",
+    \\"data-component\\": \\"componentName\\"
   }, /*#__PURE__*/React.createElement(\\"h1\\", {
     \\"data-element\\": \\"h1\\"
   }, \\"Hello world\\"));
@@ -39,7 +40,8 @@ exports[`arrow-fragment snapshot matches 1`] = `
 
 const componentName = () => {
   return /*#__PURE__*/React.createElement(Fragment, {
-    \\"data-element\\": \\"Fragment\\"
+    \\"data-element\\": \\"Fragment\\",
+    \\"data-component\\": \\"componentName\\"
   }, /*#__PURE__*/React.createElement(\\"h1\\", {
     \\"data-element\\": \\"h1\\"
   }, \\"Hello world\\"));
@@ -52,7 +54,8 @@ exports[`arrow-noreturn snapshot matches 1`] = `
 "import React, { Component } from 'react';
 
 const componentName = () => /*#__PURE__*/React.createElement(\\"div\\", {
-  \\"data-element\\": \\"div\\"
+  \\"data-element\\": \\"div\\",
+  \\"data-component\\": \\"componentName\\"
 }, /*#__PURE__*/React.createElement(\\"h1\\", {
   \\"data-element\\": \\"h1\\"
 }, \\"Hello world\\"));
@@ -64,7 +67,9 @@ exports[`arrow-noreturn-fragment snapshot matches 1`] = `
 "import React, { Component, Fragment } from 'react';
 
 const componentName = () => /*#__PURE__*/React.createElement(Fragment, {
-  \\"data-element\\": \\"Fragment\\"
+  \\"data-element\\": \\"Fragment\\",
+  \\"data-component\\": \\"componentName\\",
+  \\"data-source-file\\": \\"filename-test.js\\"
 }, /*#__PURE__*/React.createElement(\\"h1\\", {
   \\"data-element\\": \\"h1\\"
 }, \\"Hello world\\"));
@@ -76,7 +81,8 @@ exports[`arrow-noreturn-react-fragment snapshot matches 1`] = `
 "import React, { Component } from 'react';
 
 const componentName = () => /*#__PURE__*/React.createElement(React.Fragment, {
-  \\"data-element\\": \\"unknown\\"
+  \\"data-element\\": \\"unknown\\",
+  \\"data-component\\": \\"componentName\\"
 }, /*#__PURE__*/React.createElement(\\"h1\\", {
   \\"data-element\\": \\"h1\\"
 }, \\"Hello world\\"));
@@ -89,7 +95,8 @@ exports[`arrow-react-fragment snapshot matches 1`] = `
 
 const componentName = () => {
   return /*#__PURE__*/React.createElement(React.Fragment, {
-    \\"data-element\\": \\"unknown\\"
+    \\"data-element\\": \\"unknown\\",
+    \\"data-component\\": \\"componentName\\"
   }, /*#__PURE__*/React.createElement(\\"h1\\", {
     \\"data-element\\": \\"h1\\"
   }, \\"Hello world\\"));
@@ -122,7 +129,9 @@ exports[`component-fragment snapshot matches 1`] = `
 class componentName extends Component {
   render() {
     return /*#__PURE__*/React.createElement(Fragment, {
-      \\"data-element\\": \\"Fragment\\"
+      \\"data-element\\": \\"Fragment\\",
+      \\"data-component\\": \\"componentName\\",
+      \\"data-source-file\\": \\"filename-test.js\\"
     }, \\"A\\");
   }
 
@@ -137,7 +146,8 @@ exports[`component-fragment-native snapshot matches 1`] = `
 class componentName extends Component {
   render() {
     return /*#__PURE__*/React.createElement(Fragment, {
-      dataElement: \\"Fragment\\"
+      dataElement: \\"Fragment\\",
+      dataComponent: \\"componentName\\"
     }, \\"A\\");
   }
 
@@ -152,7 +162,9 @@ exports[`component-react-fragment snapshot matches 1`] = `
 class componentName extends Component {
   render() {
     return /*#__PURE__*/React.createElement(React.Fragment, {
-      \\"data-element\\": \\"unknown\\"
+      \\"data-element\\": \\"unknown\\",
+      \\"data-component\\": \\"componentName\\",
+      \\"data-source-file\\": \\"filename-test.js\\"
     }, \\"A\\");
   }
 
@@ -179,7 +191,8 @@ exports[`option-attribute snapshot matches 1`] = `
 
 const componentName = () => {
   return /*#__PURE__*/React.createElement(\\"div\\", {
-    \\"data-element\\": \\"div\\"
+    \\"data-element\\": \\"div\\",
+    \\"data-component\\": \\"componentName\\"
   }, /*#__PURE__*/React.createElement(\\"h1\\", {
     \\"data-element\\": \\"h1\\"
   }, \\"Hello world\\"));
@@ -193,7 +206,8 @@ exports[`option-format snapshot matches 1`] = `
 
 const componentName = () => {
   return /*#__PURE__*/React.createElement(\\"div\\", {
-    \\"data-element\\": \\"div\\"
+    \\"data-element\\": \\"div\\",
+    \\"data-component\\": \\"componentName\\"
   }, /*#__PURE__*/React.createElement(\\"h1\\", {
     \\"data-element\\": \\"h1\\"
   }, \\"Hello world\\"));
@@ -245,7 +259,8 @@ exports[`pureComponent-fragment snapshot matches 1`] = `
 class PureComponentName extends React.PureComponent {
   render() {
     return /*#__PURE__*/React.createElement(Fragment, {
-      \\"data-element\\": \\"Fragment\\"
+      \\"data-element\\": \\"Fragment\\",
+      \\"data-component\\": \\"PureComponentName\\"
     }, /*#__PURE__*/React.createElement(\\"h1\\", {
       \\"data-element\\": \\"h1\\"
     }, \\"Hello world\\"));
@@ -262,7 +277,8 @@ exports[`pureComponent-react-fragment snapshot matches 1`] = `
 class PureComponentName extends React.PureComponent {
   render() {
     return /*#__PURE__*/React.createElement(React.Fragment, {
-      \\"data-element\\": \\"unknown\\"
+      \\"data-element\\": \\"unknown\\",
+      \\"data-component\\": \\"PureComponentName\\"
     }, /*#__PURE__*/React.createElement(\\"h1\\", {
       \\"data-element\\": \\"h1\\"
     }, \\"Hello world\\"));
@@ -278,13 +294,15 @@ exports[`rawfunction snapshot matches 1`] = `
 
 function SubComponent() {
   return /*#__PURE__*/React.createElement(\\"div\\", {
-    \\"data-element\\": \\"div\\"
+    \\"data-element\\": \\"div\\",
+    \\"data-component\\": \\"SubComponent\\"
   }, \\"Sub\\");
 }
 
 const componentName = () => {
   return /*#__PURE__*/React.createElement(\\"div\\", {
-    \\"data-element\\": \\"div\\"
+    \\"data-element\\": \\"div\\",
+    \\"data-component\\": \\"componentName\\"
   }, /*#__PURE__*/React.createElement(SubCoponent, {
     \\"data-element\\": \\"SubCoponent\\"
   }));
@@ -298,13 +316,15 @@ exports[`rawfunction-fragment snapshot matches 1`] = `
 
 function SubComponent() {
   return /*#__PURE__*/React.createElement(Fragment, {
-    \\"data-element\\": \\"Fragment\\"
+    \\"data-element\\": \\"Fragment\\",
+    \\"data-component\\": \\"SubComponent\\"
   }, \\"Sub\\");
 }
 
 const componentName = () => {
   return /*#__PURE__*/React.createElement(Fragment, {
-    \\"data-element\\": \\"Fragment\\"
+    \\"data-element\\": \\"Fragment\\",
+    \\"data-component\\": \\"componentName\\"
   }, /*#__PURE__*/React.createElement(SubCoponent, {
     \\"data-element\\": \\"SubCoponent\\"
   }));
@@ -318,13 +338,15 @@ exports[`rawfunction-react-fragment snapshot matches 1`] = `
 
 function SubComponent() {
   return /*#__PURE__*/React.createElement(React.Fragment, {
-    \\"data-element\\": \\"unknown\\"
+    \\"data-element\\": \\"unknown\\",
+    \\"data-component\\": \\"SubComponent\\"
   }, \\"Sub\\");
 }
 
 const componentName = () => {
   return /*#__PURE__*/React.createElement(React.Fragment, {
-    \\"data-element\\": \\"unknown\\"
+    \\"data-element\\": \\"unknown\\",
+    \\"data-component\\": \\"componentName\\"
   }, /*#__PURE__*/React.createElement(SubCoponent, {
     \\"data-element\\": \\"SubCoponent\\"
   }));
@@ -351,9 +373,9 @@ class Bananas extends Component {
         marginTop: 10
       },
       fsClass: \\"test-class\\",
-      \\"data-element\\": \\"Image\\",
-      \\"data-component\\": \\"Bananas\\",
-      \\"data-source-file\\": \\"filename-test.js\\"
+      dataElement: \\"Image\\",
+      dataComponent: \\"Bananas\\",
+      dataSourceFile: \\"filename-test.js\\"
     });
   }
 
@@ -372,9 +394,9 @@ class PizzaTranslator extends Component {
       style: {
         padding: 10
       },
-      \\"data-element\\": \\"View\\",
-      \\"data-component\\": \\"PizzaTranslator\\",
-      \\"data-source-file\\": \\"filename-test.js\\"
+      dataElement: \\"View\\",
+      dataComponent: \\"PizzaTranslator\\",
+      dataSourceFile: \\"filename-test.js\\"
     }, /*#__PURE__*/React.createElement(TextInput, {
       style: {
         backgroundColor: '#000',
@@ -387,13 +409,13 @@ class PizzaTranslator extends Component {
         text
       }),
       value: this.state.text,
-      \\"data-element\\": \\"TextInput\\"
+      dataElement: \\"TextInput\\"
     }), /*#__PURE__*/React.createElement(Text, {
       style: {
         padding: 10,
         fontSize: 42
       },
-      \\"data-element\\": \\"Text\\"
+      dataElement: \\"Text\\"
     }, this.state.text.split(' ').map(word => word && '🍕').join(' ')));
   }
 
@@ -402,16 +424,18 @@ class PizzaTranslator extends Component {
 export default function App() {
   return /*#__PURE__*/React.createElement(View, {
     style: styles.container,
-    \\"data-element\\": \\"View\\"
+    dataElement: \\"View\\",
+    dataComponent: \\"App\\",
+    dataSourceFile: \\"filename-test.js\\"
   }, /*#__PURE__*/React.createElement(Text, {
     style: {
       color: '#eee'
     },
-    \\"data-element\\": \\"Text\\"
+    dataElement: \\"Text\\"
   }, \\"FullStory ReactNative testing app\\"), /*#__PURE__*/React.createElement(Bananas, {
-    \\"data-element\\": \\"Bananas\\"
+    dataElement: \\"Bananas\\"
   }), /*#__PURE__*/React.createElement(PizzaTranslator, {
-    \\"data-element\\": \\"PizzaTranslator\\"
+    dataElement: \\"PizzaTranslator\\"
   }));
 }
 const styles = StyleSheet.create({
