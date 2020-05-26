@@ -35,7 +35,7 @@ Example output:
 To activate React Native support you must pass in a `native` plugin option like so:
 
     plugins: [
-      ["@fullstory/fullstory-babel-plugin-annotate-react", { native: true }]
+      ["@fullstory/babel-plugin-annotate-react", { native: true }]
     ]
 
 
