@@ -2,6 +2,27 @@ const babel = require('babel-core');
 const plugin = require('../');
 const assert = require('assert');
 
+it('unknown-element snapshot matches', () => {
+  const { code } = babel.transform(
+`import React, { Component } from 'react';
+
+class componentName extends Component {
+  render() {
+    return <bogus><h1>A</h1></bogus>;
+  }
+}
+
+export default componentName;
+`,
+    {
+      filename: "./filename-test.js",
+      presets: ["@babel/preset-react"],
+      plugins: [plugin]
+    },
+  );
+  expect(code).toMatchSnapshot();
+});
+
 it('component-fragment snapshot matches', () => {
   const { code } = babel.transform(
 `import React, { Component, Fragment } from 'react';

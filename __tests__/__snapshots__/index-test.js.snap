@@ -5,11 +5,8 @@ exports[`arrow snapshot matches 1`] = `
 
 const componentName = () => {
   return /*#__PURE__*/React.createElement(\\"div\\", {
-    \\"data-element\\": \\"div\\",
     \\"data-component\\": \\"componentName\\"
-  }, /*#__PURE__*/React.createElement(\\"h1\\", {
-    \\"data-element\\": \\"h1\\"
-  }, \\"Hello world\\"));
+  }, /*#__PURE__*/React.createElement(\\"h1\\", null, \\"Hello world\\"));
 };
 
 export default componentName;"
@@ -42,9 +39,7 @@ const componentName = () => {
   return /*#__PURE__*/React.createElement(Fragment, {
     \\"data-element\\": \\"Fragment\\",
     \\"data-component\\": \\"componentName\\"
-  }, /*#__PURE__*/React.createElement(\\"h1\\", {
-    \\"data-element\\": \\"h1\\"
-  }, \\"Hello world\\"));
+  }, /*#__PURE__*/React.createElement(\\"h1\\", null, \\"Hello world\\"));
 };
 
 export default componentName;"
@@ -54,11 +49,8 @@ exports[`arrow-noreturn snapshot matches 1`] = `
 "import React, { Component } from 'react';
 
 const componentName = () => /*#__PURE__*/React.createElement(\\"div\\", {
-  \\"data-element\\": \\"div\\",
   \\"data-component\\": \\"componentName\\"
-}, /*#__PURE__*/React.createElement(\\"h1\\", {
-  \\"data-element\\": \\"h1\\"
-}, \\"Hello world\\"));
+}, /*#__PURE__*/React.createElement(\\"h1\\", null, \\"Hello world\\"));
 
 export default componentName;"
 `;
@@ -70,9 +62,7 @@ const componentName = () => /*#__PURE__*/React.createElement(Fragment, {
   \\"data-element\\": \\"Fragment\\",
   \\"data-component\\": \\"componentName\\",
   \\"data-source-file\\": \\"filename-test.js\\"
-}, /*#__PURE__*/React.createElement(\\"h1\\", {
-  \\"data-element\\": \\"h1\\"
-}, \\"Hello world\\"));
+}, /*#__PURE__*/React.createElement(\\"h1\\", null, \\"Hello world\\"));
 
 export default componentName;"
 `;
@@ -83,9 +73,7 @@ exports[`arrow-noreturn-react-fragment snapshot matches 1`] = `
 const componentName = () => /*#__PURE__*/React.createElement(React.Fragment, {
   \\"data-element\\": \\"unknown\\",
   \\"data-component\\": \\"componentName\\"
-}, /*#__PURE__*/React.createElement(\\"h1\\", {
-  \\"data-element\\": \\"h1\\"
-}, \\"Hello world\\"));
+}, /*#__PURE__*/React.createElement(\\"h1\\", null, \\"Hello world\\"));
 
 export default componentName;"
 `;
@@ -97,9 +85,7 @@ const componentName = () => {
   return /*#__PURE__*/React.createElement(React.Fragment, {
     \\"data-element\\": \\"unknown\\",
     \\"data-component\\": \\"componentName\\"
-  }, /*#__PURE__*/React.createElement(\\"h1\\", {
-    \\"data-element\\": \\"h1\\"
-  }, \\"Hello world\\"));
+  }, /*#__PURE__*/React.createElement(\\"h1\\", null, \\"Hello world\\"));
 };
 
 export default componentName;"
@@ -111,11 +97,8 @@ exports[`component snapshot matches 1`] = `
 class componentName extends Component {
   render() {
     return /*#__PURE__*/React.createElement(\\"div\\", {
-      \\"data-element\\": \\"div\\",
       \\"data-component\\": \\"componentName\\"
-    }, /*#__PURE__*/React.createElement(\\"h1\\", {
-      \\"data-element\\": \\"h1\\"
-    }, \\"Hello world\\"));
+    }, /*#__PURE__*/React.createElement(\\"h1\\", null, \\"Hello world\\"));
   }
 
 }
@@ -191,11 +174,8 @@ exports[`option-attribute snapshot matches 1`] = `
 
 const componentName = () => {
   return /*#__PURE__*/React.createElement(\\"div\\", {
-    \\"data-element\\": \\"div\\",
     \\"data-component\\": \\"componentName\\"
-  }, /*#__PURE__*/React.createElement(\\"h1\\", {
-    \\"data-element\\": \\"h1\\"
-  }, \\"Hello world\\"));
+  }, /*#__PURE__*/React.createElement(\\"h1\\", null, \\"Hello world\\"));
 };
 
 export default componentName;"
@@ -206,11 +186,8 @@ exports[`option-format snapshot matches 1`] = `
 
 const componentName = () => {
   return /*#__PURE__*/React.createElement(\\"div\\", {
-    \\"data-element\\": \\"div\\",
     \\"data-component\\": \\"componentName\\"
-  }, /*#__PURE__*/React.createElement(\\"h1\\", {
-    \\"data-element\\": \\"h1\\"
-  }, \\"Hello world\\"));
+  }, /*#__PURE__*/React.createElement(\\"h1\\", null, \\"Hello world\\"));
 };
 
 export default componentName;"
@@ -222,11 +199,8 @@ exports[`pure snapshot matches 1`] = `
 class PureComponentName extends React.PureComponent {
   render() {
     return /*#__PURE__*/React.createElement(\\"div\\", {
-      \\"data-element\\": \\"div\\",
       \\"data-component\\": \\"PureComponentName\\"
-    }, /*#__PURE__*/React.createElement(\\"h1\\", {
-      \\"data-element\\": \\"h1\\"
-    }, \\"Hello world\\"));
+    }, /*#__PURE__*/React.createElement(\\"h1\\", null, \\"Hello world\\"));
   }
 
 }
@@ -240,12 +214,9 @@ exports[`pure-native snapshot matches 1`] = `
 class PureComponentName extends React.PureComponent {
   render() {
     return /*#__PURE__*/React.createElement(\\"div\\", {
-      dataElement: \\"div\\",
       dataComponent: \\"PureComponentName\\",
       dataSourceFile: \\"filename-test.js\\"
-    }, /*#__PURE__*/React.createElement(\\"h1\\", {
-      dataElement: \\"h1\\"
-    }, \\"Hello world\\"));
+    }, /*#__PURE__*/React.createElement(\\"h1\\", null, \\"Hello world\\"));
   }
 
 }
@@ -261,9 +232,7 @@ class PureComponentName extends React.PureComponent {
     return /*#__PURE__*/React.createElement(Fragment, {
       \\"data-element\\": \\"Fragment\\",
       \\"data-component\\": \\"PureComponentName\\"
-    }, /*#__PURE__*/React.createElement(\\"h1\\", {
-      \\"data-element\\": \\"h1\\"
-    }, \\"Hello world\\"));
+    }, /*#__PURE__*/React.createElement(\\"h1\\", null, \\"Hello world\\"));
   }
 
 }
@@ -279,9 +248,7 @@ class PureComponentName extends React.PureComponent {
     return /*#__PURE__*/React.createElement(React.Fragment, {
       \\"data-element\\": \\"unknown\\",
       \\"data-component\\": \\"PureComponentName\\"
-    }, /*#__PURE__*/React.createElement(\\"h1\\", {
-      \\"data-element\\": \\"h1\\"
-    }, \\"Hello world\\"));
+    }, /*#__PURE__*/React.createElement(\\"h1\\", null, \\"Hello world\\"));
   }
 
 }
@@ -294,14 +261,12 @@ exports[`rawfunction snapshot matches 1`] = `
 
 function SubComponent() {
   return /*#__PURE__*/React.createElement(\\"div\\", {
-    \\"data-element\\": \\"div\\",
     \\"data-component\\": \\"SubComponent\\"
   }, \\"Sub\\");
 }
 
 const componentName = () => {
   return /*#__PURE__*/React.createElement(\\"div\\", {
-    \\"data-element\\": \\"div\\",
     \\"data-component\\": \\"componentName\\"
   }, /*#__PURE__*/React.createElement(SubCoponent, {
     \\"data-element\\": \\"SubCoponent\\"
@@ -448,4 +413,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   }
 });"
+`;
+
+exports[`unknown-element snapshot matches 1`] = `
+"import React, { Component } from 'react';
+
+class componentName extends Component {
+  render() {
+    return /*#__PURE__*/React.createElement(\\"bogus\\", {
+      \\"data-element\\": \\"bogus\\",
+      \\"data-component\\": \\"componentName\\",
+      \\"data-source-file\\": \\"filename-test.js\\"
+    }, /*#__PURE__*/React.createElement(\\"h1\\", null, \\"A\\"));
+  }
+
+}
+
+export default componentName;"
 `;
