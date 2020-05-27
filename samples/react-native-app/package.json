@@ -8,6 +8,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "fullstory-babel-plugin-annotate-react": "file:../../",
     "expo": "~37.0.3",
     "expo-splash-screen": "^0.2.3",
     "expo-updates": "~0.2.0",
