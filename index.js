@@ -106,12 +106,15 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, compo
     if (!node.name) return
     return node.name.name === elementAttributeName
   }) == null){
-    openingElement.node.attributes.push(
-      t.jSXAttribute(
-        t.jSXIdentifier(elementAttributeName),
-        t.stringLiteral(openingElement.node.name.name || 'unknown')
+    const name = openingElement.node.name.name || 'unknown'
+    if (ignoredElements.includes(name) === false) {
+      openingElement.node.attributes.push(
+        t.jSXAttribute(
+          t.jSXIdentifier(elementAttributeName),
+          t.stringLiteral(name)
+        )
       )
-    )
+    }
   }
 
   // Add a stable attribute for the component name (absent for non-root elements)
@@ -180,3 +183,26 @@ function functionBodyPushAttributes(t, path, componentName, sourceFileName, comp
 
   processJSXElement(t, jsxElement, componentName, sourceFileName, componentAttributeName, elementAttributeName, sourceFileAttributeName)
 }
+
+// We don't write data-element attributes for these names
+const ignoredElements = [
+  'a', 'abbr', 'address', 'area', 'article', 'aside', 'audio',
+  'b', 'base', 'bdi', 'bdo', 'blockquote', 'body', 'br', 'button',
+  'canvas', 'caption', 'cite', 'code', 'col', 'colgroup',
+  'data', 'datalist', 'dd', 'del', 'details', 'dfn', 'dialog', 'div', 'dl', 'dt',
+  'em', 'embed',
+  'fieldset', 'figure', 'footer', 'form',
+  'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'head', 'header', 'hgroup', 'hr', 'html',
+  'i', 'iframe', 'img', 'input', 'ins',
+  'kbd', 'keygen',
+  'label', 'legend', 'li', 'link',
+  'main', 'map', 'mark', 'menu', 'menuitem', 'meter',
+  'nav', 'noscript',
+  'object', 'ol', 'optgroup', 'option', 'output',
+  'p', 'param', 'pre', 'progress', 'q', 'rb', 'rp', 'rt', 'rtc', 'ruby',
+  's', 'samp', 'script', 'section', 'select', 'small', 'source', 'span', 'strong', 'style', 'sub', 'summary', 'sup',
+  'table', 'tbody', 'td', 'template', 'textarea', 'tfoot', 'th', 'thead', 'time', 'title', 'tr', 'track',
+  'u', 'ul',
+  'var', 'video',
+  'wbr'
+]
