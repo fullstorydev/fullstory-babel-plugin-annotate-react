@@ -101,13 +101,16 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, compo
   }
   if (!openingElement.node.attributes) openingElement.node.attributes = {}
 
-  // Add a stable attribute for the element name
+  let ignoredElement = false
+  // Add a stable attribute for the element name but only for non-DOM names
   if(openingElement.node.attributes.find(node => {
     if (!node.name) return
     return node.name.name === elementAttributeName
   }) == null){
     const name = openingElement.node.name.name || 'unknown'
-    if (ignoredElements.includes(name) === false) {
+    if (ignoredElements.includes(name)) {
+      ignoredElement = true
+    } else {
       openingElement.node.attributes.push(
         t.jSXAttribute(
           t.jSXIdentifier(elementAttributeName),
@@ -131,10 +134,14 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, compo
   }
 
   // Add a stable attribute for the source file name (absent for non-root elements)
-  if(sourceFileName && (openingElement.node.attributes.find(node => {
-    if (!node.name) return
-    return node.name.name === sourceFileAttributeName
-  }) == null)){
+  if(
+    sourceFileName
+    && (componentName || ignoredElement === false)
+    && openingElement.node.attributes.find(node => {
+      if (!node.name) return
+        return node.name.name === sourceFileAttributeName
+      }
+  ) == null){
     openingElement.node.attributes.push(
       t.jSXAttribute(
         t.jSXIdentifier(sourceFileAttributeName),
@@ -152,8 +159,8 @@ function processJSXElement(t, jsxElement, componentName, sourceFileName, compone
   applyAttributes(t, jsxElement.get('openingElement'), componentName, sourceFileName, componentAttributeName, elementAttributeName, sourceFileAttributeName)
   const children = jsxElement.get('children')
   if (children && children.length) {
-    // Children don't receive the data-component or data-source-file attribute so we pass null for componentName and sourceFileName
-    children.forEach(element => processJSXElement(t, element, null, null, componentAttributeName, elementAttributeName, sourceFileAttributeName))
+    // Children don't receive the data-component attribute so we pass null for componentName
+    children.forEach(element => processJSXElement(t, element, null, sourceFileName, componentAttributeName, elementAttributeName, sourceFileAttributeName))
   }
 }
 
