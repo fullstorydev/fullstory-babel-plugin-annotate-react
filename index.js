@@ -107,7 +107,7 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, compo
     return node.name.name === elementAttributeName
   }) == null){
     const name = openingElement.node.name.name || 'unknown'
-    if (ignoredElements.indexOf(name) === -1) {
+    if (ignoredElements.includes(name) === false) {
       openingElement.node.attributes.push(
         t.jSXAttribute(
           t.jSXIdentifier(elementAttributeName),
