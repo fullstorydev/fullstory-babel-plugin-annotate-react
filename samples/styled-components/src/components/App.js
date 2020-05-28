@@ -10,7 +10,7 @@ const Anchor = styled.a`
   color: purple;
 `;
 
-const Para = styled.p.attrs(() => ({ 'data-test': 'blatz' }))`
+const Para = styled.p.attrs(() => ({ 'data-your-custom-attribute': 'blatz' }))`
   border: solid 1px purple;
 `
 
