@@ -1,7 +1,5 @@
 # Babel Plugin: Annotate React
 ​
-### Status: This is a work-in-progress and is not yet ready for production use.
-
 This repo will hold a Babel plugin that annotates React components with stable attributes that can be used to search and select using FullStory. This is most useful when using a React system that generates dynamic names for Components or rearranges elements.
 
 For React on the web the attributes are `data-component`, `data-element`, and `data-source-file`. For React Native the attributes are `dataComponent`, `dataElement`, and `dataSourceFile`.
