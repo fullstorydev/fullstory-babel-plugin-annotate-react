@@ -18,7 +18,7 @@ Example input:
       }
     }
 
-Example output:
+Example JS output:
 
     class HelloComponent extends Component {
       render() {
@@ -31,6 +31,11 @@ Example output:
       }
     }
 
+Final render:
+
+    <div data-component="HelloComponent" data-file-source="hello-component.js">
+      <h1>Hello world</h1>
+    </div>
 
 To activate React Native support you must pass in a `native` plugin option like so:
 
