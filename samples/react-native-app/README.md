@@ -21,7 +21,8 @@ From there you can run the app on Android and iOS devices and simulators.<br />
 ## Viewing the DOM
 
 In order to view the DOM changes, install the [React Native Debugger](https://github.com/jhen0409/react-native-debugger).<br />
-Note: you should install version 0.10.x of the debugger via `brew update && brew cask install https://raw.githubusercontent.com/caskroom/homebrew-cask/b6ac3795c1df9f97242481c0817b1165e3e6306a/Casks/react-native-debugger.rb`.<br /><br />
+Note: you should install version 0.10.x of the debugger via:<br />
+`brew update && brew cask install https://raw.githubusercontent.com/caskroom/homebrew-cask/b6ac3795c1df9f97242481c0817b1165e3e6306a/Casks/react-native-debugger.rb`.<br /><br />
 
 More Info on running the React Native Debugger can be found in the [Getting Started Guide](https://github.com/jhen0409/react-native-debugger/blob/master/docs/getting-started.md).
 
