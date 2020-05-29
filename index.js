@@ -139,8 +139,8 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, compo
     && (componentName || ignoredElement === false)
     && openingElement.node.attributes.find(node => {
       if (!node.name) return
-        return node.name.name === sourceFileAttributeName
-      }
+      return node.name.name === sourceFileAttributeName
+    }
   ) == null){
     openingElement.node.attributes.push(
       t.jSXAttribute(
