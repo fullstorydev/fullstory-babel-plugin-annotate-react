@@ -374,13 +374,15 @@ class PizzaTranslator extends Component {
         text
       }),
       value: this.state.text,
-      dataElement: \\"TextInput\\"
+      dataElement: \\"TextInput\\",
+      dataSourceFile: \\"filename-test.js\\"
     }), /*#__PURE__*/React.createElement(Text, {
       style: {
         padding: 10,
         fontSize: 42
       },
-      dataElement: \\"Text\\"
+      dataElement: \\"Text\\",
+      dataSourceFile: \\"filename-test.js\\"
     }, this.state.text.split(' ').map(word => word && '🍕').join(' ')));
   }
 
@@ -396,11 +398,14 @@ export default function App() {
     style: {
       color: '#eee'
     },
-    dataElement: \\"Text\\"
+    dataElement: \\"Text\\",
+    dataSourceFile: \\"filename-test.js\\"
   }, \\"FullStory ReactNative testing app\\"), /*#__PURE__*/React.createElement(Bananas, {
-    dataElement: \\"Bananas\\"
+    dataElement: \\"Bananas\\",
+    dataSourceFile: \\"filename-test.js\\"
   }), /*#__PURE__*/React.createElement(PizzaTranslator, {
-    dataElement: \\"PizzaTranslator\\"
+    dataElement: \\"PizzaTranslator\\",
+    dataSourceFile: \\"filename-test.js\\"
   }));
 }
 const styles = StyleSheet.create({
