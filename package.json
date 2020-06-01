@@ -1,6 +1,6 @@
 {
   "name": "@fullstory/babel-plugin-annotate-react",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Babel plugin that annotates React components, making them easier to target with FullStory search",
   "main": "index.js",
   "repository": {
@@ -13,7 +13,9 @@
   "author": "FullStory",
   "license": "MIT",
   "jest": {
-    "roots": [ "<rootDir>/__tests__/" ]
+    "roots": [
+      "<rootDir>/__tests__/"
+    ]
   },
   "devDependencies": {
     "@babel/preset-react": "^7.9.4",
