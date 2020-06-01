@@ -4,7 +4,7 @@ This repo will hold a Babel plugin that annotates React components with stable a
 
 For React on the web the attributes are `data-component`, `data-element`, and `data-source-file`. For React Native the attributes are `dataComponent`, `dataElement`, and `dataSourceFile`.
 
-The component attribute names the React.Component and the element attribute names either a web DOM element like `h1` or `input` or a native element like `View` or `Image`.
+The component attribute names the `React.Component` and the element attribute names the original native elements like `View` or `Image` or an emitter of DOM elements like `Fragment`.
 
 Example input:
 
@@ -45,6 +45,6 @@ We have a few samples to demonstrate this plugin:
 
 - [Single Page App](./samples/single-page-app/)
 - [styled-components](./samples/styled-components/)
-
+- [React native](./samples/react-native-app/)
 
 Much of the logic for adding the attributes originated in the [transform-react-qa-classes](https://github.com/davesnx/babel-plugin-transform-react-qa-classes/) plugin.

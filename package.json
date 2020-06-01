@@ -12,6 +12,9 @@
   },
   "author": "FullStory",
   "license": "MIT",
+  "jest": {
+    "roots": [ "<rootDir>/__tests__/" ]
+  },
   "devDependencies": {
     "@babel/preset-react": "^7.9.4",
     "babel-core": "^7.0.0-0",
