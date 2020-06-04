@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.2
+
+- Added a homepage link to package.json
+
 ## 1.0.1
 
 - Added an npm ignore list so that samples and tests aren't installed by npm.
