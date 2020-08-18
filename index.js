@@ -76,18 +76,21 @@ function attributeNamesFromState(state) {
 function isReactFragment(openingElement) {
   if (
     !openingElement.node ||
-    !openingElement.node.name ||
-    !openingElement.node.name.name ||
+    !openingElement.node.name
+  ) return
+
+  if (openingElement.node.name.name === 'Fragment') return true;
+
+  if (
     !openingElement.node.name.type ||
     !openingElement.node.name.object ||
     !openingElement.node.name.property
   ) return
 
   return (
-    openingElement.node.name.name === 'Fragment' ||
-    (openingElement.node.name.type === 'JSXMemberExpression' &&
-      openingElement.node.name.object.name === 'React' &&
-      openingElement.node.name.property.name === 'Fragment')
+    openingElement.node.name.type === 'JSXMemberExpression' &&
+    openingElement.node.name.object.name === 'React' &&
+    openingElement.node.name.property.name === 'Fragment'
   )
 }
 
