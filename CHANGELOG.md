@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.0
+
+- React.Fragments are no longer annotated
+- Updated to new dependency versions
+
 ## 1.0.2
 
 - Added a homepage link to package.json
