@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.1
+
+- Readme update
+
 ## 2.0.0
 
 - React.Fragments are no longer annotated
