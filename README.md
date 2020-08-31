@@ -1,5 +1,5 @@
 # Babel Plugin: Annotate React
-[![CircleCI](https://circleci.com/gh/fullstorydev/ffullstory-babel-plugin-annotate-react.svg?style=svg)](https://circleci.com/gh/fullstorydev/ffullstory-babel-plugin-annotate-react)
+[![CircleCI](https://circleci.com/gh/fullstorydev/fullstory-babel-plugin-annotate-react.svg?style=svg)](https://circleci.com/gh/fullstorydev/fullstory-babel-plugin-annotate-react)
 
 This is a Babel plugin that annotates React components with stable attributes that can be used to search and select using FullStory. This is most useful when using a React system that generates dynamic names for Components or rearranges elements.
 
