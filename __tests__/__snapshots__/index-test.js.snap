@@ -52,6 +52,39 @@ const componentName = () => /*#__PURE__*/React.createElement(\\"div\\", {
 export default componentName;"
 `;
 
+exports[`arrow-noreturn-annotate-fragment snapshot matches 1`] = `
+"import React, { Component, Fragment } from 'react';
+
+const componentName = () => /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(\\"h1\\", {
+  \\"data-component\\": \\"componentName\\",
+  \\"data-source-file\\": \\"filename-test.js\\"
+}, \\"Hello world\\"));
+
+export default componentName;"
+`;
+
+exports[`arrow-noreturn-annotate-fragment-no-whitespace snapshot matches 1`] = `
+"import React, { Component, Fragment } from 'react';
+
+const componentName = () => /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(\\"h1\\", {
+  \\"data-component\\": \\"componentName\\",
+  \\"data-source-file\\": \\"filename-test.js\\"
+}, \\"Hello world\\"), /*#__PURE__*/React.createElement(\\"h1\\", null, \\"Hola Sol\\"));
+
+export default componentName;"
+`;
+
+exports[`arrow-noreturn-annotate-fragment-once snapshot matches 1`] = `
+"import React, { Component, Fragment } from 'react';
+
+const componentName = () => /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(\\"h1\\", {
+  \\"data-component\\": \\"componentName\\",
+  \\"data-source-file\\": \\"filename-test.js\\"
+}, \\"Hello world\\"), /*#__PURE__*/React.createElement(\\"h1\\", null, \\"Hola Sol\\"));
+
+export default componentName;"
+`;
+
 exports[`arrow-noreturn-fragment snapshot matches 1`] = `
 "import React, { Component, Fragment } from 'react';
 
