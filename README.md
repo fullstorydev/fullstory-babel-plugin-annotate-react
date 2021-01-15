@@ -42,6 +42,32 @@ To activate React Native support you must pass in a `native` plugin option like 
       ["@fullstory/babel-plugin-annotate-react", { native: true }]
     ]
 
+
+By default, the plugin does not annotate `React.Fragment`s because they may or may not contain a child that ends up being an HTML element.
+
+An example with no child element:
+
+    const componentName = () => (
+      <Fragment>Hello, there.</Fragment>
+    );
+
+An example with child elements:
+
+    const componentName = () => (
+      <Fragment>
+        Some text
+        <h1>Hello, there.</h1> /* This one could be annotated */
+        <a href="#foo">Click me</a>
+      </Fragment>
+    );
+
+
+If you would like the plugin to attempt to annotate the first HTML element created by a Fragment (if it exists) then set the `annotate-fragments` flag:
+
+    plugins: [
+      ["@fullstory/babel-plugin-annotate-react", { "annotate-fragments": true }]
+    ]
+
 We have a few samples to demonstrate this plugin:
 
 - [Single Page App](./samples/single-page-app/)

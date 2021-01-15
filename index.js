@@ -7,6 +7,7 @@ const nativeElementName = 'dataElement';
 const nativeSourceFileName = 'dataSourceFile';
 
 const nativeOptionName = 'native';
+const annotateFragmentsOptionName = 'annotate-fragments'
 
 module.exports = function({ types: t }) {
   return {
@@ -14,6 +15,7 @@ module.exports = function({ types: t }) {
       FunctionDeclaration(path, state) {
         if (!path.node.id || !path.node.id.name) return
         functionBodyPushAttributes(
+          state.opts[annotateFragmentsOptionName] === true,
           t,
           path,
           path.node.id.name,
@@ -24,6 +26,7 @@ module.exports = function({ types: t }) {
       ArrowFunctionExpression(path, state) {
         if (!path.parent.id || !path.parent.id.name) return
         functionBodyPushAttributes(
+          state.opts[annotateFragmentsOptionName] === true,
           t,
           path,
           path.parent.id.name,
@@ -47,6 +50,7 @@ module.exports = function({ types: t }) {
             const arg = returnStatement.get('argument')
             if (!arg.isJSXElement()) return
             processJSXElement(
+              state.opts[annotateFragmentsOptionName] === true,
               t,
               arg,
               name.node && name.node.name,
@@ -154,20 +158,30 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, compo
   }
 }
 
-function processJSXElement(t, jsxElement, componentName, sourceFileName, componentAttributeName, elementAttributeName, sourceFileAttributeName) {
+function processJSXElement(annotateFragments, t, jsxElement, componentName, sourceFileName, componentAttributeName, elementAttributeName, sourceFileAttributeName) {
   if (!jsxElement) {
     return
   }
+  const openingElement = jsxElement.get('openingElement')
 
-  applyAttributes(t, jsxElement.get('openingElement'), componentName, sourceFileName, componentAttributeName, elementAttributeName, sourceFileAttributeName)
+  applyAttributes(t, openingElement, componentName, sourceFileName, componentAttributeName, elementAttributeName, sourceFileAttributeName)
+
   const children = jsxElement.get('children')
   if (children && children.length) {
-    // Children don't receive the data-component attribute so we pass null for componentName
-    children.forEach(element => processJSXElement(t, element, null, sourceFileName, componentAttributeName, elementAttributeName, sourceFileAttributeName))
+    let shouldSetComponentName = annotateFragments
+    for (let i=0; i < children.length; i += 1){
+      // Children don't receive the data-component attribute so we pass null for componentName unless it's the first child of a Fragment with a node and `annotateFragments` is true
+      if (shouldSetComponentName && children[i].get('openingElement') && children[i].get('openingElement').node) {
+        shouldSetComponentName = false
+        processJSXElement(annotateFragments, t, children[i], componentName, sourceFileName, componentAttributeName, elementAttributeName, sourceFileAttributeName, annotateFragments)
+      } else {
+        processJSXElement(annotateFragments, t, children[i], null, sourceFileName, componentAttributeName, elementAttributeName, sourceFileAttributeName, annotateFragments)
+      }
+    }
   }
 }
 
-function functionBodyPushAttributes(t, path, componentName, sourceFileName, componentAttributeName, elementAttributeName, sourceFileAttributeName) {
+function functionBodyPushAttributes(annotateFragments, t, path, componentName, sourceFileName, componentAttributeName, elementAttributeName, sourceFileAttributeName) {
   let jsxElement = null
   const functionBody = path.get('body').get('body')
   if (functionBody.parent && functionBody.parent.type === 'JSXElement') {
@@ -190,8 +204,7 @@ function functionBodyPushAttributes(t, path, componentName, sourceFileName, comp
     jsxElement = arg
   }
   if (!jsxElement) return
-
-  processJSXElement(t, jsxElement, componentName, sourceFileName, componentAttributeName, elementAttributeName, sourceFileAttributeName)
+  processJSXElement(annotateFragments, t, jsxElement, componentName, sourceFileName, componentAttributeName, elementAttributeName, sourceFileAttributeName)
 }
 
 // We don't write data-element attributes for these names
