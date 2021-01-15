@@ -87,6 +87,27 @@ export default componentName;
   expect(code).toMatchSnapshot();
 });
 
+it('arrow-noreturn-annotate-trivial-fragment snapshot matches', () => {
+  const { code } = babel.transform(
+`import React, { Component, Fragment } from 'react';
+
+const componentName = () => (
+  <Fragment>Hello world</Fragment>
+);
+
+export default componentName;
+`,
+    {
+      filename: "./filename-test.js",
+      presets: ["@babel/preset-react"],
+      plugins: [
+        [plugin, { "annotate-fragments": true }]
+      ]
+    },
+  );
+  expect(code).toMatchSnapshot();
+});
+
 it('arrow-noreturn-annotate-fragment snapshot matches', () => {
   const { code } = babel.transform(
 `import React, { Component, Fragment } from 'react';

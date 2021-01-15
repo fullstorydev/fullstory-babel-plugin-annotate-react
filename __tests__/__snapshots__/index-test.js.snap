@@ -85,6 +85,14 @@ const componentName = () => /*#__PURE__*/React.createElement(Fragment, null, /*#
 export default componentName;"
 `;
 
+exports[`arrow-noreturn-annotate-trivial-fragment snapshot matches 1`] = `
+"import React, { Component, Fragment } from 'react';
+
+const componentName = () => /*#__PURE__*/React.createElement(Fragment, null, \\"Hello world\\");
+
+export default componentName;"
+`;
+
 exports[`arrow-noreturn-fragment snapshot matches 1`] = `
 "import React, { Component, Fragment } from 'react';
 
