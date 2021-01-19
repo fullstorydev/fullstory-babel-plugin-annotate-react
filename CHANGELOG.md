@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.0
+
+- Annotating React.Fragments as a configurable option
+
 ## 2.0.1
 
 - Readme update
