@@ -66,8 +66,16 @@ module.exports = function({ types: t }) {
 
 function sourceFileNameFromState(state) {
   const name = state.file.opts.parserOpts.sourceFileName
-  if (typeof name === 'string') return name.split('/').pop()
-  return undefined
+  if (typeof name !== 'string') {
+    return undefined
+  }
+  if (name.indexOf('/') !== -1) {
+    return name.split('/').pop()
+  } else if (name.indexOf('\\') !== -1) {
+    return name.split('\\').pop()
+  } else {
+    return name
+  }
 }
 
 function attributeNamesFromState(state) {
