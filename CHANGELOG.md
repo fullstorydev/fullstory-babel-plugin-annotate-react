@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.1.1
+
+- Fixed a bug where component file names were wrong on Windows builds
+
 ## 2.1.0
 
 - Annotating React.Fragments as a configurable option
