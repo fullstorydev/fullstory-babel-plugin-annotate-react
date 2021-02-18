@@ -65,7 +65,10 @@ module.exports = function({ types: t }) {
 }
 
 function sourceFileNameFromState(state) {
-  const name = state.file.opts.parserOpts.sourceFileName
+  return cleanFilePath(state.file.opts.parserOpts.sourceFileName)
+}
+
+function cleanFilePath(name) {
   if (typeof name !== 'string') {
     return undefined
   }
@@ -171,6 +174,8 @@ function processJSXElement(annotateFragments, t, jsxElement, componentName, sour
     return
   }
   const openingElement = jsxElement.get('openingElement')
+
+  sourceFileName = cleanFilePath(sourceFileName)
 
   applyAttributes(t, openingElement, componentName, sourceFileName, componentAttributeName, elementAttributeName, sourceFileAttributeName)
 
