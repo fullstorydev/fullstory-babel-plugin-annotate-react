@@ -6991,7 +6991,7 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.10.0"
 
-jss-plugin-camel-case@^10.5.1:
+jss-plugin-camel-case@10.6.0, jss-plugin-camel-case@^10.5.1:
   version "10.6.0"
   resolved "https://registry.npmjs.org/jss-plugin-camel-case/-/jss-plugin-camel-case-10.6.0.tgz"
   integrity sha512-JdLpA3aI/npwj3nDMKk308pvnhoSzkW3PXlbgHAzfx0yHWnPPVUjPhXFtLJzgKZge8lsfkUxvYSQ3X2OYIFU6A==
@@ -7000,7 +7000,16 @@ jss-plugin-camel-case@^10.5.1:
     hyphenate-style-name "^1.0.3"
     jss "10.6.0"
 
-jss-plugin-default-unit@^10.5.1:
+jss-plugin-compose@10.6.0:
+  version "10.6.0"
+  resolved "https://registry.yarnpkg.com/jss-plugin-compose/-/jss-plugin-compose-10.6.0.tgz#0bf058814ea9b47e87cc61f1261aab881daa403b"
+  integrity sha512-zBhI5ZDVX30h4N+rPunAfbwHVDWlme0JPiLBT0TSg24aX+QhjpogZSKHv9pn23NqIdiz3aIJmrNVnJ5rwNKQKA==
+  dependencies:
+    "@babel/runtime" "^7.3.1"
+    jss "10.6.0"
+    tiny-warning "^1.0.2"
+
+jss-plugin-default-unit@10.6.0, jss-plugin-default-unit@^10.5.1:
   version "10.6.0"
   resolved "https://registry.npmjs.org/jss-plugin-default-unit/-/jss-plugin-default-unit-10.6.0.tgz"
   integrity sha512-7y4cAScMHAxvslBK2JRK37ES9UT0YfTIXWgzUWD5euvR+JR3q+o8sQKzBw7GmkQRfZijrRJKNTiSt1PBsLI9/w==
@@ -7008,7 +7017,24 @@ jss-plugin-default-unit@^10.5.1:
     "@babel/runtime" "^7.3.1"
     jss "10.6.0"
 
-jss-plugin-global@^10.5.1:
+jss-plugin-expand@10.6.0:
+  version "10.6.0"
+  resolved "https://registry.yarnpkg.com/jss-plugin-expand/-/jss-plugin-expand-10.6.0.tgz#7eabb6d14f407c38b4d6013588d6641a2e869723"
+  integrity sha512-TYVfKS3l8kNaClWW3PA9AhFr9ixhBnKcdGwZDRH3WRGDmdX0RYOhpfScscRXQM1HAlqaXLRqiP+NYGCK6QBgOg==
+  dependencies:
+    "@babel/runtime" "^7.3.1"
+    jss "10.6.0"
+
+jss-plugin-extend@10.6.0:
+  version "10.6.0"
+  resolved "https://registry.yarnpkg.com/jss-plugin-extend/-/jss-plugin-extend-10.6.0.tgz#7611d5d96781b833e5b4aa3eb8599525e790143b"
+  integrity sha512-eY/zKMT+aUOdHegTDzTznq8Nwsv0PEb5AyJfo8A1B9jPxzzLTGcFOl9S6JZoYRxMh9TWxA5lOULMIjgKAKzUcQ==
+  dependencies:
+    "@babel/runtime" "^7.3.1"
+    jss "10.6.0"
+    tiny-warning "^1.0.2"
+
+jss-plugin-global@10.6.0, jss-plugin-global@^10.5.1:
   version "10.6.0"
   resolved "https://registry.npmjs.org/jss-plugin-global/-/jss-plugin-global-10.6.0.tgz"
   integrity sha512-I3w7ji/UXPi3VuWrTCbHG9rVCgB4yoBQLehGDTmsnDfXQb3r1l3WIdcO8JFp9m0YMmyy2CU7UOV6oPI7/Tmu+w==
@@ -7016,7 +7042,7 @@ jss-plugin-global@^10.5.1:
     "@babel/runtime" "^7.3.1"
     jss "10.6.0"
 
-jss-plugin-nested@^10.5.1:
+jss-plugin-nested@10.6.0, jss-plugin-nested@^10.5.1:
   version "10.6.0"
   resolved "https://registry.npmjs.org/jss-plugin-nested/-/jss-plugin-nested-10.6.0.tgz"
   integrity sha512-fOFQWgd98H89E6aJSNkEh2fAXquC9aZcAVjSw4q4RoQ9gU++emg18encR4AT4OOIFl4lQwt5nEyBBRn9V1Rk8g==
@@ -7025,7 +7051,7 @@ jss-plugin-nested@^10.5.1:
     jss "10.6.0"
     tiny-warning "^1.0.2"
 
-jss-plugin-props-sort@^10.5.1:
+jss-plugin-props-sort@10.6.0, jss-plugin-props-sort@^10.5.1:
   version "10.6.0"
   resolved "https://registry.npmjs.org/jss-plugin-props-sort/-/jss-plugin-props-sort-10.6.0.tgz"
   integrity sha512-oMCe7hgho2FllNc60d9VAfdtMrZPo9n1Iu6RNa+3p9n0Bkvnv/XX5San8fTPujrTBScPqv9mOE0nWVvIaohNuw==
@@ -7033,7 +7059,7 @@ jss-plugin-props-sort@^10.5.1:
     "@babel/runtime" "^7.3.1"
     jss "10.6.0"
 
-jss-plugin-rule-value-function@^10.5.1:
+jss-plugin-rule-value-function@10.6.0, jss-plugin-rule-value-function@^10.5.1:
   version "10.6.0"
   resolved "https://registry.npmjs.org/jss-plugin-rule-value-function/-/jss-plugin-rule-value-function-10.6.0.tgz"
   integrity sha512-TKFqhRTDHN1QrPTMYRlIQUOC2FFQb271+AbnetURKlGvRl/eWLswcgHQajwuxI464uZk91sPiTtdGi7r7XaWfA==
@@ -7042,7 +7068,25 @@ jss-plugin-rule-value-function@^10.5.1:
     jss "10.6.0"
     tiny-warning "^1.0.2"
 
-jss-plugin-vendor-prefixer@^10.5.1:
+jss-plugin-rule-value-observable@10.6.0:
+  version "10.6.0"
+  resolved "https://registry.yarnpkg.com/jss-plugin-rule-value-observable/-/jss-plugin-rule-value-observable-10.6.0.tgz#2b3252cc1507d0154bd9e50f4527ad8073d67b6b"
+  integrity sha512-+N6S8UZ+Tu+G2Fbu/UrfLI/JyaTi/KfkPbKsVRfyg/C/IdI+p9+H67HncMIFYEi/KnNj5fqvMNSDe4ag/lqbHw==
+  dependencies:
+    "@babel/runtime" "^7.3.1"
+    jss "10.6.0"
+    symbol-observable "^1.2.0"
+
+jss-plugin-template@10.6.0:
+  version "10.6.0"
+  resolved "https://registry.yarnpkg.com/jss-plugin-template/-/jss-plugin-template-10.6.0.tgz#75b1643044f3191b9d447589439053c597854704"
+  integrity sha512-P3iaIR6AqTOoutwP7Y2KVCq4jShEMACrwKf8W9gsS3ppnIeBg4OCAQvLKmqunApkEoIk0711xbW9XPi9CYy3zg==
+  dependencies:
+    "@babel/runtime" "^7.3.1"
+    jss "10.6.0"
+    tiny-warning "^1.0.2"
+
+jss-plugin-vendor-prefixer@10.6.0, jss-plugin-vendor-prefixer@^10.5.1:
   version "10.6.0"
   resolved "https://registry.npmjs.org/jss-plugin-vendor-prefixer/-/jss-plugin-vendor-prefixer-10.6.0.tgz"
   integrity sha512-doJ7MouBXT1lypLLctCwb4nJ6lDYqrTfVS3LtXgox42Xz0gXusXIIDboeh6UwnSmox90QpVnub7au8ybrb0krQ==
@@ -7051,7 +7095,27 @@ jss-plugin-vendor-prefixer@^10.5.1:
     css-vendor "^2.0.8"
     jss "10.6.0"
 
-jss@10.6.0, jss@^10.5.1:
+jss-preset-default@^10.6.0:
+  version "10.6.0"
+  resolved "https://registry.yarnpkg.com/jss-preset-default/-/jss-preset-default-10.6.0.tgz#b5471858adede57efd8d139c85dd44601b55dc94"
+  integrity sha512-TuHDZiuxGLLJ/LIMLAzO5uf2PnLOCR6yF5GHQLPp59YTascmwEldJfR0tuqjKa8B2F/v708ZvzE1Dw0Ao7UIcA==
+  dependencies:
+    "@babel/runtime" "^7.3.1"
+    jss "10.6.0"
+    jss-plugin-camel-case "10.6.0"
+    jss-plugin-compose "10.6.0"
+    jss-plugin-default-unit "10.6.0"
+    jss-plugin-expand "10.6.0"
+    jss-plugin-extend "10.6.0"
+    jss-plugin-global "10.6.0"
+    jss-plugin-nested "10.6.0"
+    jss-plugin-props-sort "10.6.0"
+    jss-plugin-rule-value-function "10.6.0"
+    jss-plugin-rule-value-observable "10.6.0"
+    jss-plugin-template "10.6.0"
+    jss-plugin-vendor-prefixer "10.6.0"
+
+jss@10.6.0, jss@^10.5.1, jss@^10.6.0:
   version "10.6.0"
   resolved "https://registry.npmjs.org/jss/-/jss-10.6.0.tgz"
   integrity sha512-n7SHdCozmxnzYGXBHe0NsO0eUf9TvsHVq2MXvi4JmTn3x5raynodDVE/9VQmBdWFyyj9HpHZ2B4xNZ7MMy7lkw==
@@ -10614,7 +10678,7 @@ svgo@^1.0.0, svgo@^1.2.2:
     unquote "~1.1.1"
     util.promisify "~1.0.0"
 
-symbol-observable@1.2.0:
+symbol-observable@1.2.0, symbol-observable@^1.2.0:
   version "1.2.0"
   resolved "https://registry.npmjs.org/symbol-observable/-/symbol-observable-1.2.0.tgz"
   integrity sha512-e900nM8RRtGhlV36KGEU9k65K3mPb1WV70OdjfxlG2EAuM1noi/E/BaW/uMhL7bPEssK8QV57vN3esixjUvcXQ==
