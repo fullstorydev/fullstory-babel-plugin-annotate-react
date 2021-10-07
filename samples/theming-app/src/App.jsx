@@ -14,8 +14,12 @@ const theme = createMuiTheme({ colors: { red: "red" } });
 
 const App = () => {
   return (
-    <StylesProvider jss={jss}>
-      <ThemeProvider theme={theme}>
+    <StylesProvider // fullstory-babel-plugin-annotate-react-disable-component
+      jss={jss}
+    >
+      <ThemeProvider // fullstory-babel-plugin-annotate-react-disable-component
+        theme={theme}
+      >
         <DemoBox text="this is a text" />
       </ThemeProvider>
     </StylesProvider>
