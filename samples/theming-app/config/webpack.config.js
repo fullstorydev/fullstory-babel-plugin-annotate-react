@@ -409,7 +409,7 @@ module.exports = function (webpackEnv) {
                 ],
                 
                 plugins: [
-                  '@fullstory/babel-plugin-annotate-react',
+                  '../..',
                   [
                     require.resolve('babel-plugin-named-asset-import'),
                     {
@@ -428,7 +428,7 @@ module.exports = function (webpackEnv) {
                 // This is a feature of `babel-loader` for webpack (not Babel itself).
                 // It enables caching results in ./node_modules/.cache/babel-loader/
                 // directory for faster rebuilds.
-                cacheDirectory: true,
+                cacheDirectory: false,
                 // See #6846 for context on why cacheCompression is disabled
                 cacheCompression: false,
                 compact: isEnvProduction,
@@ -450,7 +450,7 @@ module.exports = function (webpackEnv) {
                     { helpers: true },
                   ],
                 ],
-                cacheDirectory: true,
+                cacheDirectory: false,
                 // See #6846 for context on why cacheCompression is disabled
                 cacheCompression: false,
                 
