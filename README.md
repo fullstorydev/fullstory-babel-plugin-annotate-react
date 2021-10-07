@@ -68,6 +68,20 @@ If you would like the plugin to attempt to annotate the first HTML element creat
       ["@fullstory/babel-plugin-annotate-react", { "annotate-fragments": true }]
     ]
 
+If you would like the plugin to skip the annotation for one component, use `// fullstory-babel-plugin-annotate-react-disable-component` comment immediately after the opening tag name:
+
+```JSX
+const App = () => {
+  return (
+    <StylesProvider // fullstory-babel-plugin-annotate-react-disable-component
+      jss={jss}
+    >
+        <SomeComponent text="this is a text" />
+    </StylesProvider>
+  );
+};
+```
+
 We have a few samples to demonstrate this plugin:
 
 - [Single Page App](./samples/single-page-app/)
