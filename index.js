@@ -9,6 +9,8 @@ const nativeSourceFileName = 'dataSourceFile';
 const nativeOptionName = 'native';
 const annotateFragmentsOptionName = 'annotate-fragments'
 
+const commentStringIgnoreComponent = "fullstory-babel-plugin-annotate-react-disable-component"
+
 module.exports = function({ types: t }) {
   return {
     visitor: {
@@ -171,6 +173,11 @@ function processJSXElement(annotateFragments, t, jsxElement, componentName, sour
     return
   }
   const openingElement = jsxElement.get('openingElement')
+
+  const trailingComments = openingElement?.node?.name?.trailingComments
+  if (trailingComments && trailingComments.find(c => c.value.includes(commentStringIgnoreComponent))) {
+    return
+  }
 
   applyAttributes(t, openingElement, componentName, sourceFileName, componentAttributeName, elementAttributeName, sourceFileAttributeName)
 
