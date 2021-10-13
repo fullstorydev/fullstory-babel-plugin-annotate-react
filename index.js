@@ -8,11 +8,13 @@ const nativeSourceFileName = 'dataSourceFile';
 
 const nativeOptionName = 'native';
 const annotateFragmentsOptionName = 'annotate-fragments'
-
-const commentStringIgnoreComponent = "fullstory-babel-plugin-annotate-react-disable-component"
+const ignoreComponentsOptionName = "ignore-components"
 
 module.exports = function({ types: t }) {
   return {
+    pre() {
+      this.ignoreComponentsFromOption = this.opts[ignoreComponentsOptionName] || [];
+    },
     visitor: {
       FunctionDeclaration(path, state) {
         if (!path.node.id || !path.node.id.name) return
@@ -22,7 +24,8 @@ module.exports = function({ types: t }) {
           path,
           path.node.id.name,
           sourceFileNameFromState(state),
-          ...attributeNamesFromState(state)
+          attributeNamesFromState(state),
+          this.ignoreComponentsFromOption,
         )
       },
       ArrowFunctionExpression(path, state) {
@@ -33,7 +36,8 @@ module.exports = function({ types: t }) {
           path,
           path.parent.id.name,
           sourceFileNameFromState(state),
-          ...attributeNamesFromState(state)
+          attributeNamesFromState(state),
+          this.ignoreComponentsFromOption,
         )
       },
       ClassDeclaration(path, state) {
@@ -57,7 +61,8 @@ module.exports = function({ types: t }) {
               arg,
               name.node && name.node.name,
               sourceFileNameFromState(state),
-              ...attributeNamesFromState(state)
+              attributeNamesFromState(state),
+              this.ignoreComponentsFromOption,
             )
           }
         })
@@ -108,7 +113,8 @@ function isReactFragment(openingElement) {
   )
 }
 
-function applyAttributes(t, openingElement, componentName, sourceFileName, componentAttributeName, elementAttributeName, sourceFileAttributeName) {
+function applyAttributes(t, openingElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption) {
+  const [ componentAttributeName, elementAttributeName, sourceFileAttributeName ] = attributeNames;
   if (!openingElement
       || isReactFragment(openingElement)
       || !openingElement.node
@@ -118,30 +124,44 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, compo
   }
   if (!openingElement.node.attributes) openingElement.node.attributes = {}
 
+  const elementName = openingElement.node.name.name || 'unknown'
+  let ignoredComponentFromOptions = ignoreComponentsFromOption.find(component => {
+    let match = true;
+    if (component[0] !== '*' && component[0] !== sourceFileName) match = false;
+    else if (component[1] !== '*' && component[1] !== componentName) match = false;
+    else if (component[2] !== '*' && component[2] !== elementName) match = false;
+    
+    return match
+  }) !== undefined
+
   let ignoredElement = false
   // Add a stable attribute for the element name but only for non-DOM names
-  if(openingElement.node.attributes.find(node => {
+  if (
+    !ignoredComponentFromOptions
+    && openingElement.node.attributes.find(node => {
     if (!node.name) return
     return node.name.name === elementAttributeName
-  }) == null){
-    const name = openingElement.node.name.name || 'unknown'
-    if (ignoredElements.includes(name)) {
+  }) == undefined){
+    if (defaultIgnoredElements.includes(elementName)) {
       ignoredElement = true
     } else {
       openingElement.node.attributes.push(
         t.jSXAttribute(
           t.jSXIdentifier(elementAttributeName),
-          t.stringLiteral(name)
+          t.stringLiteral(elementName)
         )
       )
     }
   }
 
   // Add a stable attribute for the component name (absent for non-root elements)
-  if(componentName && (openingElement.node.attributes.find(node => {
-    if (!node.name) return
-    return node.name.name === componentAttributeName
-  }) == null)){
+  if (
+    componentName 
+    && !ignoredComponentFromOptions
+    && (openingElement.node.attributes.find(node => {
+      if (!node.name) return
+      return node.name.name === componentAttributeName
+    }) == undefined)){
     openingElement.node.attributes.push(
       t.jSXAttribute(
         t.jSXIdentifier(componentAttributeName),
@@ -151,14 +171,15 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, compo
   }
 
   // Add a stable attribute for the source file name (absent for non-root elements)
-  if(
+  if (
     sourceFileName
+    && !ignoredComponentFromOptions
     && (componentName || ignoredElement === false)
     && openingElement.node.attributes.find(node => {
       if (!node.name) return
       return node.name.name === sourceFileAttributeName
     }
-  ) == null){
+  ) == undefined){
     openingElement.node.attributes.push(
       t.jSXAttribute(
         t.jSXIdentifier(sourceFileAttributeName),
@@ -168,18 +189,13 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, compo
   }
 }
 
-function processJSXElement(annotateFragments, t, jsxElement, componentName, sourceFileName, componentAttributeName, elementAttributeName, sourceFileAttributeName) {
+function processJSXElement(annotateFragments, t, jsxElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption) {
   if (!jsxElement) {
     return
   }
   const openingElement = jsxElement.get('openingElement')
 
-  const trailingComments = openingElement?.node?.name?.trailingComments
-  if (trailingComments && trailingComments.find(c => c.value.includes(commentStringIgnoreComponent))) {
-    return
-  }
-
-  applyAttributes(t, openingElement, componentName, sourceFileName, componentAttributeName, elementAttributeName, sourceFileAttributeName)
+  applyAttributes(t, openingElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption)
 
   const children = jsxElement.get('children')
   if (children && children.length) {
@@ -188,15 +204,15 @@ function processJSXElement(annotateFragments, t, jsxElement, componentName, sour
       // Children don't receive the data-component attribute so we pass null for componentName unless it's the first child of a Fragment with a node and `annotateFragments` is true
       if (shouldSetComponentName && children[i].get('openingElement') && children[i].get('openingElement').node) {
         shouldSetComponentName = false
-        processJSXElement(annotateFragments, t, children[i], componentName, sourceFileName, componentAttributeName, elementAttributeName, sourceFileAttributeName, annotateFragments)
+        processJSXElement(annotateFragments, t, children[i], componentName, sourceFileName, attributeNames, ignoreComponentsFromOption)
       } else {
-        processJSXElement(annotateFragments, t, children[i], null, sourceFileName, componentAttributeName, elementAttributeName, sourceFileAttributeName, annotateFragments)
+        processJSXElement(annotateFragments, t, children[i], null, sourceFileName, attributeNames, ignoreComponentsFromOption)
       }
     }
   }
 }
 
-function functionBodyPushAttributes(annotateFragments, t, path, componentName, sourceFileName, componentAttributeName, elementAttributeName, sourceFileAttributeName) {
+function functionBodyPushAttributes(annotateFragments, t, path, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption) {
   let jsxElement = null
   const functionBody = path.get('body').get('body')
   if (functionBody.parent && functionBody.parent.type === 'JSXElement') {
@@ -219,11 +235,11 @@ function functionBodyPushAttributes(annotateFragments, t, path, componentName, s
     jsxElement = arg
   }
   if (!jsxElement) return
-  processJSXElement(annotateFragments, t, jsxElement, componentName, sourceFileName, componentAttributeName, elementAttributeName, sourceFileAttributeName)
+  processJSXElement(annotateFragments, t, jsxElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption)
 }
 
 // We don't write data-element attributes for these names
-const ignoredElements = [
+const defaultIgnoredElements = [
   'a', 'abbr', 'address', 'area', 'article', 'aside', 'audio',
   'b', 'base', 'bdi', 'bdo', 'blockquote', 'body', 'br', 'button',
   'canvas', 'caption', 'cite', 'code', 'col', 'colgroup',

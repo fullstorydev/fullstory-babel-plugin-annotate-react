@@ -68,18 +68,24 @@ If you would like the plugin to attempt to annotate the first HTML element creat
       ["@fullstory/babel-plugin-annotate-react", { "annotate-fragments": true }]
     ]
 
-If you would like the plugin to skip the annotation for one component, use `// fullstory-babel-plugin-annotate-react-disable-component` comment immediately after the opening tag name:
+If you would like the plugin to skip the annotation for certain components, use the `ignore-components` option:
 
-```JSX
-const App = () => {
-  return (
-    <StylesProvider // fullstory-babel-plugin-annotate-react-disable-component
-      jss={jss}
-    >
-        <SomeComponent text="this is a text" />
-    </StylesProvider>
-  );
-};
+```javascript
+  plugins: [
+      [
+        '../..',
+        { 
+          "ignore-components":[
+            // each item must be a string array containing three items: file name, component name, element name 
+            // corresponding to the values for data-source-file, data-component, data-element
+            // use wild card (*) to match anything
+            ["myBoxComponent.jsx","MyBox","Box"],
+            ["App.jsx", "*", "ThemeProvider"], // use wild-card to match anything
+            ["App.jsx", "App", "*"], 
+          ]
+        }
+      ],
+  ]
 ```
 
 We have a few samples to demonstrate this plugin:
