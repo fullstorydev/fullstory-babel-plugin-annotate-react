@@ -51,6 +51,8 @@ module.exports = function({ types: t }) {
         })
         if (!render || !render.traverse) return
 
+        const ignoreComponentsFromOption = this.ignoreComponentsFromOption;
+
         render.traverse({
           ReturnStatement(returnStatement) {
             const arg = returnStatement.get('argument')
@@ -62,7 +64,7 @@ module.exports = function({ types: t }) {
               name.node && name.node.name,
               sourceFileNameFromState(state),
               attributeNamesFromState(state),
-              this.ignoreComponentsFromOption,
+              ignoreComponentsFromOption
             )
           }
         })
@@ -125,7 +127,7 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, attri
   if (!openingElement.node.attributes) openingElement.node.attributes = {}
 
   const elementName = openingElement.node.name.name || 'unknown'
-  let ignoredComponentFromOptions = ignoreComponentsFromOption.find(component => {
+  const ignoredComponentFromOptions = ignoreComponentsFromOption?.find(component => {
     let match = true;
     if (component[0] !== '*' && component[0] !== sourceFileName) match = false;
     else if (component[1] !== '*' && component[1] !== componentName) match = false;
