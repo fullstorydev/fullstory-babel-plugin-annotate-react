@@ -127,7 +127,7 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, attri
   if (!openingElement.node.attributes) openingElement.node.attributes = {}
 
   const elementName = openingElement.node.name.name || 'unknown'
-  const ignoredComponentFromOptions = ignoreComponentsFromOption?.find(component => {
+  const ignoredComponentFromOptions = ignoreComponentsFromOption && ignoreComponentsFromOption.find(component => {
     let match = true;
     if (component[0] !== '*' && component[0] !== sourceFileName) match = false;
     else if (component[1] !== '*' && component[1] !== componentName) match = false;
