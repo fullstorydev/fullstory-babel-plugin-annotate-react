@@ -196,7 +196,56 @@ class Bananas extends Component {
 }"
 `;
 
-exports[`ignore components dataSourceFile=* dataComponent=* dataElement=match snapshot matches1`] = `
+exports[`ignore components dataSourceFile=* dataComponent=* dataElement=match snapshot matches 1`] = `
+"import React, { Component } from 'react';
+import { Image } from 'react-native';
+
+class Bananas extends Component {
+  render() {
+    let pic = {
+      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
+    };
+    return /*#__PURE__*/React.createElement(Image, {
+      source: pic,
+      style: {
+        width: 193,
+        height: 110,
+        marginTop: 10
+      },
+      fsClass: \\"test-class\\"
+    });
+  }
+
+}"
+`;
+
+exports[`ignore components dataSourceFile=* dataComponent=* dataElement=nomatch snapshot matches 1`] = `
+"import React, { Component } from 'react';
+import { Image } from 'react-native';
+
+class Bananas extends Component {
+  render() {
+    let pic = {
+      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
+    };
+    return /*#__PURE__*/React.createElement(Image, {
+      source: pic,
+      style: {
+        width: 193,
+        height: 110,
+        marginTop: 10
+      },
+      fsClass: \\"test-class\\",
+      dataElement: \\"Image\\",
+      dataComponent: \\"Bananas\\",
+      dataSourceFile: \\"filename-test.js\\"
+    });
+  }
+
+}"
+`;
+
+exports[`ignore components dataSourceFile=* dataComponent=match dataElement=match snapshot matches 1`] = `
 "import React, { Component } from 'react';
 import { Image } from 'react-native';
 
@@ -242,7 +291,59 @@ class Bananas extends Component {
 }"
 `;
 
-exports[`ignore components dataSourceFile=* dataComponent=match dataElement=match snapshot matches1`] = `
+exports[`ignore components dataSourceFile=* dataComponent=nomatch dataElement=* snapshot matches 1`] = `
+"import React, { Component } from 'react';
+import { Image } from 'react-native';
+
+class Bananas extends Component {
+  render() {
+    let pic = {
+      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
+    };
+    return /*#__PURE__*/React.createElement(Image, {
+      source: pic,
+      style: {
+        width: 193,
+        height: 110,
+        marginTop: 10
+      },
+      fsClass: \\"test-class\\",
+      dataElement: \\"Image\\",
+      dataComponent: \\"Bananas\\",
+      dataSourceFile: \\"filename-test.js\\"
+    });
+  }
+
+}"
+`;
+
+exports[`ignore components dataSourceFile=* dataComponent=nomatch dataElement=nomatch snapshot matches 1`] = `
+"import React, { Component } from 'react';
+import { Image } from 'react-native';
+
+class Bananas extends Component {
+  render() {
+    let pic = {
+      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
+    };
+    return /*#__PURE__*/React.createElement(Image, {
+      source: pic,
+      style: {
+        width: 193,
+        height: 110,
+        marginTop: 10
+      },
+      fsClass: \\"test-class\\",
+      dataElement: \\"Image\\",
+      dataComponent: \\"Bananas\\",
+      dataSourceFile: \\"filename-test.js\\"
+    });
+  }
+
+}"
+`;
+
+exports[`ignore components dataSourceFile=match dataComponent=match dataElement=match snapshot matches 1`] = `
 "import React, { Component } from 'react';
 import { Image } from 'react-native';
 
@@ -288,7 +389,7 @@ class Bananas extends Component {
 }"
 `;
 
-exports[`ignore components dataSourceFile=match dataComponent=match dataElement=match snapshot matches1`] = `
+exports[`ignore components dataSourceFile=nomatch dataComponent=* dataElement=* snapshot matches 1`] = `
 "import React, { Component } from 'react';
 import { Image } from 'react-native';
 
@@ -304,7 +405,62 @@ class Bananas extends Component {
         height: 110,
         marginTop: 10
       },
-      fsClass: \\"test-class\\"
+      fsClass: \\"test-class\\",
+      dataElement: \\"Image\\",
+      dataComponent: \\"Bananas\\",
+      dataSourceFile: \\"filename-test.js\\"
+    });
+  }
+
+}"
+`;
+
+exports[`ignore components dataSourceFile=nomatch dataComponent=* dataElement=nomatch snapshot matches 1`] = `
+"import React, { Component } from 'react';
+import { Image } from 'react-native';
+
+class Bananas extends Component {
+  render() {
+    let pic = {
+      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
+    };
+    return /*#__PURE__*/React.createElement(Image, {
+      source: pic,
+      style: {
+        width: 193,
+        height: 110,
+        marginTop: 10
+      },
+      fsClass: \\"test-class\\",
+      dataElement: \\"Image\\",
+      dataComponent: \\"Bananas\\",
+      dataSourceFile: \\"filename-test.js\\"
+    });
+  }
+
+}"
+`;
+
+exports[`ignore components dataSourceFile=nomatch dataComponent=nomatch dataElement=* snapshot matches 1`] = `
+"import React, { Component } from 'react';
+import { Image } from 'react-native';
+
+class Bananas extends Component {
+  render() {
+    let pic = {
+      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
+    };
+    return /*#__PURE__*/React.createElement(Image, {
+      source: pic,
+      style: {
+        width: 193,
+        height: 110,
+        marginTop: 10
+      },
+      fsClass: \\"test-class\\",
+      dataElement: \\"Image\\",
+      dataComponent: \\"Bananas\\",
+      dataSourceFile: \\"filename-test.js\\"
     });
   }
 

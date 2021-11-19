@@ -695,6 +695,151 @@ class Bananas extends Component {
   expect(code).toMatchSnapshot();
 });
 
+it('ignore components dataSourceFile=* dataComponent=nomatch dataElement=nomatch snapshot matches', () => {
+  const { code } = babel.transform(
+`import React, { Component } from 'react';
+import { Image } from 'react-native';
+
+class Bananas extends Component {
+  render() {
+    let pic = {
+      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
+    };
+    return <Image source={pic} style={{ width: 193, height: 110, marginTop: 10 }} fsClass="test-class" />;
+  }
+}`,
+    {
+      filename: "./filename-test.js",
+      presets: ["@babel/preset-react"],
+      plugins: [
+        [plugin, { native: true, "ignore-components":[["*","nomatch","nomatch"]] }]
+      ]
+    },
+  );
+  expect(code).toMatchSnapshot();
+});
+
+it('ignore components dataSourceFile=nomatch dataComponent=* dataElement=nomatch snapshot matches', () => {
+  const { code } = babel.transform(
+`import React, { Component } from 'react';
+import { Image } from 'react-native';
+
+class Bananas extends Component {
+  render() {
+    let pic = {
+      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
+    };
+    return <Image source={pic} style={{ width: 193, height: 110, marginTop: 10 }} fsClass="test-class" />;
+  }
+}`,
+    {
+      filename: "./filename-test.js",
+      presets: ["@babel/preset-react"],
+      plugins: [
+        [plugin, { native: true, "ignore-components":[["nomatch.js","*","nomatch"]] }]
+      ]
+    },
+  );
+  expect(code).toMatchSnapshot();
+});
+
+it('ignore components dataSourceFile=nomatch dataComponent=nomatch dataElement=* snapshot matches', () => {
+  const { code } = babel.transform(
+`import React, { Component } from 'react';
+import { Image } from 'react-native';
+
+class Bananas extends Component {
+  render() {
+    let pic = {
+      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
+    };
+    return <Image source={pic} style={{ width: 193, height: 110, marginTop: 10 }} fsClass="test-class" />;
+  }
+}`,
+    {
+      filename: "./filename-test.js",
+      presets: ["@babel/preset-react"],
+      plugins: [
+        [plugin, { native: true, "ignore-components":[["nomatch.js","nomatch","*"]] }]
+      ]
+    },
+  );
+  expect(code).toMatchSnapshot();
+});
+
+it('ignore components dataSourceFile=* dataComponent=* dataElement=nomatch snapshot matches', () => {
+  const { code } = babel.transform(
+`import React, { Component } from 'react';
+import { Image } from 'react-native';
+
+class Bananas extends Component {
+  render() {
+    let pic = {
+      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
+    };
+    return <Image source={pic} style={{ width: 193, height: 110, marginTop: 10 }} fsClass="test-class" />;
+  }
+}`,
+    {
+      filename: "./filename-test.js",
+      presets: ["@babel/preset-react"],
+      plugins: [
+        [plugin, { native: true, "ignore-components":[["nomatch.js","nomatch","nomatch"]] }]
+      ]
+    },
+  );
+  expect(code).toMatchSnapshot();
+});
+
+it('ignore components dataSourceFile=* dataComponent=nomatch dataElement=* snapshot matches', () => {
+  const { code } = babel.transform(
+`import React, { Component } from 'react';
+import { Image } from 'react-native';
+
+class Bananas extends Component {
+  render() {
+    let pic = {
+      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
+    };
+    return <Image source={pic} style={{ width: 193, height: 110, marginTop: 10 }} fsClass="test-class" />;
+  }
+}`,
+    {
+      filename: "./filename-test.js",
+      presets: ["@babel/preset-react"],
+      plugins: [
+        [plugin, { native: true, "ignore-components":[["nomatch.js","nomatch","nomatch"]] }]
+      ]
+    },
+  );
+  expect(code).toMatchSnapshot();
+});
+
+it('ignore components dataSourceFile=nomatch dataComponent=* dataElement=* snapshot matches', () => {
+  const { code } = babel.transform(
+`import React, { Component } from 'react';
+import { Image } from 'react-native';
+
+class Bananas extends Component {
+  render() {
+    let pic = {
+      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
+    };
+    return <Image source={pic} style={{ width: 193, height: 110, marginTop: 10 }} fsClass="test-class" />;
+  }
+}`,
+    {
+      filename: "./filename-test.js",
+      presets: ["@babel/preset-react"],
+      plugins: [
+        [plugin, { native: true, "ignore-components":[["nomatch.js","nomatch","nomatch"]] }]
+      ]
+    },
+  );
+  expect(code).toMatchSnapshot();
+});
+
+
 it('ignore components dataSourceFile=* dataComponent=* dataElement=match snapshot matches', () => {
   const { code } = babel.transform(
 `import React, { Component } from 'react';
