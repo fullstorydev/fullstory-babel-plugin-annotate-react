@@ -670,3 +670,51 @@ export default PureComponentName;
   );
   expect(code).toMatchSnapshot();
 });
+
+it('tags blocklist no-match snapshot matches', () => {
+  const { code } = babel.transform(
+`import React, { Component } from 'react';
+import { Image } from 'react-native';
+
+class Bananas extends Component {
+  render() {
+    let pic = {
+      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
+    };
+    return <Image source={pic} style={{ width: 193, height: 110, marginTop: 10 }} fsClass="test-class" />;
+  }
+}`,
+    {
+      filename: "./filename-test.js",
+      presets: ["@babel/preset-react"],
+      plugins: [
+        [plugin, { native: true }]
+      ]
+    },
+  );
+  expect(code).toMatchSnapshot();
+});
+
+it('tags dataElement blocklist excluded snapshot matches', () => {
+  const { code } = babel.transform(
+`import React, { Component } from 'react';
+import { Image } from 'react-native';
+
+class Bananas extends Component {
+  render() {
+    let pic = {
+      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
+    };
+    return <Image source={pic} style={{ width: 193, height: 110, marginTop: 10 }} fsClass="test-class" />;
+  }
+}`,
+    {
+      filename: "./filename-test.js",
+      presets: ["@babel/preset-react"],
+      plugins: [
+        [plugin, { native: true, "ignore-components":[["*","*","Image"]] }]
+      ]
+    },
+  );
+  expect(code).toMatchSnapshot();
+});

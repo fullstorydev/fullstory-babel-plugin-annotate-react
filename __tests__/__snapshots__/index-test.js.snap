@@ -319,6 +319,55 @@ const componentName = () => {
 export default componentName;"
 `;
 
+exports[`tags blocklist no-match snapshot matches 1`] = `
+"import React, { Component } from 'react';
+import { Image } from 'react-native';
+
+class Bananas extends Component {
+  render() {
+    let pic = {
+      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
+    };
+    return /*#__PURE__*/React.createElement(Image, {
+      source: pic,
+      style: {
+        width: 193,
+        height: 110,
+        marginTop: 10
+      },
+      fsClass: \\"test-class\\",
+      dataElement: \\"Image\\",
+      dataComponent: \\"Bananas\\",
+      dataSourceFile: \\"filename-test.js\\"
+    });
+  }
+
+}"
+`;
+
+exports[`tags dataElement blocklist excluded snapshot matches 1`] = `
+"import React, { Component } from 'react';
+import { Image } from 'react-native';
+
+class Bananas extends Component {
+  render() {
+    let pic = {
+      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
+    };
+    return /*#__PURE__*/React.createElement(Image, {
+      source: pic,
+      style: {
+        width: 193,
+        height: 110,
+        marginTop: 10
+      },
+      fsClass: \\"test-class\\"
+    });
+  }
+
+}"
+`;
+
 exports[`tags snapshot matches 1`] = `
 "import React, { Component } from 'react';
 import { StyleSheet, Text, TextInput, View, Image, UIManager } from 'react-native';
