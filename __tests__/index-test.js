@@ -14,6 +14,55 @@ class Bananas extends Component {
   }
 }`;
 
+const BananasStandardOutputNoAttributes = `
+"import React, { Component } from 'react';
+import { Image } from 'react-native';
+
+class Bananas extends Component {
+  render() {
+    let pic = {
+      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
+    };
+    return /*#__PURE__*/React.createElement(Image, {
+      source: pic,
+      style: {
+        width: 193,
+        height: 110,
+        marginTop: 10
+      },
+      fsClass: \\"test-class\\"
+    });
+  }
+
+}"
+`;
+
+const BananasStandardOutputWithAttributes = `
+"import React, { Component } from 'react';
+import { Image } from 'react-native';
+
+class Bananas extends Component {
+  render() {
+    let pic = {
+      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
+    };
+    return /*#__PURE__*/React.createElement(Image, {
+      source: pic,
+      style: {
+        width: 193,
+        height: 110,
+        marginTop: 10
+      },
+      fsClass: \\"test-class\\",
+      dataElement: \\"Image\\",
+      dataComponent: \\"Bananas\\",
+      dataSourceFile: \\"filename-test.js\\"
+    });
+  }
+
+}"
+`;
+
 it('unknown-element snapshot matches', () => {
   const { code } = babel.transform(
 `import React, { Component } from 'react';
@@ -694,7 +743,7 @@ it('ignore components dataSourceFile=nomatch dataComponent=nomatch dataElement=n
       ]
     },
   );
-  expect(code).toMatchSnapshot();
+  expect(code).toMatchInlineSnapshot(BananasStandardOutputWithAttributes);
 });
 
 it('ignore components dataSourceFile=* dataComponent=nomatch dataElement=nomatch snapshot matches', () => {
@@ -708,7 +757,7 @@ it('ignore components dataSourceFile=* dataComponent=nomatch dataElement=nomatch
       ]
     },
   );
-  expect(code).toMatchSnapshot();
+  expect(code).toMatchInlineSnapshot(BananasStandardOutputWithAttributes);
 });
 
 it('ignore components dataSourceFile=nomatch dataComponent=* dataElement=nomatch snapshot matches', () => {
@@ -722,7 +771,7 @@ it('ignore components dataSourceFile=nomatch dataComponent=* dataElement=nomatch
       ]
     },
   );
-  expect(code).toMatchSnapshot();
+  expect(code).toMatchInlineSnapshot(BananasStandardOutputWithAttributes);
 });
 
 it('ignore components dataSourceFile=nomatch dataComponent=nomatch dataElement=* snapshot matches', () => {
@@ -736,7 +785,7 @@ it('ignore components dataSourceFile=nomatch dataComponent=nomatch dataElement=*
       ]
     },
   );
-  expect(code).toMatchSnapshot();
+  expect(code).toMatchInlineSnapshot(BananasStandardOutputWithAttributes);
 });
 
 it('ignore components dataSourceFile=* dataComponent=* dataElement=nomatch snapshot matches', () => {
@@ -750,7 +799,7 @@ it('ignore components dataSourceFile=* dataComponent=* dataElement=nomatch snaps
       ]
     },
   );
-  expect(code).toMatchSnapshot();
+  expect(code).toMatchInlineSnapshot(BananasStandardOutputWithAttributes);
 });
 
 it('ignore components dataSourceFile=* dataComponent=nomatch dataElement=* snapshot matches', () => {
@@ -764,7 +813,7 @@ it('ignore components dataSourceFile=* dataComponent=nomatch dataElement=* snaps
       ]
     },
   );
-  expect(code).toMatchSnapshot();
+  expect(code).toMatchInlineSnapshot(BananasStandardOutputWithAttributes);
 });
 
 it('ignore components dataSourceFile=nomatch dataComponent=* dataElement=* snapshot matches', () => {
@@ -778,7 +827,7 @@ it('ignore components dataSourceFile=nomatch dataComponent=* dataElement=* snaps
       ]
     },
   );
-  expect(code).toMatchSnapshot();
+  expect(code).toMatchInlineSnapshot(BananasStandardOutputWithAttributes);
 });
 
 // This tests out matching only `dataElement`, with * for the others
@@ -793,7 +842,7 @@ it('ignore components dataSourceFile=* dataComponent=* dataElement=match snapsho
       ]
     },
   );
-  expect(code).toMatchSnapshot();
+  expect(code).toMatchInlineSnapshot(BananasStandardOutputNoAttributes);
 });
 
 // This tests out matching only `dataElement` and `dataComponent`, with * for `dataSourceFile`
@@ -808,7 +857,7 @@ it('ignore components dataSourceFile=* dataComponent=match dataElement=match sna
       ]
     },
   );
-  expect(code).toMatchSnapshot();
+  expect(code).toMatchInlineSnapshot(BananasStandardOutputNoAttributes);
 });
 
 // This tests out matching on all 3 of our ignore list values
@@ -823,5 +872,5 @@ it('ignore components dataSourceFile=match dataComponent=match dataElement=match
       ]
     },
   );
-  expect(code).toMatchSnapshot();
+  expect(code).toMatchInlineSnapshot(BananasStandardOutputNoAttributes);
 });
