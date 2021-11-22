@@ -1,7 +1,11 @@
 module.exports = function(api) {
-  api.cache(true);
+  api.cache.never()
   return {
     presets: ['babel-preset-expo'],
-    plugins: ['module:fullstory-babel-plugin-annotate-react'],
+    plugins: [
+      // This is the local reference @fullstory/babel-plugin-annotate-react
+      // To use in your projects you would replace '../..' with '@fullstory/babel-plugin-annotate-react'
+      ['../..', { native: true, }]
+    ],
   };
 };
