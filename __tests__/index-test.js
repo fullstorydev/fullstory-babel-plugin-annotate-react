@@ -2,6 +2,18 @@ const babel = require('babel-core');
 const plugin = require('../');
 const assert = require('assert');
 
+const BananasStandardInput = `import React, { Component } from 'react';
+import { Image } from 'react-native';
+
+class Bananas extends Component {
+  render() {
+    let pic = {
+      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
+    };
+    return <Image source={pic} style={{ width: 193, height: 110, marginTop: 10 }} fsClass="test-class" />;
+  }
+}`;
+
 it('unknown-element snapshot matches', () => {
   const { code } = babel.transform(
 `import React, { Component } from 'react';
@@ -673,17 +685,7 @@ export default PureComponentName;
 
 it('ignore components dataSourceFile=nomatch dataComponent=nomatch dataElement=nomatch snapshot matches', () => {
   const { code } = babel.transform(
-`import React, { Component } from 'react';
-import { Image } from 'react-native';
-
-class Bananas extends Component {
-  render() {
-    let pic = {
-      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
-    };
-    return <Image source={pic} style={{ width: 193, height: 110, marginTop: 10 }} fsClass="test-class" />;
-  }
-}`,
+    BananasStandardInput,
     {
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
@@ -697,17 +699,7 @@ class Bananas extends Component {
 
 it('ignore components dataSourceFile=* dataComponent=nomatch dataElement=nomatch snapshot matches', () => {
   const { code } = babel.transform(
-`import React, { Component } from 'react';
-import { Image } from 'react-native';
-
-class Bananas extends Component {
-  render() {
-    let pic = {
-      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
-    };
-    return <Image source={pic} style={{ width: 193, height: 110, marginTop: 10 }} fsClass="test-class" />;
-  }
-}`,
+    BananasStandardInput,
     {
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
@@ -721,17 +713,7 @@ class Bananas extends Component {
 
 it('ignore components dataSourceFile=nomatch dataComponent=* dataElement=nomatch snapshot matches', () => {
   const { code } = babel.transform(
-`import React, { Component } from 'react';
-import { Image } from 'react-native';
-
-class Bananas extends Component {
-  render() {
-    let pic = {
-      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
-    };
-    return <Image source={pic} style={{ width: 193, height: 110, marginTop: 10 }} fsClass="test-class" />;
-  }
-}`,
+    BananasStandardInput,
     {
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
@@ -745,17 +727,7 @@ class Bananas extends Component {
 
 it('ignore components dataSourceFile=nomatch dataComponent=nomatch dataElement=* snapshot matches', () => {
   const { code } = babel.transform(
-`import React, { Component } from 'react';
-import { Image } from 'react-native';
-
-class Bananas extends Component {
-  render() {
-    let pic = {
-      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
-    };
-    return <Image source={pic} style={{ width: 193, height: 110, marginTop: 10 }} fsClass="test-class" />;
-  }
-}`,
+    BananasStandardInput,
     {
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
@@ -769,17 +741,7 @@ class Bananas extends Component {
 
 it('ignore components dataSourceFile=* dataComponent=* dataElement=nomatch snapshot matches', () => {
   const { code } = babel.transform(
-`import React, { Component } from 'react';
-import { Image } from 'react-native';
-
-class Bananas extends Component {
-  render() {
-    let pic = {
-      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
-    };
-    return <Image source={pic} style={{ width: 193, height: 110, marginTop: 10 }} fsClass="test-class" />;
-  }
-}`,
+    BananasStandardInput,
     {
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
@@ -793,17 +755,7 @@ class Bananas extends Component {
 
 it('ignore components dataSourceFile=* dataComponent=nomatch dataElement=* snapshot matches', () => {
   const { code } = babel.transform(
-`import React, { Component } from 'react';
-import { Image } from 'react-native';
-
-class Bananas extends Component {
-  render() {
-    let pic = {
-      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
-    };
-    return <Image source={pic} style={{ width: 193, height: 110, marginTop: 10 }} fsClass="test-class" />;
-  }
-}`,
+    BananasStandardInput,
     {
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
@@ -817,17 +769,7 @@ class Bananas extends Component {
 
 it('ignore components dataSourceFile=nomatch dataComponent=* dataElement=* snapshot matches', () => {
   const { code } = babel.transform(
-`import React, { Component } from 'react';
-import { Image } from 'react-native';
-
-class Bananas extends Component {
-  render() {
-    let pic = {
-      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
-    };
-    return <Image source={pic} style={{ width: 193, height: 110, marginTop: 10 }} fsClass="test-class" />;
-  }
-}`,
+    BananasStandardInput,
     {
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
@@ -839,20 +781,10 @@ class Bananas extends Component {
   expect(code).toMatchSnapshot();
 });
 
-
+// This tests out matching only `dataElement`, with * for the others
 it('ignore components dataSourceFile=* dataComponent=* dataElement=match snapshot matches', () => {
   const { code } = babel.transform(
-`import React, { Component } from 'react';
-import { Image } from 'react-native';
-
-class Bananas extends Component {
-  render() {
-    let pic = {
-      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
-    };
-    return <Image source={pic} style={{ width: 193, height: 110, marginTop: 10 }} fsClass="test-class" />;
-  }
-}`,
+    BananasStandardInput,
     {
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
@@ -864,19 +796,10 @@ class Bananas extends Component {
   expect(code).toMatchSnapshot();
 });
 
+// This tests out matching only `dataElement` and `dataComponent`, with * for `dataSourceFile`
 it('ignore components dataSourceFile=* dataComponent=match dataElement=match snapshot matches', () => {
   const { code } = babel.transform(
-`import React, { Component } from 'react';
-import { Image } from 'react-native';
-
-class Bananas extends Component {
-  render() {
-    let pic = {
-      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
-    };
-    return <Image source={pic} style={{ width: 193, height: 110, marginTop: 10 }} fsClass="test-class" />;
-  }
-}`,
+    BananasStandardInput,
     {
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
@@ -888,19 +811,10 @@ class Bananas extends Component {
   expect(code).toMatchSnapshot();
 });
 
+// This tests out matching on all 3 of our ignore list values
 it('ignore components dataSourceFile=match dataComponent=match dataElement=match snapshot matches', () => {
   const { code } = babel.transform(
-`import React, { Component } from 'react';
-import { Image } from 'react-native';
-
-class Bananas extends Component {
-  render() {
-    let pic = {
-      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
-    };
-    return <Image source={pic} style={{ width: 193, height: 110, marginTop: 10 }} fsClass="test-class" />;
-  }
-}`,
+    BananasStandardInput,
     {
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
