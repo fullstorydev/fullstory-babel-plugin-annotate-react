@@ -1682,14 +1682,14 @@ it('Bananas/Pizza/App only Bananas dataSourceFile=* dataComponent=* dataElement=
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, "ignore-components":[[
-          "filename-test.js","PizzaTranslator","*",
-          "filename-test.js","*","Text",
-          "filename-test.js","*","TextInput",
-          "filename-test.js","*","PizzaTranslator",
-          "filename-test.js","*","Bananas",
-          "filename-test.js","App","View",
-        ]] }]
+        [plugin, { native: true, "ignore-components":[
+          ["filename-test.js","PizzaTranslator","*"],
+          ["filename-test.js","*","Text"],
+          ["filename-test.js","*","TextInput"],
+          ["filename-test.js","*","PizzaTranslator"],
+          ["filename-test.js","*","Bananas"],
+          ["filename-test.js","App","View"]
+        ] }]
       ]
     },
   );
