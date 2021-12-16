@@ -285,12 +285,16 @@ class PizzaTranslator extends Component {
       onChangeText: text => this.setState({
         text
       }),
-      value: this.state.text
+      value: this.state.text,
+      dataElement: \\"TextInput\\",
+      dataSourceFile: \\"filename-test.js\\"
     }), /*#__PURE__*/React.createElement(Text, {
       style: {
         padding: 10,
         fontSize: 42
-      }
+      },
+      dataElement: \\"Text\\",
+      dataSourceFile: \\"filename-test.js\\"
     }, this.state.text.split(' ').map(word => word && '🍕').join(' ')));
   }
 
@@ -302,8 +306,16 @@ export default function App() {
   }, /*#__PURE__*/React.createElement(Text, {
     style: {
       color: '#eee'
-    }
-  }, \\"FullStory ReactNative testing app\\"), /*#__PURE__*/React.createElement(Bananas, null), /*#__PURE__*/React.createElement(PizzaTranslator, null));
+    },
+    dataElement: \\"Text\\",
+    dataSourceFile: \\"filename-test.js\\"
+  }, \\"FullStory ReactNative testing app\\"), /*#__PURE__*/React.createElement(Bananas, {
+    dataElement: \\"Bananas\\",
+    dataSourceFile: \\"filename-test.js\\"
+  }), /*#__PURE__*/React.createElement(PizzaTranslator, {
+    dataElement: \\"PizzaTranslator\\",
+    dataSourceFile: \\"filename-test.js\\"
+  }));
 }
 const styles = StyleSheet.create({
   container: {
@@ -388,8 +400,16 @@ export default function App() {
   }, /*#__PURE__*/React.createElement(Text, {
     style: {
       color: '#eee'
-    }
-  }, \\"FullStory ReactNative testing app\\"), /*#__PURE__*/React.createElement(Bananas, null), /*#__PURE__*/React.createElement(PizzaTranslator, null));
+    },
+    dataElement: \\"Text\\",
+    dataSourceFile: \\"filename-test.js\\"
+  }, \\"FullStory ReactNative testing app\\"), /*#__PURE__*/React.createElement(Bananas, {
+    dataElement: \\"Bananas\\",
+    dataSourceFile: \\"filename-test.js\\"
+  }), /*#__PURE__*/React.createElement(PizzaTranslator, {
+    dataElement: \\"PizzaTranslator\\",
+    dataSourceFile: \\"filename-test.js\\"
+  }));
 }
 const styles = StyleSheet.create({
   container: {
@@ -450,12 +470,16 @@ class PizzaTranslator extends Component {
       onChangeText: text => this.setState({
         text
       }),
-      value: this.state.text
+      value: this.state.text,
+      dataElement: \\"TextInput\\",
+      dataSourceFile: \\"filename-test.js\\"
     }), /*#__PURE__*/React.createElement(Text, {
       style: {
         padding: 10,
         fontSize: 42
-      }
+      },
+      dataElement: \\"Text\\",
+      dataSourceFile: \\"filename-test.js\\"
     }, this.state.text.split(' ').map(word => word && '🍕').join(' ')));
   }
 
@@ -567,8 +591,16 @@ export default function App() {
   }, /*#__PURE__*/React.createElement(Text, {
     style: {
       color: '#eee'
-    }
-  }, \\"FullStory ReactNative testing app\\"), /*#__PURE__*/React.createElement(Bananas, null), /*#__PURE__*/React.createElement(PizzaTranslator, null));
+    },
+    dataElement: \\"Text\\",
+    dataSourceFile: \\"filename-test.js\\"
+  }, \\"FullStory ReactNative testing app\\"), /*#__PURE__*/React.createElement(Bananas, {
+    dataElement: \\"Bananas\\",
+    dataSourceFile: \\"filename-test.js\\"
+  }), /*#__PURE__*/React.createElement(PizzaTranslator, {
+    dataElement: \\"PizzaTranslator\\",
+    dataSourceFile: \\"filename-test.js\\"
+  }));
 }
 const styles = StyleSheet.create({
   container: {
@@ -632,12 +664,16 @@ class PizzaTranslator extends Component {
       onChangeText: text => this.setState({
         text
       }),
-      value: this.state.text
+      value: this.state.text,
+      dataElement: \\"TextInput\\",
+      dataSourceFile: \\"filename-test.js\\"
     }), /*#__PURE__*/React.createElement(Text, {
       style: {
         padding: 10,
         fontSize: 42
-      }
+      },
+      dataElement: \\"Text\\",
+      dataSourceFile: \\"filename-test.js\\"
     }, this.state.text.split(' ').map(word => word && '🍕').join(' ')));
   }
 
@@ -1675,7 +1711,7 @@ it('Bananas/Pizza/App ignore components dataSourceFile=nomatch dataComponent=* d
   expect(code).toMatchInlineSnapshot(BananasPizzaAppStandardOutputBananasPizzaAppAttributes);
 });
 
-it('Bananas/Pizza/App only Bananas dataSourceFile=* dataComponent=* dataElement=match snapshot matches', () => {
+it('Bananas/Pizza/App only Bananas dataSourceFile=match dataComponent=match dataElement=match snapshot matches', () => {
   const { code } = babel.transform(
     BananasPizzaAppStandardInput,
     {
@@ -1683,15 +1719,51 @@ it('Bananas/Pizza/App only Bananas dataSourceFile=* dataComponent=* dataElement=
       presets: ["@babel/preset-react"],
       plugins: [
         [plugin, { native: true, "ignore-components":[
-          ["filename-test.js","PizzaTranslator","*"],
-          ["filename-test.js","*","Text"],
-          ["filename-test.js","*","TextInput"],
-          ["filename-test.js","*","PizzaTranslator"],
-          ["filename-test.js","*","Bananas"],
+          // Pizza
+          ["filename-test.js","PizzaTranslator","View"],
+          // App
           ["filename-test.js","App","View"]
         ] }]
       ]
     },
   );
   expect(code).toMatchInlineSnapshot(BananasPizzaAppStandardOutputBananasAttributes);
+});
+
+it('Bananas/Pizza/App only Pizza dataSourceFile=match dataComponent=match dataElement=match snapshot matches', () => {
+  const { code } = babel.transform(
+    BananasPizzaAppStandardInput,
+    {
+      filename: "./filename-test.js",
+      presets: ["@babel/preset-react"],
+      plugins: [
+        [plugin, { native: true, "ignore-components":[
+          // Bananas
+          ["filename-test.js","Bananas","Image"],
+          // App
+          ["filename-test.js","App","View"]
+        ] }]
+      ]
+    },
+  );
+  expect(code).toMatchInlineSnapshot(BananasPizzaAppStandardOutputPizzaAttributes);
+});
+
+it('Bananas/Pizza/App only App dataSourceFile=match dataComponent=match dataElement=match snapshot matches', () => {
+  const { code } = babel.transform(
+    BananasPizzaAppStandardInput,
+    {
+      filename: "./filename-test.js",
+      presets: ["@babel/preset-react"],
+      plugins: [
+        [plugin, { native: true, "ignore-components":[
+          // Bananas
+          ["filename-test.js","Bananas","Image"],
+          // Pizza
+          ["filename-test.js","PizzaTranslator","View"]
+        ] }]
+      ]
+    },
+  );
+  expect(code).toMatchInlineSnapshot(BananasPizzaAppStandardOutputAppAttributes);
 });
