@@ -8,7 +8,7 @@ const nativeSourceFileName = 'dataSourceFile';
 
 const nativeOptionName = 'native';
 const annotateFragmentsOptionName = 'annotate-fragments'
-const ignoreComponentsOptionName = "ignore-components"
+const ignoreComponentsOptionName = 'ignoreComponents'
 
 module.exports = function({ types: t }) {
   return {

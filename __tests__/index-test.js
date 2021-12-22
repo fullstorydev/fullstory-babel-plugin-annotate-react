@@ -1833,7 +1833,7 @@ it('Bananas ignore components dataSourceFile=nomatch dataComponent=nomatch dataE
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, "ignore-components":[["nomatch.js","nomatch","nomatch"]] }]
+        [plugin, { native: true, ignoreComponents:[["nomatch.js","nomatch","nomatch"]] }]
       ]
     },
   );
@@ -1847,7 +1847,7 @@ it('ignore components dataSourceFile=* dataComponent=nomatch dataElement=nomatch
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, "ignore-components":[["*","nomatch","nomatch"]] }]
+        [plugin, { native: true, ignoreComponents:[["*","nomatch","nomatch"]] }]
       ]
     },
   );
@@ -1861,7 +1861,7 @@ it('Bananas ignore components dataSourceFile=nomatch dataComponent=* dataElement
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, "ignore-components":[["nomatch.js","*","nomatch"]] }]
+        [plugin, { native: true, ignoreComponents:[["nomatch.js","*","nomatch"]] }]
       ]
     },
   );
@@ -1875,7 +1875,7 @@ it('Bananas ignore components dataSourceFile=nomatch dataComponent=nomatch dataE
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, "ignore-components":[["nomatch.js","nomatch","*"]] }]
+        [plugin, { native: true, ignoreComponents:[["nomatch.js","nomatch","*"]] }]
       ]
     },
   );
@@ -1889,7 +1889,7 @@ it('Bananas ignore components dataSourceFile=* dataComponent=* dataElement=nomat
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, "ignore-components":[["nomatch.js","nomatch","nomatch"]] }]
+        [plugin, { native: true, ignoreComponents:[["nomatch.js","nomatch","nomatch"]] }]
       ]
     },
   );
@@ -1903,7 +1903,7 @@ it('Bananas ignore components dataSourceFile=* dataComponent=nomatch dataElement
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, "ignore-components":[["nomatch.js","nomatch","nomatch"]] }]
+        [plugin, { native: true, ignoreComponents:[["nomatch.js","nomatch","nomatch"]] }]
       ]
     },
   );
@@ -1917,7 +1917,7 @@ it('Bananas ignore components dataSourceFile=nomatch dataComponent=* dataElement
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, "ignore-components":[["nomatch.js","nomatch","nomatch"]] }]
+        [plugin, { native: true, ignoreComponents:[["nomatch.js","nomatch","nomatch"]] }]
       ]
     },
   );
@@ -1932,7 +1932,7 @@ it('Bananas ignore components dataSourceFile=* dataComponent=* dataElement=match
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, "ignore-components":[["*","*","Image"]] }]
+        [plugin, { native: true, ignoreComponents:[["*","*","Image"]] }]
       ]
     },
   );
@@ -1947,7 +1947,7 @@ it('Bananas ignore components dataSourceFile=* dataComponent=match dataElement=m
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, "ignore-components":[["*","Bananas","Image"]] }]
+        [plugin, { native: true, ignoreComponents:[["*","Bananas","Image"]] }]
       ]
     },
   );
@@ -1962,7 +1962,7 @@ it('Bananas ignore components dataSourceFile=match dataComponent=match dataEleme
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, "ignore-components":[["filename-test.js","Bananas","Image"]] }]
+        [plugin, { native: true, ignoreComponents:[["filename-test.js","Bananas","Image"]] }]
       ]
     },
   );
@@ -1977,7 +1977,7 @@ it('Bananas/Pizza/App ignore components dataSourceFile=* dataComponent=* dataEle
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, "ignore-components":[["*","*","*"]] }]
+        [plugin, { native: true, ignoreComponents:[["*","*","*"]] }]
       ]
     },
   );
@@ -1992,7 +1992,7 @@ it('Bananas/Pizza/App ignore components dataSourceFile=nomatch dataComponent=* d
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, "ignore-components":[["nomatch.js","*","*"]] }]
+        [plugin, { native: true, ignoreComponents:[["nomatch.js","*","*"]] }]
       ]
     },
   );
@@ -2006,7 +2006,7 @@ it('Bananas/Pizza/App only Bananas dataSourceFile=match dataComponent=match data
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, "ignore-components":[
+        [plugin, { native: true, ignoreComponents:[
           // Pizza
           ["filename-test.js","PizzaTranslator","View"],
           // App
@@ -2025,7 +2025,7 @@ it('Bananas/Pizza/App only Pizza dataSourceFile=match dataComponent=match dataEl
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, "ignore-components":[
+        [plugin, { native: true, ignoreComponents:[
           // Bananas
           ["filename-test.js","Bananas","Image"],
           // App
@@ -2044,7 +2044,7 @@ it('Bananas/Pizza/App only App dataSourceFile=match dataComponent=match dataElem
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, "ignore-components":[
+        [plugin, { native: true, ignoreComponents:[
           // Bananas
           ["filename-test.js","Bananas","Image"],
           // Pizza
@@ -2063,7 +2063,7 @@ it('Bananas/Pizza/App No Pizza Elements dataSourceFile=match dataComponent=match
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, "ignore-components":[
+        [plugin, { native: true, ignoreComponents:[
           // Pizza Element
           ["filename-test.js",null,"PizzaTranslator"]
         ] }]
@@ -2080,7 +2080,7 @@ it('Bananas/Pizza/App No Bananas Elements dataSourceFile=match dataComponent=mat
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, "ignore-components":[
+        [plugin, { native: true, ignoreComponents:[
           // Bananas Element
           ["filename-test.js",null,"Bananas"]
         ] }]
@@ -2097,7 +2097,7 @@ it('Bananas/Pizza/App No Bananas/Pizza Elements dataSourceFile=match dataCompone
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, "ignore-components":[
+        [plugin, { native: true, ignoreComponents:[
           // Bananas Element
           ["filename-test.js",null,"Bananas"],
           // Pizza Element
