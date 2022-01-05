@@ -127,23 +127,19 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, attri
   if (!openingElement.node.attributes) openingElement.node.attributes = {}
 
   const elementName = openingElement.node.name.name || 'unknown'
-  const ignoredComponentFromOptions = ignoreComponentsFromOption && ignoreComponentsFromOption.find(component => {
-    let match = true;
-    if (component[0] !== '*' && component[0] !== sourceFileName) match = false;
-    else if (component[1] !== '*' && component[1] !== componentName) match = false;
-    else if (component[2] !== '*' && component[2] !== elementName) match = false;
-    
-    return match
-  }) !== undefined
+
+  const ignoredComponentFromOptions = ignoreComponentsFromOption && !!ignoreComponentsFromOption.find(component => 
+    matchesIgnoreRule(component[0], sourceFileName) && 
+    matchesIgnoreRule(component[1], componentName) && 
+    matchesIgnoreRule(component[2], elementName)
+)
 
   let ignoredElement = false
   // Add a stable attribute for the element name but only for non-DOM names
   if (
-    !ignoredComponentFromOptions
-    && openingElement.node.attributes.find(node => {
-    if (!node.name) return
-    return node.name.name === elementAttributeName
-  }) == undefined){
+    !ignoredComponentFromOptions &&
+    !hasNodeNamed(openingElement, componentAttributeName)
+  ) {
     if (defaultIgnoredElements.includes(elementName)) {
       ignoredElement = true
     } else {
@@ -160,10 +156,7 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, attri
   if (
     componentName 
     && !ignoredComponentFromOptions
-    && (openingElement.node.attributes.find(node => {
-      if (!node.name) return
-      return node.name.name === componentAttributeName
-    }) == undefined)){
+    && !hasNodeNamed(openingElement, componentAttributeName)){
     openingElement.node.attributes.push(
       t.jSXAttribute(
         t.jSXIdentifier(componentAttributeName),
@@ -177,11 +170,11 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, attri
     sourceFileName
     && !ignoredComponentFromOptions
     && (componentName || ignoredElement === false)
-    && openingElement.node.attributes.find(node => {
+    && !openingElement.node.attributes.find(node => {
       if (!node.name) return
       return node.name.name === sourceFileAttributeName
     }
-  ) == undefined){
+  )){
     openingElement.node.attributes.push(
       t.jSXAttribute(
         t.jSXIdentifier(sourceFileAttributeName),
@@ -238,6 +231,17 @@ function functionBodyPushAttributes(annotateFragments, t, path, componentName, s
   }
   if (!jsxElement) return
   processJSXElement(annotateFragments, t, jsxElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption)
+}
+
+function matchesIgnoreRule(rule, name) {
+  return rule === '*' || rule === name;
+}
+
+function hasNodeNamed(openingElement, name) {
+  return openingElement.node.attributes.find(node => {
+    if (!node.name) return
+    return node.name.name === name
+  })
 }
 
 // We don't write data-element attributes for these names
