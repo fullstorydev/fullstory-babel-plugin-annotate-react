@@ -116,7 +116,7 @@ function isReactFragment(openingElement) {
 }
 
 function applyAttributes(t, openingElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption) {
-  const [ componentAttributeName, elementAttributeName, sourceFileAttributeName ] = attributeNames;
+  const [componentAttributeName, elementAttributeName, sourceFileAttributeName] = attributeNames;
   if (!openingElement
       || isReactFragment(openingElement)
       || !openingElement.node
@@ -128,11 +128,11 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, attri
 
   const elementName = openingElement.node.name.name || 'unknown'
 
-  const ignoredComponentFromOptions = ignoreComponentsFromOption && !!ignoreComponentsFromOption.find(component => 
-    matchesIgnoreRule(component[0], sourceFileName) && 
-    matchesIgnoreRule(component[1], componentName) && 
+  const ignoredComponentFromOptions = ignoreComponentsFromOption && !!ignoreComponentsFromOption.find(component =>
+    matchesIgnoreRule(component[0], sourceFileName) &&
+    matchesIgnoreRule(component[1], componentName) &&
     matchesIgnoreRule(component[2], elementName)
-)
+  )
 
   let ignoredElement = false
   // Add a stable attribute for the element name but only for non-DOM names
@@ -154,9 +154,9 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, attri
 
   // Add a stable attribute for the component name (absent for non-root elements)
   if (
-    componentName 
+    componentName
     && !ignoredComponentFromOptions
-    && !hasNodeNamed(openingElement, componentAttributeName)){
+    && !hasNodeNamed(openingElement, componentAttributeName)) {
     openingElement.node.attributes.push(
       t.jSXAttribute(
         t.jSXIdentifier(componentAttributeName),
@@ -170,11 +170,8 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, attri
     sourceFileName
     && !ignoredComponentFromOptions
     && (componentName || ignoredElement === false)
-    && !openingElement.node.attributes.find(node => {
-      if (!node.name) return
-      return node.name.name === sourceFileAttributeName
-    }
-  )){
+    && !hasNodeNamed(openingElement, sourceFileAttributeName)
+  ) {
     openingElement.node.attributes.push(
       t.jSXAttribute(
         t.jSXIdentifier(sourceFileAttributeName),
