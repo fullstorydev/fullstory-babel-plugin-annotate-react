@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.0
+
+- Added the ability to skip annotating certain elements. See the README for usage.
+
 ## 2.1.2
 
 - Version bump to trigger a green build
