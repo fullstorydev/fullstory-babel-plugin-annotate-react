@@ -68,6 +68,26 @@ If you would like the plugin to attempt to annotate the first HTML element creat
       ["@fullstory/babel-plugin-annotate-react", { "annotate-fragments": true }]
     ]
 
+If you would like the plugin to skip the annotation for certain components, use the `ignoreComponents` option:
+
+```javascript
+  plugins: [
+      [
+        '../..',
+        { 
+          ignoreComponents:[
+            // each item must be a string array containing three items: file name, component name, element name 
+            // corresponding to the values for data-source-file, data-component, data-element
+            // use wild card (*) to match anything
+            ["myBoxComponent.jsx","MyBox","Box"],
+            ["App.jsx", "*", "ThemeProvider"], // use wild-card to match anything
+            ["App.jsx", "App", "*"], 
+          ]
+        }
+      ],
+  ]
+```
+
 We have a few samples to demonstrate this plugin:
 
 - [Single Page App](./samples/single-page-app/)
