@@ -43,7 +43,7 @@ workflows:
   version: 2
   test-deploy:
     jobs:
-      - build-babel-plugin
+      - build-babel-plugin:
         filters:
             tags:
               only: /.*/
