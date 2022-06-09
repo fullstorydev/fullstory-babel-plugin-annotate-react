@@ -44,13 +44,23 @@ workflows:
   test-deploy:
     jobs:
       - build-babel-plugin
+        filters:
+            tags:
+              only: /.*/
       - hold:
           type: approval
           requires:
             - build-babel-plugin
           filters:
+            tags:
+              only: /^v.*/
             branches:
-              only: "master"
+              ignore: /.*/
       - deploy-babel-plugin:
           requires:
             - hold
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
