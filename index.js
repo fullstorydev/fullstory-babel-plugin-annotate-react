@@ -53,24 +53,26 @@ module.exports = function({ types: t }) {
     visitor: {
       FunctionDeclaration(path, state) {
         if (!path.node.id || !path.node.id.name) return
+        if (isKnownIncompatiblePluginFromState(state)) return
         functionBodyPushAttributes(
           state.opts[annotateFragmentsOptionName] === true,
           t,
           path,
           path.node.id.name,
-          fullSourceFileNameFromState(state),
+          sourceFileNameFromState(state),
           attributeNamesFromState(state),
           this.ignoreComponentsFromOption,
         )
       },
       ArrowFunctionExpression(path, state) {
         if (!path.parent.id || !path.parent.id.name) return
+        if (isKnownIncompatiblePluginFromState(state)) return
         functionBodyPushAttributes(
           state.opts[annotateFragmentsOptionName] === true,
           t,
           path,
           path.parent.id.name,
-          fullSourceFileNameFromState(state),
+          sourceFileNameFromState(state),
           attributeNamesFromState(state),
           this.ignoreComponentsFromOption,
         )
@@ -85,6 +87,7 @@ module.exports = function({ types: t }) {
           )
         })
         if (!render || !render.traverse) return
+        if (isKnownIncompatiblePluginFromState(state)) return
 
         const ignoreComponentsFromOption = this.ignoreComponentsFromOption;
 
@@ -97,7 +100,7 @@ module.exports = function({ types: t }) {
               t,
               arg,
               name.node && name.node.name,
-              fullSourceFileNameFromState(state),
+              sourceFileNameFromState(state),
               attributeNamesFromState(state),
               ignoreComponentsFromOption
             )
@@ -116,10 +119,12 @@ function fullSourceFileNameFromState(state) {
   return name
 }
 
-function sourceFileNameFromFullSourceFileName(name) {
+function sourceFileNameFromState(state) {
+  const name = fullSourceFileNameFromState(state)
   if (name === undefined) {
     return undefined
   }
+
   if (name.indexOf('/') !== -1) {
     return name.split('/').pop()
   } else if (name.indexOf('\\') !== -1) {
@@ -129,13 +134,21 @@ function sourceFileNameFromFullSourceFileName(name) {
   }
 }
 
-function isKnownIncompatiblePlugin(fullSourceFileName, pluginName) {
+function isKnownIncompatiblePluginFromState(state) {
+  const fullSourceFileName = fullSourceFileNameFromState(state)
   if (fullSourceFileName == undefined) {
     return false
   }
 
-  return fullSourceFileName.includes("/node_modules/" + pluginName + "/") || 
-         fullSourceFileName.includes("\\node_modules\\" + pluginName + "\\")
+  for (let i = 0; i < knownIncompatiblePlugins.length; i += 1) {
+    let pluginName = knownIncompatiblePlugins[i];
+    if (fullSourceFileName.includes("/node_modules/" + pluginName + "/") || 
+        fullSourceFileName.includes("\\node_modules\\" + pluginName + "\\")) {
+      return true
+    }
+  }
+
+  return false
 }
 
 function attributeNamesFromState(state) {
@@ -166,7 +179,7 @@ function isReactFragment(openingElement) {
   )
 }
 
-function applyAttributes(t, openingElement, componentName, fullSourceFileName, attributeNames, ignoreComponentsFromOption) {
+function applyAttributes(t, openingElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption) {
   const [componentAttributeName, elementAttributeName, sourceFileAttributeName] = attributeNames;
   if (!openingElement
       || isReactFragment(openingElement)
@@ -179,22 +192,11 @@ function applyAttributes(t, openingElement, componentName, fullSourceFileName, a
 
   const elementName = openingElement.node.name.name || 'unknown'
 
-  const sourceFileName = sourceFileNameFromFullSourceFileName(fullSourceFileName)
   let ignoredComponentFromOptions = ignoreComponentsFromOption && !!ignoreComponentsFromOption.find(component =>
     matchesIgnoreRule(component[0], sourceFileName) &&
     matchesIgnoreRule(component[1], componentName) &&
     matchesIgnoreRule(component[2], elementName)
   )
-
-  if (!ignoredComponentFromOptions) {
-    // check for any known bad plugins
-    for (let i = 0; i < knownIncompatiblePlugins.length; i += 1) {
-      if (isKnownIncompatiblePlugin(fullSourceFileName, knownIncompatiblePlugins[i])) {
-        ignoredComponentFromOptions = true
-        break
-      }
-    }
-  }
 
   let ignoredElement = false
   // Add a stable attribute for the element name but only for non-DOM names
@@ -243,13 +245,13 @@ function applyAttributes(t, openingElement, componentName, fullSourceFileName, a
   }
 }
 
-function processJSXElement(annotateFragments, t, jsxElement, componentName, fullSourceFileName, attributeNames, ignoreComponentsFromOption) {
+function processJSXElement(annotateFragments, t, jsxElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption) {
   if (!jsxElement) {
     return
   }
   const openingElement = jsxElement.get('openingElement')
 
-  applyAttributes(t, openingElement, componentName, fullSourceFileName, attributeNames, ignoreComponentsFromOption)
+  applyAttributes(t, openingElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption)
 
   const children = jsxElement.get('children')
   if (children && children.length) {
@@ -258,15 +260,15 @@ function processJSXElement(annotateFragments, t, jsxElement, componentName, full
       // Children don't receive the data-component attribute so we pass null for componentName unless it's the first child of a Fragment with a node and `annotateFragments` is true
       if (shouldSetComponentName && children[i].get('openingElement') && children[i].get('openingElement').node) {
         shouldSetComponentName = false
-        processJSXElement(annotateFragments, t, children[i], componentName, fullSourceFileName, attributeNames, ignoreComponentsFromOption)
+        processJSXElement(annotateFragments, t, children[i], componentName, sourceFileName, attributeNames, ignoreComponentsFromOption)
       } else {
-        processJSXElement(annotateFragments, t, children[i], null, fullSourceFileName, attributeNames, ignoreComponentsFromOption)
+        processJSXElement(annotateFragments, t, children[i], null, sourceFileName, attributeNames, ignoreComponentsFromOption)
       }
     }
   }
 }
 
-function functionBodyPushAttributes(annotateFragments, t, path, componentName, fullSourceFileName, attributeNames, ignoreComponentsFromOption) {
+function functionBodyPushAttributes(annotateFragments, t, path, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption) {
   let jsxElement = null
   const functionBody = path.get('body').get('body')
   if (functionBody.parent && functionBody.parent.type === 'JSXElement') {
@@ -289,7 +291,7 @@ function functionBodyPushAttributes(annotateFragments, t, path, componentName, f
     jsxElement = arg
   }
   if (!jsxElement) return
-  processJSXElement(annotateFragments, t, jsxElement, componentName, fullSourceFileName, attributeNames, ignoreComponentsFromOption)
+  processJSXElement(annotateFragments, t, jsxElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption)
 }
 
 function matchesIgnoreRule(rule, name) {
