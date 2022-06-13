@@ -7,10 +7,43 @@ const nativeElementName = 'dataElement';
 const nativeSourceFileName = 'dataSourceFile';
 
 const nativeOptionName = 'native';
-const annotateFragmentsOptionName = 'annotate-fragments'
-const ignoreComponentsOptionName = 'ignoreComponents'
+const annotateFragmentsOptionName = 'annotate-fragments';
+const ignoreComponentsOptionName = 'ignoreComponents';
 
-const knownIncompatiblePlugins = ["react-native-navigation", "victory-native", "react-navigation"]
+const knownIncompatiblePlugins = [
+  'react-native-navigation',
+  '@react-navigation',
+  'victory',
+  'victory-area',
+  'victory-axis',
+  'victory-bar',
+  'victory-box-plot',
+  'victory-brush-container',
+  'victory-brush-line',
+  'victory-candlestick',
+  'victory-canvas',
+  'victory-chart',
+  'victory-core',
+  'victory-create-container',
+  'victory-cursor-container',
+  'victory-errorbar',
+  'victory-group',
+  'victory-histogram',
+  'victory-legend',
+  'victory-line',
+  'victory-native',
+  'victory-pie',
+  'victory-polar-axis',
+  'victory-scatter',
+  'victory-selection-container',
+  'victory-shared-events',
+  'victory-stack',
+  'victory-tooltip',
+  'victory-vendor',
+  'victory-voronoi',
+  'victory-voronoi-container',
+  'victory-zoom-container',
+];
 
 module.exports = function({ types: t }) {
   return {
