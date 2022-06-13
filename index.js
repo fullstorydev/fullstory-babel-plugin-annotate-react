@@ -10,6 +10,8 @@ const nativeOptionName = 'native';
 const annotateFragmentsOptionName = 'annotate-fragments'
 const ignoreComponentsOptionName = 'ignoreComponents'
 
+const knownIncompatiblePlugins = ["react-native-navigation", "victory-native", "react-navigation"]
+
 module.exports = function({ types: t }) {
   return {
     pre() {
@@ -94,6 +96,15 @@ function sourceFileNameFromFullSourceFileName(name) {
   }
 }
 
+function isKnownIncompatiblePlugin(fullSourceFileName, pluginName) {
+  if (fullSourceFileName == undefined) {
+    return false
+  }
+
+  return fullSourceFileName.includes("/node_modules/" + pluginName + "/") || 
+         fullSourceFileName.includes("\\node_modules\\" + pluginName + "\\")
+}
+
 function attributeNamesFromState(state) {
   if(state.opts[nativeOptionName] === true) {
     return [nativeComponentName, nativeElementName, nativeSourceFileName]
@@ -144,6 +155,12 @@ function applyAttributes(t, openingElement, componentName, fullSourceFileName, a
 
   if (!ignoredComponentFromOptions) {
     // check for any known bad plugins
+    for (let i = 0; i < knownIncompatiblePlugins.length; i += 1) {
+      if (isKnownIncompatiblePlugin(fullSourceFileName, knownIncompatiblePlugins[i])) {
+        ignoredComponentFromOptions = true
+        break
+      }
+    }
   }
 
   let ignoredElement = false
