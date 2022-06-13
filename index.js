@@ -23,7 +23,7 @@ module.exports = function({ types: t }) {
           t,
           path,
           path.node.id.name,
-          sourceFileNameFromState(state),
+          fullSourceFileNameFromState(state),
           attributeNamesFromState(state),
           this.ignoreComponentsFromOption,
         )
@@ -35,7 +35,7 @@ module.exports = function({ types: t }) {
           t,
           path,
           path.parent.id.name,
-          sourceFileNameFromState(state),
+          fullSourceFileNameFromState(state),
           attributeNamesFromState(state),
           this.ignoreComponentsFromOption,
         )
@@ -62,7 +62,7 @@ module.exports = function({ types: t }) {
               t,
               arg,
               name.node && name.node.name,
-              sourceFileNameFromState(state),
+              fullSourceFileNameFromState(state),
               attributeNamesFromState(state),
               ignoreComponentsFromOption
             )
@@ -73,9 +73,16 @@ module.exports = function({ types: t }) {
   }
 }
 
-function sourceFileNameFromState(state) {
+function fullSourceFileNameFromState(state) {
   const name = state.file.opts.parserOpts.sourceFileName
   if (typeof name !== 'string') {
+    return undefined
+  }
+  return name
+}
+
+function sourceFileNameFromFullSourceFileName(name) {
+  if (name === undefined) {
     return undefined
   }
   if (name.indexOf('/') !== -1) {
@@ -115,7 +122,7 @@ function isReactFragment(openingElement) {
   )
 }
 
-function applyAttributes(t, openingElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption) {
+function applyAttributes(t, openingElement, componentName, fullSourceFileName, attributeNames, ignoreComponentsFromOption) {
   const [componentAttributeName, elementAttributeName, sourceFileAttributeName] = attributeNames;
   if (!openingElement
       || isReactFragment(openingElement)
@@ -128,11 +135,16 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, attri
 
   const elementName = openingElement.node.name.name || 'unknown'
 
-  const ignoredComponentFromOptions = ignoreComponentsFromOption && !!ignoreComponentsFromOption.find(component =>
+  const sourceFileName = sourceFileNameFromFullSourceFileName(fullSourceFileName)
+  let ignoredComponentFromOptions = ignoreComponentsFromOption && !!ignoreComponentsFromOption.find(component =>
     matchesIgnoreRule(component[0], sourceFileName) &&
     matchesIgnoreRule(component[1], componentName) &&
     matchesIgnoreRule(component[2], elementName)
   )
+
+  if (!ignoredComponentFromOptions) {
+    // check for any known bad plugins
+  }
 
   let ignoredElement = false
   // Add a stable attribute for the element name but only for non-DOM names
@@ -181,13 +193,13 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, attri
   }
 }
 
-function processJSXElement(annotateFragments, t, jsxElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption) {
+function processJSXElement(annotateFragments, t, jsxElement, componentName, fullSourceFileName, attributeNames, ignoreComponentsFromOption) {
   if (!jsxElement) {
     return
   }
   const openingElement = jsxElement.get('openingElement')
 
-  applyAttributes(t, openingElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption)
+  applyAttributes(t, openingElement, componentName, fullSourceFileName, attributeNames, ignoreComponentsFromOption)
 
   const children = jsxElement.get('children')
   if (children && children.length) {
@@ -196,15 +208,15 @@ function processJSXElement(annotateFragments, t, jsxElement, componentName, sour
       // Children don't receive the data-component attribute so we pass null for componentName unless it's the first child of a Fragment with a node and `annotateFragments` is true
       if (shouldSetComponentName && children[i].get('openingElement') && children[i].get('openingElement').node) {
         shouldSetComponentName = false
-        processJSXElement(annotateFragments, t, children[i], componentName, sourceFileName, attributeNames, ignoreComponentsFromOption)
+        processJSXElement(annotateFragments, t, children[i], componentName, fullSourceFileName, attributeNames, ignoreComponentsFromOption)
       } else {
-        processJSXElement(annotateFragments, t, children[i], null, sourceFileName, attributeNames, ignoreComponentsFromOption)
+        processJSXElement(annotateFragments, t, children[i], null, fullSourceFileName, attributeNames, ignoreComponentsFromOption)
       }
     }
   }
 }
 
-function functionBodyPushAttributes(annotateFragments, t, path, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption) {
+function functionBodyPushAttributes(annotateFragments, t, path, componentName, fullSourceFileName, attributeNames, ignoreComponentsFromOption) {
   let jsxElement = null
   const functionBody = path.get('body').get('body')
   if (functionBody.parent && functionBody.parent.type === 'JSXElement') {
@@ -227,7 +239,7 @@ function functionBodyPushAttributes(annotateFragments, t, path, componentName, s
     jsxElement = arg
   }
   if (!jsxElement) return
-  processJSXElement(annotateFragments, t, jsxElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption)
+  processJSXElement(annotateFragments, t, jsxElement, componentName, fullSourceFileName, attributeNames, ignoreComponentsFromOption)
 }
 
 function matchesIgnoreRule(rule, name) {
