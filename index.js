@@ -60,6 +60,7 @@ module.exports = function({ types: t }) {
         if (!path.node.id || !path.node.id.name) return
         if (isKnownIncompatiblePluginFromState(state)) return
         functionBodyPushAttributes(
+          state,
           state.opts[annotateFragmentsOptionName] === true,
           t,
           path,
@@ -73,6 +74,7 @@ module.exports = function({ types: t }) {
         if (!path.parent.id || !path.parent.id.name) return
         if (isKnownIncompatiblePluginFromState(state)) return
         functionBodyPushAttributes(
+          state,
           state.opts[annotateFragmentsOptionName] === true,
           t,
           path,
@@ -101,6 +103,7 @@ module.exports = function({ types: t }) {
             const arg = returnStatement.get('argument')
             if (!arg.isJSXElement()) return
             processJSXElement(
+              state,
               state.opts[annotateFragmentsOptionName] === true,
               t,
               arg,
@@ -184,7 +187,7 @@ function isReactFragment(openingElement) {
   )
 }
 
-function applyAttributes(t, openingElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption) {
+function applyAttributes(state, t, openingElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption) {
   const [componentAttributeName, elementAttributeName, sourceFileAttributeName] = attributeNames;
   if (!openingElement
       || isReactFragment(openingElement)
@@ -211,7 +214,7 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, attri
   ) {
     if (defaultIgnoredElements.includes(elementName)) {
       ignoredElement = true
-    } else {
+    } else if (state.file.opts.parserOpts.sourceFileName !== "/Users/mikeli/src/mn/projects/fullstory/nativemobile/ReactNative/apps/WixNavigationFS/node_modules/react-native/Libraries/ReactNative/AppContainer.js") {
       openingElement.node.attributes.push(
         t.jSXAttribute(
           t.jSXIdentifier(elementAttributeName),
@@ -225,7 +228,9 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, attri
   if (
     componentName
     && !ignoredComponentFromOptions
-    && !hasNodeNamed(openingElement, componentAttributeName)) {
+    && !hasNodeNamed(openingElement, componentAttributeName)
+    && state.file.opts.parserOpts.sourceFileName !== "/Users/mikeli/src/mn/projects/fullstory/nativemobile/ReactNative/apps/WixNavigationFS/node_modules/react-native/Libraries/ReactNative/AppContainer.js"
+  ) {
     openingElement.node.attributes.push(
       t.jSXAttribute(
         t.jSXIdentifier(componentAttributeName),
@@ -240,6 +245,7 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, attri
     && !ignoredComponentFromOptions
     && (componentName || ignoredElement === false)
     && !hasNodeNamed(openingElement, sourceFileAttributeName)
+    && state.file.opts.parserOpts.sourceFileName !== "/Users/mikeli/src/mn/projects/fullstory/nativemobile/ReactNative/apps/WixNavigationFS/node_modules/react-native/Libraries/ReactNative/AppContainer.js"
   ) {
     openingElement.node.attributes.push(
       t.jSXAttribute(
@@ -250,13 +256,13 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, attri
   }
 }
 
-function processJSXElement(annotateFragments, t, jsxElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption) {
+function processJSXElement(state, annotateFragments, t, jsxElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption) {
   if (!jsxElement) {
     return
   }
   const openingElement = jsxElement.get('openingElement')
 
-  applyAttributes(t, openingElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption)
+  applyAttributes(state, t, openingElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption)
 
   const children = jsxElement.get('children')
   if (children && children.length) {
@@ -265,15 +271,15 @@ function processJSXElement(annotateFragments, t, jsxElement, componentName, sour
       // Children don't receive the data-component attribute so we pass null for componentName unless it's the first child of a Fragment with a node and `annotateFragments` is true
       if (shouldSetComponentName && children[i].get('openingElement') && children[i].get('openingElement').node) {
         shouldSetComponentName = false
-        processJSXElement(annotateFragments, t, children[i], componentName, sourceFileName, attributeNames, ignoreComponentsFromOption)
+        processJSXElement(state, annotateFragments, t, children[i], componentName, sourceFileName, attributeNames, ignoreComponentsFromOption)
       } else {
-        processJSXElement(annotateFragments, t, children[i], null, sourceFileName, attributeNames, ignoreComponentsFromOption)
+        processJSXElement(state, annotateFragments, t, children[i], null, sourceFileName, attributeNames, ignoreComponentsFromOption)
       }
     }
   }
 }
 
-function functionBodyPushAttributes(annotateFragments, t, path, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption) {
+function functionBodyPushAttributes(state, annotateFragments, t, path, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption) {
   let jsxElement = null
   const functionBody = path.get('body').get('body')
   if (functionBody.parent && functionBody.parent.type === 'JSXElement') {
@@ -296,7 +302,7 @@ function functionBodyPushAttributes(annotateFragments, t, path, componentName, s
     jsxElement = arg
   }
   if (!jsxElement) return
-  processJSXElement(annotateFragments, t, jsxElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption)
+  processJSXElement(state, annotateFragments, t, jsxElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption)
 }
 
 function matchesIgnoreRule(rule, name) {
