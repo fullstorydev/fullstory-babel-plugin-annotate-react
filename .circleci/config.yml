@@ -41,7 +41,17 @@ jobs:
           command: npm publish --access public
 workflows:
   version: 2
+  daily-run-workflow:
+    when:
+      and:
+        - equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
+        - equal: [ "daily build", << pipeline.schedule.name >> ]
+    jobs:
+      - build-babel-plugin
   test-deploy:
+    when:
+      not:
+        equal: [ scheduled_pipeline, << pipeline.trigger_source >> ]
     jobs:
       - build-babel-plugin:
         filters:
