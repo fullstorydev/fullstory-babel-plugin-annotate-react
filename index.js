@@ -7,8 +7,46 @@ const nativeElementName = 'dataElement';
 const nativeSourceFileName = 'dataSourceFile';
 
 const nativeOptionName = 'native';
-const annotateFragmentsOptionName = 'annotate-fragments'
-const ignoreComponentsOptionName = 'ignoreComponents'
+const annotateFragmentsOptionName = 'annotate-fragments';
+const ignoreComponentsOptionName = 'ignoreComponents';
+
+const knownIncompatiblePlugins = [
+  // This module might be causing an issue preventing clicks. For safety, we won't run on this module.
+  'react-native-testfairy',
+  // This module checks for unexpected property keys and throws an exception.
+  '@react-navigation',
+  // The victory* modules use `dataComponent` and we get a collision.
+  'victory',
+  'victory-area',
+  'victory-axis',
+  'victory-bar',
+  'victory-box-plot',
+  'victory-brush-container',
+  'victory-brush-line',
+  'victory-candlestick',
+  'victory-canvas',
+  'victory-chart',
+  'victory-core',
+  'victory-create-container',
+  'victory-cursor-container',
+  'victory-errorbar',
+  'victory-group',
+  'victory-histogram',
+  'victory-legend',
+  'victory-line',
+  'victory-native',
+  'victory-pie',
+  'victory-polar-axis',
+  'victory-scatter',
+  'victory-selection-container',
+  'victory-shared-events',
+  'victory-stack',
+  'victory-tooltip',
+  'victory-vendor',
+  'victory-voronoi',
+  'victory-voronoi-container',
+  'victory-zoom-container',
+];
 
 module.exports = function({ types: t }) {
   return {
@@ -18,6 +56,7 @@ module.exports = function({ types: t }) {
     visitor: {
       FunctionDeclaration(path, state) {
         if (!path.node.id || !path.node.id.name) return
+        if (isKnownIncompatiblePluginFromState(state)) return
         functionBodyPushAttributes(
           state.opts[annotateFragmentsOptionName] === true,
           t,
@@ -30,6 +69,7 @@ module.exports = function({ types: t }) {
       },
       ArrowFunctionExpression(path, state) {
         if (!path.parent.id || !path.parent.id.name) return
+        if (isKnownIncompatiblePluginFromState(state)) return
         functionBodyPushAttributes(
           state.opts[annotateFragmentsOptionName] === true,
           t,
@@ -50,6 +90,7 @@ module.exports = function({ types: t }) {
           )
         })
         if (!render || !render.traverse) return
+        if (isKnownIncompatiblePluginFromState(state)) return
 
         const ignoreComponentsFromOption = this.ignoreComponentsFromOption;
 
@@ -73,11 +114,20 @@ module.exports = function({ types: t }) {
   }
 }
 
-function sourceFileNameFromState(state) {
+function fullSourceFileNameFromState(state) {
   const name = state.file.opts.parserOpts.sourceFileName
   if (typeof name !== 'string') {
     return undefined
   }
+  return name
+}
+
+function sourceFileNameFromState(state) {
+  const name = fullSourceFileNameFromState(state)
+  if (name === undefined) {
+    return undefined
+  }
+
   if (name.indexOf('/') !== -1) {
     return name.split('/').pop()
   } else if (name.indexOf('\\') !== -1) {
@@ -85,6 +135,23 @@ function sourceFileNameFromState(state) {
   } else {
     return name
   }
+}
+
+function isKnownIncompatiblePluginFromState(state) {
+  const fullSourceFileName = fullSourceFileNameFromState(state)
+  if (fullSourceFileName == undefined) {
+    return false
+  }
+
+  for (let i = 0; i < knownIncompatiblePlugins.length; i += 1) {
+    let pluginName = knownIncompatiblePlugins[i];
+    if (fullSourceFileName.includes("/node_modules/" + pluginName + "/") || 
+        fullSourceFileName.includes("\\node_modules\\" + pluginName + "\\")) {
+      return true
+    }
+  }
+
+  return false
 }
 
 function attributeNamesFromState(state) {

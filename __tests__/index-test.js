@@ -2108,3 +2108,45 @@ it('Bananas/Pizza/App No Bananas/Pizza Elements dataSourceFile=match dataCompone
   );
   expect(code).toMatchInlineSnapshot(BananasPizzaAppStandardOutputBananasPizzaAppAttributesNoBananasPizzaElements);
 });
+
+it('Bananas incompatible plugin victory-core source snapshot matches', () => {
+  const { code } = babel.transform(
+    BananasStandardInput,
+    {
+      filename: "test/node_modules/victory-core/filename-test.js",
+      presets: ["@babel/preset-react"],
+      plugins: [
+        [plugin, { native: true }]
+      ]
+    },
+  );
+  expect(code).toMatchInlineSnapshot(BananasStandardOutputNoAttributes);
+});
+
+it('Bananas incompatible plugin victory-valid source snapshot matches', () => {
+  const { code } = babel.transform(
+    BananasStandardInput,
+    {
+      filename: "test/node_modules/victory-valid/filename-test.js",
+      presets: ["@babel/preset-react"],
+      plugins: [
+        [plugin, { native: true }]
+      ]
+    },
+  );
+  expect(code).toMatchInlineSnapshot(BananasStandardOutputWithAttributes);
+});
+
+it('Bananas incompatible plugin @react-navigation source snapshot matches', () => {
+  const { code } = babel.transform(
+    BananasStandardInput,
+    {
+      filename: "test/node_modules/@react-navigation/core/filename-test.js",
+      presets: ["@babel/preset-react"],
+      plugins: [
+        [plugin, { native: true }]
+      ]
+    },
+  );
+  expect(code).toMatchInlineSnapshot(BananasStandardOutputNoAttributes);
+});
