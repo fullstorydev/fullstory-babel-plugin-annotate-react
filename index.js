@@ -11,8 +11,6 @@ const annotateFragmentsOptionName = 'annotate-fragments';
 const ignoreComponentsOptionName = 'ignoreComponents';
 
 const knownIncompatiblePlugins = [
-  // This module has issues with overlays becoming unclickable.
-  'react-native-navigation',
   // This module might be causing an issue preventing clicks. For safety, we won't run on this module.
   'react-native-testfairy',
   // This module checks for unexpected property keys and throws an exception.
