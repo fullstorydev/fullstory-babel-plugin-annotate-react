@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.1
+
+- Added a blocklist for known-incompatible node modules.
+
 ## 2.2.0
 
 - Added the ability to skip annotating certain elements. See the README for usage.
