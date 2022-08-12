@@ -9,6 +9,7 @@ const nativeSourceFileName = 'dataSourceFile';
 const nativeOptionName = 'native';
 const annotateFragmentsOptionName = 'annotate-fragments';
 const ignoreComponentsOptionName = 'ignoreComponents';
+const ignoreSourceFileOptionName = 'ignoreSourceFile';
 
 const knownIncompatiblePlugins = [
   // This module might be causing an issue preventing clicks. For safety, we won't run on this module.
@@ -235,6 +236,7 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, attri
   // Add a stable attribute for the source file name (absent for non-root elements)
   if (
     sourceFileName
+    && ignoreSourceFileOptionName !== true
     && !ignoredComponentFromOptions
     && (componentName || ignoredElement === false)
     && !hasNodeNamed(openingElement, sourceFileAttributeName)
