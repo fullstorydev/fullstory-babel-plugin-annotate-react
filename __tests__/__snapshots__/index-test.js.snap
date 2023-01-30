@@ -32,6 +32,16 @@ const componentName = () => {
 export default componentName;"
 `;
 
+exports[`arrow-anonymous-shorthand-fragment snapshot matches 1`] = `
+"import React, { Component } from 'react';
+
+const componentName = () => {
+  return (() => /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(\\"h1\\", null, \\"Hello world\\")))();
+};
+
+export default componentName;"
+`;
+
 exports[`arrow-fragment snapshot matches 1`] = `
 "import React, { Component, Fragment } from 'react';
 
@@ -85,6 +95,28 @@ const componentName = () => /*#__PURE__*/React.createElement(Fragment, null, /*#
 export default componentName;"
 `;
 
+exports[`arrow-noreturn-annotate-react-fragment snapshot matches 1`] = `
+"import React, { Component } from 'react';
+
+const componentName = () => /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(\\"h1\\", {
+  \\"data-component\\": \\"componentName\\",
+  \\"data-source-file\\": \\"filename-test.js\\"
+}, \\"Hello world\\"));
+
+export default componentName;"
+`;
+
+exports[`arrow-noreturn-annotate-shorthand-fragment snapshot matches 1`] = `
+"import React, { Component } from 'react';
+
+const componentName = () => /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(\\"h1\\", {
+  \\"data-component\\": \\"componentName\\",
+  \\"data-source-file\\": \\"filename-test.js\\"
+}, \\"Hello world\\"));
+
+export default componentName;"
+`;
+
 exports[`arrow-noreturn-annotate-trivial-fragment snapshot matches 1`] = `
 "import React, { Component, Fragment } from 'react';
 
@@ -109,8 +141,26 @@ const componentName = () => /*#__PURE__*/React.createElement(React.Fragment, nul
 export default componentName;"
 `;
 
+exports[`arrow-noreturn-shorthand-fragment snapshot matches 1`] = `
+"import React, { Component } from 'react';
+
+const componentName = () => /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(\\"h1\\", null, \\"Hello world\\"));
+
+export default componentName;"
+`;
+
 exports[`arrow-react-fragment snapshot matches 1`] = `
 "import React, { Component } from 'react';
+
+const componentName = () => {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(\\"h1\\", null, \\"Hello world\\"));
+};
+
+export default componentName;"
+`;
+
+exports[`arrow-shorthand-fragment snapshot matches 1`] = `
+"import React from 'react';
 
 const componentName = () => {
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(\\"h1\\", null, \\"Hello world\\"));
@@ -127,6 +177,51 @@ class componentName extends Component {
     return /*#__PURE__*/React.createElement(\\"div\\", {
       \\"data-component\\": \\"componentName\\"
     }, /*#__PURE__*/React.createElement(\\"h1\\", null, \\"Hello world\\"));
+  }
+
+}
+
+export default componentName;"
+`;
+
+exports[`component-annotate-fragment snapshot matches 1`] = `
+"import React, { Component } from 'react';
+
+class componentName extends Component {
+  render() {
+    return /*#__PURE__*/React.createElement(React.Fragment, null, \\"A\\");
+  }
+
+}
+
+export default componentName;"
+`;
+
+exports[`component-annotate-react-fragment snapshot matches 1`] = `
+"import React, { Component } from 'react';
+
+class componentName extends Component {
+  render() {
+    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(\\"h1\\", {
+      \\"data-component\\": \\"componentName\\",
+      \\"data-source-file\\": \\"filename-test.js\\"
+    }, \\"Hello world\\"));
+  }
+
+}
+
+export default componentName;"
+`;
+
+exports[`component-annotate-shorthand-fragment snapshot matches 1`] = `
+"import React, { Component } from 'react';
+
+class componentName extends Component {
+  render() {
+    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(\\"h1\\", {
+      \\"data-component\\": \\"componentName\\",
+      \\"data-source-file\\": \\"filename-test.js\\"
+    }, \\"Hello world\\"));
   }
 
 }
@@ -161,6 +256,19 @@ export default componentName;"
 `;
 
 exports[`component-react-fragment snapshot matches 1`] = `
+"import React, { Component } from 'react';
+
+class componentName extends Component {
+  render() {
+    return /*#__PURE__*/React.createElement(React.Fragment, null, \\"A\\");
+  }
+
+}
+
+export default componentName;"
+`;
+
+exports[`component-shorthand-fragment snapshot matches 1`] = `
 "import React, { Component } from 'react';
 
 class componentName extends Component {
@@ -267,6 +375,19 @@ class PureComponentName extends React.PureComponent {
 export default PureComponentName;"
 `;
 
+exports[`pureComponent-shorthand-fragment snapshot matches 1`] = `
+"import React from 'react';
+
+class PureComponentName extends React.PureComponent {
+  render() {
+    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(\\"h1\\", null, \\"Hello world\\"));
+  }
+
+}
+
+export default PureComponentName;"
+`;
+
 exports[`rawfunction snapshot matches 1`] = `
 "import React, { Component } from 'react';
 
@@ -279,8 +400,59 @@ function SubComponent() {
 const componentName = () => {
   return /*#__PURE__*/React.createElement(\\"div\\", {
     \\"data-component\\": \\"componentName\\"
-  }, /*#__PURE__*/React.createElement(SubCoponent, {
-    \\"data-element\\": \\"SubCoponent\\"
+  }, /*#__PURE__*/React.createElement(SubComponent, {
+    \\"data-element\\": \\"SubComponent\\"
+  }));
+};
+
+export default componentName;"
+`;
+
+exports[`rawfunction-annotate-fragment snapshot matches 1`] = `
+"import React, { Component, Fragment } from 'react';
+
+function SubComponent() {
+  return /*#__PURE__*/React.createElement(Fragment, null, \\"Sub\\");
+}
+
+const componentName = () => {
+  return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(SubComponent, {
+    \\"data-element\\": \\"SubComponent\\",
+    \\"data-component\\": \\"componentName\\"
+  }));
+};
+
+export default componentName;"
+`;
+
+exports[`rawfunction-annotate-react-fragment snapshot matches 1`] = `
+"import React, { Component } from 'react';
+
+function SubComponent() {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, \\"Sub\\");
+}
+
+const componentName = () => {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(SubComponent, {
+    \\"data-element\\": \\"SubComponent\\",
+    \\"data-component\\": \\"componentName\\"
+  }));
+};
+
+export default componentName;"
+`;
+
+exports[`rawfunction-annotate-shorthand-fragment snapshot matches 1`] = `
+"import React, { Component } from 'react';
+
+function SubComponent() {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, \\"Sub\\");
+}
+
+const componentName = () => {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(SubComponent, {
+    \\"data-element\\": \\"SubComponent\\",
+    \\"data-component\\": \\"componentName\\"
   }));
 };
 
@@ -295,8 +467,8 @@ function SubComponent() {
 }
 
 const componentName = () => {
-  return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(SubCoponent, {
-    \\"data-element\\": \\"SubCoponent\\"
+  return /*#__PURE__*/React.createElement(Fragment, null, /*#__PURE__*/React.createElement(SubComponent, {
+    \\"data-element\\": \\"SubComponent\\"
   }));
 };
 
@@ -311,8 +483,24 @@ function SubComponent() {
 }
 
 const componentName = () => {
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(SubCoponent, {
-    \\"data-element\\": \\"SubCoponent\\"
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(SubComponent, {
+    \\"data-element\\": \\"SubComponent\\"
+  }));
+};
+
+export default componentName;"
+`;
+
+exports[`rawfunction-shorthand-fragment snapshot matches 1`] = `
+"import React, { Component } from 'react';
+
+function SubComponent() {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, \\"Sub\\");
+}
+
+const componentName = () => {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(SubComponent, {
+    \\"data-element\\": \\"SubComponent\\"
   }));
 };
 

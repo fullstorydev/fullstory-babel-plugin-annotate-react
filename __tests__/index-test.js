@@ -1159,7 +1159,7 @@ class Bananas extends Component {
 
 it('unknown-element snapshot matches', () => {
   const { code } = babel.transform(
-`import React, { Component } from 'react';
+    `import React, { Component } from 'react';
 
 class componentName extends Component {
   render() {
@@ -1180,7 +1180,7 @@ export default componentName;
 
 it('component-fragment snapshot matches', () => {
   const { code } = babel.transform(
-`import React, { Component, Fragment } from 'react';
+    `import React, { Component, Fragment } from 'react';
 
 class componentName extends Component {
   render() {
@@ -1199,10 +1199,9 @@ export default componentName;
   expect(code).toMatchSnapshot();
 });
 
-
 it('component-react-fragment snapshot matches', () => {
   const { code } = babel.transform(
-`import React, { Component } from 'react';
+    `import React, { Component } from 'react';
 
 class componentName extends Component {
   render() {
@@ -1221,9 +1220,101 @@ export default componentName;
   expect(code).toMatchSnapshot();
 });
 
+it('component-shorthand-fragment snapshot matches', () => {
+  const { code } = babel.transform(
+    `import React, { Component } from 'react';
+
+class componentName extends Component {
+  render() {
+    return <>A</>;
+  }
+}
+
+export default componentName;
+`,
+    {
+      filename: "./filename-test.js",
+      presets: ["@babel/preset-react"],
+      plugins: [plugin]
+    },
+  );
+  expect(code).toMatchSnapshot();
+});
+
+it('component-annotate-fragment snapshot matches', () => {
+  const { code } = babel.transform(
+    `import React, { Component } from 'react';
+
+class componentName extends Component {
+  render() {
+    return <>A</>;
+  }
+}
+
+export default componentName;
+`,
+    {
+      filename: "./filename-test.js",
+      presets: ["@babel/preset-react"],
+      plugins: [plugin]
+    },
+  );
+  expect(code).toMatchSnapshot();
+});
+
+it('component-annotate-react-fragment snapshot matches', () => {
+  const { code } = babel.transform(
+    `import React, { Component } from 'react';
+
+class componentName extends Component {
+  render() {
+    return <React.Fragment>
+      <h1>Hello world</h1>
+    </React.Fragment>;
+  }
+}
+
+export default componentName;
+`,
+    {
+      filename: "./filename-test.js",
+      presets: ["@babel/preset-react"],
+      plugins: [
+        [plugin, { "annotate-fragments": true }]
+      ]
+    },
+  );
+  expect(code).toMatchSnapshot();
+});
+
+it('component-annotate-shorthand-fragment snapshot matches', () => {
+  const { code } = babel.transform(
+    `import React, { Component } from 'react';
+
+class componentName extends Component {
+  render() {
+    return <>
+      <h1>Hello world</h1>
+    </>;
+  }
+}
+
+export default componentName;
+`,
+    {
+      filename: "./filename-test.js",
+      presets: ["@babel/preset-react"],
+      plugins: [
+        [plugin, { "annotate-fragments": true }]
+      ]
+    },
+  );
+  expect(code).toMatchSnapshot();
+});
+
 it('arrow-noreturn-fragment snapshot matches', () => {
   const { code } = babel.transform(
-`import React, { Component, Fragment } from 'react';
+    `import React, { Component, Fragment } from 'react';
 
 const componentName = () => (
   <Fragment>
@@ -1242,9 +1333,50 @@ export default componentName;
   expect(code).toMatchSnapshot();
 });
 
+it('arrow-noreturn-shorthand-fragment snapshot matches', () => {
+  const { code } = babel.transform(
+    `import React, { Component } from 'react';
+
+const componentName = () => (
+  <>
+    <h1>Hello world</h1>
+  </>
+);
+
+export default componentName;
+`,
+    {
+      filename: "./filename-test.js",
+      presets: ["@babel/preset-react"],
+      plugins: [plugin]
+    },
+  );
+  expect(code).toMatchSnapshot();
+});
+
+it('arrow-noreturn-react-fragment snapshot matches', () => {
+  const { code } = babel.transform(
+    `import React, { Component } from 'react';
+
+const componentName = () => (
+  <React.Fragment>
+    <h1>Hello world</h1>
+  </React.Fragment>
+);
+
+export default componentName;
+`,
+    {
+      presets: ["@babel/preset-react"],
+      plugins: [plugin]
+    },
+  );
+  expect(code).toMatchSnapshot();
+});
+
 it('arrow-noreturn-annotate-trivial-fragment snapshot matches', () => {
   const { code } = babel.transform(
-`import React, { Component, Fragment } from 'react';
+    `import React, { Component, Fragment } from 'react';
 
 const componentName = () => (
   <Fragment>Hello world</Fragment>
@@ -1265,7 +1397,7 @@ export default componentName;
 
 it('arrow-noreturn-annotate-fragment snapshot matches', () => {
   const { code } = babel.transform(
-`import React, { Component, Fragment } from 'react';
+    `import React, { Component, Fragment } from 'react';
 
 const componentName = () => (
   <Fragment>
@@ -1286,9 +1418,55 @@ export default componentName;
   expect(code).toMatchSnapshot();
 });
 
+it('arrow-noreturn-annotate-react-fragment snapshot matches', () => {
+  const { code } = babel.transform(
+    `import React, { Component } from 'react';
+
+const componentName = () => (
+  <React.Fragment>
+    <h1>Hello world</h1>
+  </React.Fragment>
+);
+
+export default componentName;
+`,
+    {
+      filename: "./filename-test.js",
+      presets: ["@babel/preset-react"],
+      plugins: [
+        [plugin, { "annotate-fragments": true }]
+      ]
+    },
+  );
+  expect(code).toMatchSnapshot();
+});
+
+it('arrow-noreturn-annotate-shorthand-fragment snapshot matches', () => {
+  const { code } = babel.transform(
+    `import React, { Component } from 'react';
+
+const componentName = () => (
+  <>
+    <h1>Hello world</h1>
+  </>
+);
+
+export default componentName;
+`,
+    {
+      filename: "./filename-test.js",
+      presets: ["@babel/preset-react"],
+      plugins: [
+        [plugin, { "annotate-fragments": true }]
+      ]
+    },
+  );
+  expect(code).toMatchSnapshot();
+});
+
 it('arrow-noreturn-annotate-fragment-once snapshot matches', () => {
   const { code } = babel.transform(
-`import React, { Component, Fragment } from 'react';
+    `import React, { Component, Fragment } from 'react';
 
 const componentName = () => (
   <Fragment>
@@ -1310,10 +1488,9 @@ export default componentName;
   expect(code).toMatchSnapshot();
 });
 
-
 it('arrow-noreturn-annotate-fragment-no-whitespace snapshot matches', () => {
   const { code } = babel.transform(
-`import React, { Component, Fragment } from 'react';
+    `import React, { Component, Fragment } from 'react';
 
 const componentName = () => (
   <Fragment><h1>Hello world</h1><h1>Hola Sol</h1></Fragment>
@@ -1332,35 +1509,9 @@ export default componentName;
   expect(code).toMatchSnapshot();
 });
 
-
-it('rawfunction-fragment snapshot matches', () => {
-  const { code } = babel.transform(
-`import React, { Component, Fragment } from 'react';
-
-function SubComponent() {
-  return <Fragment>Sub</Fragment>;
-}
-
-const componentName = () => {
-  return <Fragment>
-    <SubCoponent />
-  </Fragment>;
-};
-
-export default componentName;
-`,
-    {
-      presets: ["@babel/preset-react"],
-      plugins: [plugin]
-    },
-  );
-  expect(code).toMatchSnapshot();
-});
-
-
 it('arrow snapshot matches', () => {
   const { code } = babel.transform(
-`import React, { Component } from 'react';
+    `import React, { Component } from 'react';
 
 const componentName = () => {
   return <div>
@@ -1381,7 +1532,7 @@ export default componentName;
 
 it('option-attribute snapshot matches', () => {
   const { code } = babel.transform(
-`import React, { Component } from 'react';
+    `import React, { Component } from 'react';
 
 const componentName = () => {
   return <div>
@@ -1402,7 +1553,7 @@ export default componentName;
 
 it('component snapshot matches', () => {
   const { code } = babel.transform(
-`import React, { Component } from 'react';
+    `import React, { Component } from 'react';
 
 class componentName extends Component {
   render() {
@@ -1422,10 +1573,35 @@ export default componentName;
   expect(code).toMatchSnapshot();
 });
 
-
-it('rawfunction-react-fragment snapshot matches', () => {
+it('rawfunction-annotate-fragment snapshot matches', () => {
   const { code } = babel.transform(
-`import React, { Component } from 'react';
+    `import React, { Component, Fragment } from 'react';
+
+function SubComponent() {
+  return <Fragment>Sub</Fragment>;
+}
+
+const componentName = () => {
+  return <Fragment>
+    <SubComponent />
+  </Fragment>;
+};
+
+export default componentName;
+`,
+    {
+      presets: ["@babel/preset-react"],
+      plugins: [
+        [plugin, { "annotate-fragments": true }]
+      ]
+    },
+  );
+  expect(code).toMatchSnapshot();
+});
+
+it('rawfunction-annotate-react-fragment snapshot matches', () => {
+  const { code } = babel.transform(
+    `import React, { Component } from 'react';
 
 function SubComponent() {
   return <React.Fragment>Sub</React.Fragment>;
@@ -1433,7 +1609,83 @@ function SubComponent() {
 
 const componentName = () => {
   return <React.Fragment>
-    <SubCoponent />
+    <SubComponent />
+  </React.Fragment>;
+};
+
+export default componentName;
+`,
+    {
+      presets: ["@babel/preset-react"],
+      plugins: [
+        [plugin, { "annotate-fragments": true }]
+      ]
+    },
+  );
+  expect(code).toMatchSnapshot();
+});
+
+it('rawfunction-annotate-shorthand-fragment snapshot matches', () => {
+  const { code } = babel.transform(
+    `import React, { Component } from 'react';
+
+function SubComponent() {
+  return <>Sub</>;
+}
+
+const componentName = () => {
+  return <>
+    <SubComponent />
+  </>;
+};
+
+export default componentName;
+`,
+    {
+      presets: ["@babel/preset-react"],
+      plugins: [
+        [plugin, { "annotate-fragments": true }]
+      ]
+    },
+  );
+  expect(code).toMatchSnapshot();
+});
+
+it('rawfunction-fragment snapshot matches', () => {
+  const { code } = babel.transform(
+    `import React, { Component, Fragment } from 'react';
+
+function SubComponent() {
+  return <Fragment>Sub</Fragment>;
+}
+
+const componentName = () => {
+  return <Fragment>
+    <SubComponent />
+  </Fragment>;
+};
+
+export default componentName;
+`,
+    {
+      presets: ["@babel/preset-react"],
+      plugins: [plugin]
+    },
+  );
+  expect(code).toMatchSnapshot();
+});
+
+it('rawfunction-react-fragment snapshot matches', () => {
+  const { code } = babel.transform(
+    `import React, { Component } from 'react';
+
+function SubComponent() {
+  return <React.Fragment>Sub</React.Fragment>;
+}
+
+const componentName = () => {
+  return <React.Fragment>
+    <SubComponent />
   </React.Fragment>;
 };
 
@@ -1447,15 +1699,18 @@ export default componentName;
   expect(code).toMatchSnapshot();
 });
 
-
-it('arrow-anonymous-react-fragment snapshot matches', () => {
+it('rawfunction-shorthand-fragment snapshot matches', () => {
   const { code } = babel.transform(
-`import React, { Component } from 'react';
+    `import React, { Component } from 'react';
+
+function SubComponent() {
+  return <>Sub</>;
+}
 
 const componentName = () => {
-  return (() => <React.Fragment>
-    <h1>Hello world</h1>
-  </React.Fragment>)();
+  return <>
+    <SubComponent />
+  </>;
 };
 
 export default componentName;
@@ -1468,10 +1723,9 @@ export default componentName;
   expect(code).toMatchSnapshot();
 });
 
-
 it('arrow-noreturn snapshot matches', () => {
   const { code } = babel.transform(
-`import React, { Component } from 'react';
+    `import React, { Component } from 'react';
 
 const componentName = () => (
   <div>
@@ -1490,30 +1744,9 @@ export default componentName;
 });
 
 
-it('arrow-noreturn-react-fragment snapshot matches', () => {
-  const { code } = babel.transform(
-`import React, { Component } from 'react';
-
-const componentName = () => (
-  <React.Fragment>
-    <h1>Hello world</h1>
-  </React.Fragment>
-);
-
-export default componentName;
-`,
-    {
-      presets: ["@babel/preset-react"],
-      plugins: [plugin]
-    },
-  );
-  expect(code).toMatchSnapshot();
-});
-
-
 it('tags snapshot matches', () => {
   const { code } = babel.transform(
-`import React, { Component } from 'react';
+    `import React, { Component } from 'react';
 import { StyleSheet, Text, TextInput, View, Image, UIManager } from 'react-native';
 
 UIManager.getViewManagerConfig('RCTView').NativeProps.fsClass = "String";
@@ -1581,7 +1814,7 @@ const styles = StyleSheet.create({
 
 it('option-format snapshot matches', () => {
   const { code } = babel.transform(
-`import React, { Component } from 'react';
+    `import React, { Component } from 'react';
 
 const componentName = () => {
   return <div>
@@ -1599,10 +1832,53 @@ export default componentName;
   expect(code).toMatchSnapshot();
 });
 
+it('pureComponent-fragment snapshot matches', () => {
+  const { code } = babel.transform(
+    `import React, { Fragment } from 'react';
+
+class PureComponentName extends React.PureComponent {
+    render() {
+        return <Fragment>
+            <h1>Hello world</h1>
+        </Fragment>;
+    }
+}
+
+export default PureComponentName;
+`,
+    {
+      presets: ["@babel/preset-react"],
+      plugins: [plugin]
+    },
+  );
+  expect(code).toMatchSnapshot();
+});
+
+it('pureComponent-shorthand-fragment snapshot matches', () => {
+  const { code } = babel.transform(
+    `import React from 'react';
+
+class PureComponentName extends React.PureComponent {
+    render() {
+        return <>
+            <h1>Hello world</h1>
+        </>;
+    }
+}
+
+export default PureComponentName;
+`,
+    {
+      presets: ["@babel/preset-react"],
+      plugins: [plugin]
+    },
+  );
+  expect(code).toMatchSnapshot();
+});
 
 it('pureComponent-react-fragment snapshot matches', () => {
   const { code } = babel.transform(
-`import React from 'react';
+    `import React from 'react';
 
 class PureComponentName extends React.PureComponent {
     render() {
@@ -1625,7 +1901,7 @@ export default PureComponentName;
 
 it('rawfunction snapshot matches', () => {
   const { code } = babel.transform(
-`import React, { Component } from 'react';
+    `import React, { Component } from 'react';
 
 function SubComponent() {
   return <div>Sub</div>;
@@ -1633,7 +1909,7 @@ function SubComponent() {
 
 const componentName = () => {
   return <div>
-    <SubCoponent />
+    <SubComponent />
   </div>;
 };
 
@@ -1650,7 +1926,7 @@ export default componentName;
 
 it('arrow-fragment snapshot matches', () => {
   const { code } = babel.transform(
-`import React, { Component, Fragment } from 'react';
+    `import React, { Component, Fragment } from 'react';
 
 const componentName = () => {
   return <Fragment>
@@ -1668,10 +1944,29 @@ export default componentName;
   expect(code).toMatchSnapshot();
 });
 
+it('arrow-shorthand-fragment snapshot matches', () => {
+  const { code } = babel.transform(
+    `import React from 'react';
+
+const componentName = () => {
+  return <>
+    <h1>Hello world</h1>
+  </>;
+};
+
+export default componentName;
+`,
+    {
+      presets: ["@babel/preset-react"],
+      plugins: [plugin]
+    },
+  );
+  expect(code).toMatchSnapshot();
+});
 
 it('arrow-react-fragment snapshot matches', () => {
   const { code } = babel.transform(
-`import React, { Component } from 'react';
+    `import React, { Component } from 'react';
 
 const componentName = () => {
   return <React.Fragment>
@@ -1692,7 +1987,7 @@ export default componentName;
 
 it('nonJSX snapshot matches', () => {
   const { code } = babel.transform(
-`import React, { Component } from 'react';
+    `import React, { Component } from 'react';
 
 class TestClass extends Component {
   test() {
@@ -1710,33 +2005,9 @@ export default TestClass;
   expect(code).toMatchSnapshot();
 });
 
-
-it('pureComponent-fragment snapshot matches', () => {
-  const { code } = babel.transform(
-`import React, { Fragment } from 'react';
-
-class PureComponentName extends React.PureComponent {
-    render() {
-        return <Fragment>
-            <h1>Hello world</h1>
-        </Fragment>;
-    }
-}
-
-export default PureComponentName;
-`,
-    {
-      presets: ["@babel/preset-react"],
-      plugins: [plugin]
-    },
-  );
-  expect(code).toMatchSnapshot();
-});
-
-
 it('arrow-anonymous-fragment snapshot matches', () => {
   const { code } = babel.transform(
-`import React, { Component, Fragment } from 'react';
+    `import React, { Component, Fragment } from 'react';
 
 const componentName = () => {
   return (() => <Fragment>
@@ -1754,10 +2025,50 @@ export default componentName;
   expect(code).toMatchSnapshot();
 });
 
+it('arrow-anonymous-shorthand-fragment snapshot matches', () => {
+  const { code } = babel.transform(
+    `import React, { Component } from 'react';
+
+const componentName = () => {
+  return (() => <>
+    <h1>Hello world</h1>
+  </>)();
+};
+
+export default componentName;
+`,
+    {
+      presets: ["@babel/preset-react"],
+      plugins: [plugin]
+    },
+  );
+  expect(code).toMatchSnapshot();
+});
+
+it('arrow-anonymous-react-fragment snapshot matches', () => {
+  const { code } = babel.transform(
+    `import React, { Component } from 'react';
+
+const componentName = () => {
+  return (() => <React.Fragment>
+    <h1>Hello world</h1>
+  </React.Fragment>)();
+};
+
+export default componentName;
+`,
+    {
+      presets: ["@babel/preset-react"],
+      plugins: [plugin]
+    },
+  );
+  expect(code).toMatchSnapshot();
+});
+
 
 it('pure snapshot matches', () => {
   const { code } = babel.transform(
-`import React from 'react';
+    `import React from 'react';
 
 class PureComponentName extends React.PureComponent {
     render() {
@@ -1780,7 +2091,7 @@ export default PureComponentName;
 
 it('component-fragment-native snapshot matches', () => {
   const { code } = babel.transform(
-`import React, { Component, Fragment } from 'react';
+    `import React, { Component, Fragment } from 'react';
 
 class componentName extends Component {
   render() {
@@ -1803,7 +2114,7 @@ export default componentName;
 
 it('pure-native snapshot matches', () => {
   const { code } = babel.transform(
-`import React from 'react';
+    `import React from 'react';
 
 class PureComponentName extends React.PureComponent {
     render() {
@@ -1833,7 +2144,7 @@ it('Bananas ignore components dataSourceFile=nomatch dataComponent=nomatch dataE
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, ignoreComponents:[["nomatch.js","nomatch","nomatch"]] }]
+        [plugin, { native: true, ignoreComponents: [["nomatch.js", "nomatch", "nomatch"]] }]
       ]
     },
   );
@@ -1847,7 +2158,7 @@ it('ignore components dataSourceFile=* dataComponent=nomatch dataElement=nomatch
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, ignoreComponents:[["*","nomatch","nomatch"]] }]
+        [plugin, { native: true, ignoreComponents: [["*", "nomatch", "nomatch"]] }]
       ]
     },
   );
@@ -1861,7 +2172,7 @@ it('Bananas ignore components dataSourceFile=nomatch dataComponent=* dataElement
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, ignoreComponents:[["nomatch.js","*","nomatch"]] }]
+        [plugin, { native: true, ignoreComponents: [["nomatch.js", "*", "nomatch"]] }]
       ]
     },
   );
@@ -1875,7 +2186,7 @@ it('Bananas ignore components dataSourceFile=nomatch dataComponent=nomatch dataE
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, ignoreComponents:[["nomatch.js","nomatch","*"]] }]
+        [plugin, { native: true, ignoreComponents: [["nomatch.js", "nomatch", "*"]] }]
       ]
     },
   );
@@ -1889,7 +2200,7 @@ it('Bananas ignore components dataSourceFile=* dataComponent=* dataElement=nomat
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, ignoreComponents:[["nomatch.js","nomatch","nomatch"]] }]
+        [plugin, { native: true, ignoreComponents: [["nomatch.js", "nomatch", "nomatch"]] }]
       ]
     },
   );
@@ -1903,7 +2214,7 @@ it('Bananas ignore components dataSourceFile=* dataComponent=nomatch dataElement
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, ignoreComponents:[["nomatch.js","nomatch","nomatch"]] }]
+        [plugin, { native: true, ignoreComponents: [["nomatch.js", "nomatch", "nomatch"]] }]
       ]
     },
   );
@@ -1917,7 +2228,7 @@ it('Bananas ignore components dataSourceFile=nomatch dataComponent=* dataElement
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, ignoreComponents:[["nomatch.js","nomatch","nomatch"]] }]
+        [plugin, { native: true, ignoreComponents: [["nomatch.js", "nomatch", "nomatch"]] }]
       ]
     },
   );
@@ -1932,7 +2243,7 @@ it('Bananas ignore components dataSourceFile=* dataComponent=* dataElement=match
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, ignoreComponents:[["*","*","Image"]] }]
+        [plugin, { native: true, ignoreComponents: [["*", "*", "Image"]] }]
       ]
     },
   );
@@ -1947,7 +2258,7 @@ it('Bananas ignore components dataSourceFile=* dataComponent=match dataElement=m
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, ignoreComponents:[["*","Bananas","Image"]] }]
+        [plugin, { native: true, ignoreComponents: [["*", "Bananas", "Image"]] }]
       ]
     },
   );
@@ -1962,7 +2273,7 @@ it('Bananas ignore components dataSourceFile=match dataComponent=match dataEleme
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, ignoreComponents:[["filename-test.js","Bananas","Image"]] }]
+        [plugin, { native: true, ignoreComponents: [["filename-test.js", "Bananas", "Image"]] }]
       ]
     },
   );
@@ -1977,7 +2288,7 @@ it('Bananas/Pizza/App ignore components dataSourceFile=* dataComponent=* dataEle
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, ignoreComponents:[["*","*","*"]] }]
+        [plugin, { native: true, ignoreComponents: [["*", "*", "*"]] }]
       ]
     },
   );
@@ -1992,7 +2303,7 @@ it('Bananas/Pizza/App ignore components dataSourceFile=nomatch dataComponent=* d
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, ignoreComponents:[["nomatch.js","*","*"]] }]
+        [plugin, { native: true, ignoreComponents: [["nomatch.js", "*", "*"]] }]
       ]
     },
   );
@@ -2006,12 +2317,14 @@ it('Bananas/Pizza/App only Bananas dataSourceFile=match dataComponent=match data
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, ignoreComponents:[
-          // Pizza
-          ["filename-test.js","PizzaTranslator","View"],
-          // App
-          ["filename-test.js","App","View"]
-        ] }]
+        [plugin, {
+          native: true, ignoreComponents: [
+            // Pizza
+            ["filename-test.js", "PizzaTranslator", "View"],
+            // App
+            ["filename-test.js", "App", "View"]
+          ]
+        }]
       ]
     },
   );
@@ -2025,12 +2338,14 @@ it('Bananas/Pizza/App only Pizza dataSourceFile=match dataComponent=match dataEl
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, ignoreComponents:[
-          // Bananas
-          ["filename-test.js","Bananas","Image"],
-          // App
-          ["filename-test.js","App","View"]
-        ] }]
+        [plugin, {
+          native: true, ignoreComponents: [
+            // Bananas
+            ["filename-test.js", "Bananas", "Image"],
+            // App
+            ["filename-test.js", "App", "View"]
+          ]
+        }]
       ]
     },
   );
@@ -2044,12 +2359,14 @@ it('Bananas/Pizza/App only App dataSourceFile=match dataComponent=match dataElem
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, ignoreComponents:[
-          // Bananas
-          ["filename-test.js","Bananas","Image"],
-          // Pizza
-          ["filename-test.js","PizzaTranslator","View"]
-        ] }]
+        [plugin, {
+          native: true, ignoreComponents: [
+            // Bananas
+            ["filename-test.js", "Bananas", "Image"],
+            // Pizza
+            ["filename-test.js", "PizzaTranslator", "View"]
+          ]
+        }]
       ]
     },
   );
@@ -2063,10 +2380,12 @@ it('Bananas/Pizza/App No Pizza Elements dataSourceFile=match dataComponent=match
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, ignoreComponents:[
-          // Pizza Element
-          ["filename-test.js",null,"PizzaTranslator"]
-        ] }]
+        [plugin, {
+          native: true, ignoreComponents: [
+            // Pizza Element
+            ["filename-test.js", null, "PizzaTranslator"]
+          ]
+        }]
       ]
     },
   );
@@ -2080,10 +2399,12 @@ it('Bananas/Pizza/App No Bananas Elements dataSourceFile=match dataComponent=mat
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, ignoreComponents:[
-          // Bananas Element
-          ["filename-test.js",null,"Bananas"]
-        ] }]
+        [plugin, {
+          native: true, ignoreComponents: [
+            // Bananas Element
+            ["filename-test.js", null, "Bananas"]
+          ]
+        }]
       ]
     },
   );
@@ -2097,12 +2418,14 @@ it('Bananas/Pizza/App No Bananas/Pizza Elements dataSourceFile=match dataCompone
       filename: "./filename-test.js",
       presets: ["@babel/preset-react"],
       plugins: [
-        [plugin, { native: true, ignoreComponents:[
-          // Bananas Element
-          ["filename-test.js",null,"Bananas"],
-          // Pizza Element
-          ["filename-test.js",null,"PizzaTranslator"]
-        ] }]
+        [plugin, {
+          native: true, ignoreComponents: [
+            // Bananas Element
+            ["filename-test.js", null, "Bananas"],
+            // Pizza Element
+            ["filename-test.js", null, "PizzaTranslator"]
+          ]
+        }]
       ]
     },
   );
