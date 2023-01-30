@@ -48,7 +48,7 @@ const knownIncompatiblePlugins = [
   'victory-zoom-container',
 ];
 
-module.exports = function({ types: t }) {
+module.exports = function ({ types: t }) {
   return {
     pre() {
       this.ignoreComponentsFromOption = this.opts[ignoreComponentsOptionName] || [];
@@ -89,6 +89,7 @@ module.exports = function({ types: t }) {
             prop.get('key').isIdentifier({ name: 'render' })
           )
         })
+
         if (!render || !render.traverse) return
         if (isKnownIncompatiblePluginFromState(state)) return
 
@@ -96,8 +97,10 @@ module.exports = function({ types: t }) {
 
         render.traverse({
           ReturnStatement(returnStatement) {
+            // console.log("returnStatement", returnStatement)
             const arg = returnStatement.get('argument')
-            if (!arg.isJSXElement()) return
+
+            if (!arg.isJSXElement() && !arg.isJSXFragment()) return
             processJSXElement(
               state.opts[annotateFragmentsOptionName] === true,
               t,
@@ -145,8 +148,8 @@ function isKnownIncompatiblePluginFromState(state) {
 
   for (let i = 0; i < knownIncompatiblePlugins.length; i += 1) {
     let pluginName = knownIncompatiblePlugins[i];
-    if (fullSourceFileName.includes("/node_modules/" + pluginName + "/") || 
-        fullSourceFileName.includes("\\node_modules\\" + pluginName + "\\")) {
+    if (fullSourceFileName.includes("/node_modules/" + pluginName + "/") ||
+      fullSourceFileName.includes("\\node_modules\\" + pluginName + "\\")) {
       return true
     }
   }
@@ -155,19 +158,25 @@ function isKnownIncompatiblePluginFromState(state) {
 }
 
 function attributeNamesFromState(state) {
-  if(state.opts[nativeOptionName] === true) {
+  if (state.opts[nativeOptionName] === true) {
     return [nativeComponentName, nativeElementName, nativeSourceFileName]
   }
   return [webComponentName, webElementName, webSourceFileName]
 }
 
 function isReactFragment(openingElement) {
+  if (openingElement.isJSXFragment()) {
+    return true
+  }
+
   if (
     !openingElement.node ||
     !openingElement.node.name
   ) return
 
-  if (openingElement.node.name.name === 'Fragment') return true;
+  if (openingElement.node.name.name === 'Fragment' ||
+    openingElement.node.name.name === 'React.Fragment'
+  ) return true;
 
   if (
     !openingElement.node.name.type ||
@@ -185,10 +194,10 @@ function isReactFragment(openingElement) {
 function applyAttributes(t, openingElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption) {
   const [componentAttributeName, elementAttributeName, sourceFileAttributeName] = attributeNames;
   if (!openingElement
-      || isReactFragment(openingElement)
-      || !openingElement.node
-      || !openingElement.node.name
-    ) {
+    || isReactFragment(openingElement)
+    || !openingElement.node
+    || !openingElement.node.name
+  ) {
     return
   }
   if (!openingElement.node.attributes) openingElement.node.attributes = {}
@@ -259,7 +268,7 @@ function processJSXElement(annotateFragments, t, jsxElement, componentName, sour
   const children = jsxElement.get('children')
   if (children && children.length) {
     let shouldSetComponentName = annotateFragments
-    for (let i=0; i < children.length; i += 1){
+    for (let i = 0; i < children.length; i += 1) {
       // Children don't receive the data-component attribute so we pass null for componentName unless it's the first child of a Fragment with a node and `annotateFragments` is true
       if (shouldSetComponentName && children[i].get('openingElement') && children[i].get('openingElement').node) {
         shouldSetComponentName = false
@@ -274,9 +283,11 @@ function processJSXElement(annotateFragments, t, jsxElement, componentName, sour
 function functionBodyPushAttributes(annotateFragments, t, path, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption) {
   let jsxElement = null
   const functionBody = path.get('body').get('body')
-  if (functionBody.parent && functionBody.parent.type === 'JSXElement') {
+  if (functionBody.parent &&
+    (functionBody.parent.type === 'JSXElement' || functionBody.parent.type === 'JSXFragment')
+  ) {
     const maybeJsxElement = functionBody.find(c => {
-      return c.type === 'JSXElement'
+      return (c.type === 'JSXElement' || c.type === 'JSXFragment')
     })
     if (!maybeJsxElement) return
     jsxElement = maybeJsxElement
@@ -288,7 +299,10 @@ function functionBodyPushAttributes(annotateFragments, t, path, componentName, s
       return
     }
     const arg = returnStatement.get('argument')
-    if (!arg || !arg.isJSXElement()) {
+    if (!arg) {
+      return
+    }
+    if (!arg.isJSXFragment() && !arg.isJSXElement()) {
       return
     }
     jsxElement = arg
