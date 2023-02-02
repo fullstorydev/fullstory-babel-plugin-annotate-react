@@ -97,7 +97,6 @@ module.exports = function ({ types: t }) {
 
         render.traverse({
           ReturnStatement(returnStatement) {
-            // console.log("returnStatement", returnStatement)
             const arg = returnStatement.get('argument')
 
             if (!arg.isJSXElement() && !arg.isJSXFragment()) return
