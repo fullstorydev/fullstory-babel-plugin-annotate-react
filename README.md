@@ -82,4 +82,4 @@ Please refer to our [Knowledge Base article](https://help.fullstory.com/hc/en-us
 
 ### React Native
 
-Please see our [Getting Started with FullStory React Native Recording](https://help.fullstory.com/hc/en-us/articles/360052419133) guide or email mobile-support@fullstory.com for additional help.
+Please see our [Getting Started with FullStory React Native Capture](https://help.fullstory.com/hc/en-us/articles/360052419133) guide or email mobile-support@fullstory.com for additional help.
