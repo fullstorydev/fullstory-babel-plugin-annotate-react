@@ -173,6 +173,33 @@ class componentName extends Component {
 export default componentName;"
 `;
 
+exports[`nested-component snapshot matches 1`] = `
+"import React, { Component } from 'react';
+
+class componentName1 extends Component {
+  render() {
+    return /*#__PURE__*/React.createElement(\\"div\\", {
+      \\"data-component\\": \\"componentName1\\"
+    }, \\"A\\");
+  }
+
+}
+
+class componentName3 extends Component {
+  render() {
+    return /*#__PURE__*/React.createElement(\\"componentName1\\", {
+      \\"data-element\\": \\"componentName1\\",
+      \\"data-component\\": \\"componentName3\\"
+    }, /*#__PURE__*/React.createElement(\\"componentName2\\", {
+      \\"data-element\\": \\"componentName2\\"
+    }), \\";\\");
+  }
+
+}
+
+export default componentName1;"
+`;
+
 exports[`nonJSX snapshot matches 1`] = `
 "import React, { Component } from 'react';
 
