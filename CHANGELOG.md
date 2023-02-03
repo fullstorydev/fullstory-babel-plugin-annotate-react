@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.2.2
+
+- Fixed annotating short syntax Fragments when enabled.
+
 ## 2.2.1
 
 - Added a blocklist for known-incompatible node modules.
