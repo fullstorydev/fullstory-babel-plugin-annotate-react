@@ -100,7 +100,7 @@ module.exports = function ({ types: t }) {
             const arg = returnStatement.get('argument')
 
             if (!arg.isJSXElement() && !arg.isJSXFragment()) return
-            processJSXElement(
+            processJSX(
               state.opts[annotateFragmentsOptionName] === true,
               t,
               arg,
@@ -256,40 +256,43 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, attri
   }
 }
 
-function processJSXElement(annotateFragments, t, jsxElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption) {
-  if (!jsxElement) {
+function processJSX(annotateFragments, t, jsxNode, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption) {
+  if (!jsxNode) {
     return
   }
-  const openingElement = jsxElement.get('openingElement')
+
+  // only a JSXElement contains openingElement
+  const openingElement = jsxNode.get('openingElement')
 
   applyAttributes(t, openingElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption)
 
-  const children = jsxElement.get('children')
+  const children = jsxNode.get('children')
   if (children && children.length) {
     let shouldSetComponentName = annotateFragments
     for (let i = 0; i < children.length; i += 1) {
+      const child = children[i]
       // Children don't receive the data-component attribute so we pass null for componentName unless it's the first child of a Fragment with a node and `annotateFragments` is true
-      if (shouldSetComponentName && children[i].get('openingElement') && children[i].get('openingElement').node) {
+      if (shouldSetComponentName && child.get('openingElement') && child.get('openingElement').node) {
         shouldSetComponentName = false
-        processJSXElement(annotateFragments, t, children[i], componentName, sourceFileName, attributeNames, ignoreComponentsFromOption)
+        processJSX(annotateFragments, t, child, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption)
       } else {
-        processJSXElement(annotateFragments, t, children[i], null, sourceFileName, attributeNames, ignoreComponentsFromOption)
+        processJSX(annotateFragments, t, child, null, sourceFileName, attributeNames, ignoreComponentsFromOption)
       }
     }
   }
 }
 
 function functionBodyPushAttributes(annotateFragments, t, path, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption) {
-  let jsxElement = null
+  let jsxNode = null
   const functionBody = path.get('body').get('body')
   if (functionBody.parent &&
     (functionBody.parent.type === 'JSXElement' || functionBody.parent.type === 'JSXFragment')
   ) {
-    const maybeJsxElement = functionBody.find(c => {
+    const maybeJsxNode = functionBody.find(c => {
       return (c.type === 'JSXElement' || c.type === 'JSXFragment')
     })
-    if (!maybeJsxElement) return
-    jsxElement = maybeJsxElement
+    if (!maybeJsxNode) return
+    jsxNode = maybeJsxNode
   } else {
     const returnStatement = functionBody.find(c => {
       return c.type === 'ReturnStatement'
@@ -304,10 +307,10 @@ function functionBodyPushAttributes(annotateFragments, t, path, componentName, s
     if (!arg.isJSXFragment() && !arg.isJSXElement()) {
       return
     }
-    jsxElement = arg
+    jsxNode = arg
   }
-  if (!jsxElement) return
-  processJSXElement(annotateFragments, t, jsxElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption)
+  if (!jsxNode) return
+  processJSX(annotateFragments, t, jsxNode, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption)
 }
 
 function matchesIgnoreRule(rule, name) {
