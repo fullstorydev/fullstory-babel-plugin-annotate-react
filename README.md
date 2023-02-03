@@ -78,8 +78,8 @@ Much of the logic for adding the attributes originated in the [transform-react-q
 
 ## Getting Help
 
-Please refer to our [Knowledge Base article](https://help.fullstory.com/hc/en-us/articles/360049493054-FullStory-s-Annotate-React-plugin-for-Web-Native) or contact support@fullstory.com for additional help.
+Please refer to our [Knowledge Base article](https://help.fullstory.com/hc/en-us/articles/360049493054-FullStory-s-Annotate-React-plugin-for-Web-Native) or contact mobile-support@fullstory.com for additional help.
 
 ### React Native
 
-Please see our [Getting Started with FullStory React Native Capture](https://help.fullstory.com/hc/en-us/articles/360052419133) guide or email mobile-mobile-support@fullstory.com for additional help.
+Please see our [Getting Started with FullStory React Native Capture](https://help.fullstory.com/hc/en-us/articles/360052419133) guide or email mobile-support@fullstory.com for additional help.
