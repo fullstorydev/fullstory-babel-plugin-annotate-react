@@ -1,7 +1,7 @@
 # Babel Plugin: Annotate React
 [![CircleCI](https://circleci.com/gh/fullstorydev/fullstory-babel-plugin-annotate-react.svg?style=svg)](https://circleci.com/gh/fullstorydev/fullstory-babel-plugin-annotate-react)
 
-This is a Babel plugin that annotates React components with stable attributes that can be used to search and select using FullStory. This is most useful when using a React system that generates dynamic names for Components or rearranges elements.
+This is a Babel plugin that annotates React components with stable attributes that can be used to search and select using [FullStory](https://www.fullstory.com/). This is most useful when using a React system that generates dynamic names for Components or rearranges elements.
 
 For React on the web the attributes are `data-component`, `data-element`, and `data-source-file`. For React Native the attributes are `dataComponent`, `dataElement`, and `dataSourceFile`.
 
@@ -95,3 +95,11 @@ We have a few samples to demonstrate this plugin:
 - [React native](./samples/react-native-app/)
 
 Much of the logic for adding the attributes originated in the [transform-react-qa-classes](https://github.com/davesnx/babel-plugin-transform-react-qa-classes/) plugin.
+
+## Getting Help
+
+Please refer to our [Knowledge Base article](https://help.fullstory.com/hc/en-us/articles/360049493054-FullStory-s-Annotate-React-plugin-for-Web-Native) or contact mobile-support@fullstory.com for additional help.
+
+### React Native
+
+Please see our [Getting Started with FullStory React Native Capture](https://help.fullstory.com/hc/en-us/articles/360052419133) guide or email mobile-support@fullstory.com for additional help.
