@@ -74,14 +74,14 @@ If you would like the plugin to skip the annotation for certain components, use 
   plugins: [
       [
         '../..',
-        { 
+        {
           ignoreComponents:[
-            // each item must be a string array containing three items: file name, component name, element name 
+            // each item must be a string array containing three items: file name, component name, element name
             // corresponding to the values for data-source-file, data-component, data-element
             // use wild card (*) to match anything
             ["myBoxComponent.jsx","MyBox","Box"],
             ["App.jsx", "*", "ThemeProvider"], // use wild-card to match anything
-            ["App.jsx", "App", "*"], 
+            ["App.jsx", "App", "*"],
           ]
         }
       ],
@@ -90,9 +90,9 @@ If you would like the plugin to skip the annotation for certain components, use 
 
 We have a few samples to demonstrate this plugin:
 
-- [Single Page App](./samples/single-page-app/)
-- [styled-components](./samples/styled-components/)
-- [React native](./samples/react-native-app/)
+- [Single Page App](https://github.com/fullstorydev/fullstory-babel-plugin-annotate-react/tree/master/samples/single-page-app/)
+- [styled-components](https://github.com/fullstorydev/fullstory-babel-plugin-annotate-react/tree/master/samples/styled-components/)
+- [React native](https://github.com/fullstorydev/fullstory-babel-plugin-annotate-react/tree/master/samples/react-native-app/)
 
 Much of the logic for adding the attributes originated in the [transform-react-qa-classes](https://github.com/davesnx/babel-plugin-transform-react-qa-classes/) plugin.
 
