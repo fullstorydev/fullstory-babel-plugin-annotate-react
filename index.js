@@ -52,6 +52,7 @@ module.exports = function ({ types: t }) {
   return {
     pre() {
       this.ignoreComponentsFromOption = this.opts[ignoreComponentsOptionName] || [];
+      this.isNative = this.opts[nativeOptionName] === true;
     },
     visitor: {
       FunctionDeclaration(path, state) {
@@ -65,6 +66,7 @@ module.exports = function ({ types: t }) {
           sourceFileNameFromState(state),
           attributeNamesFromState(state),
           this.ignoreComponentsFromOption,
+          this.isNative,
         )
       },
       ArrowFunctionExpression(path, state) {
@@ -78,6 +80,7 @@ module.exports = function ({ types: t }) {
           sourceFileNameFromState(state),
           attributeNamesFromState(state),
           this.ignoreComponentsFromOption,
+          this.isNative,
         )
       },
       ClassDeclaration(path, state) {
@@ -94,6 +97,7 @@ module.exports = function ({ types: t }) {
         if (isKnownIncompatiblePluginFromState(state)) return
 
         const ignoreComponentsFromOption = this.ignoreComponentsFromOption;
+        const isNative = this.isNative;
 
         render.traverse({
           ReturnStatement(returnStatement) {
@@ -107,7 +111,8 @@ module.exports = function ({ types: t }) {
               name.node && name.node.name,
               sourceFileNameFromState(state),
               attributeNamesFromState(state),
-              ignoreComponentsFromOption
+              ignoreComponentsFromOption,
+              isNative
             )
           }
         })
@@ -190,7 +195,7 @@ function isReactFragment(openingElement) {
   )
 }
 
-function applyAttributes(t, openingElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption) {
+function applyAttributes(t, openingElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption, isNative) {
   const [componentAttributeName, elementAttributeName, sourceFileAttributeName] = attributeNames;
   if (!openingElement
     || isReactFragment(openingElement)
@@ -209,14 +214,17 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, attri
     matchesIgnoreRule(component[2], elementName)
   )
 
-  let ignoredElement = false
+  let ignoredElement = false;
+  let ignoredComponent = false;
   // Add a stable attribute for the element name but only for non-DOM names
   if (
     !ignoredComponentFromOptions &&
     !hasNodeNamed(openingElement, componentAttributeName)
   ) {
-    if (defaultIgnoredElements.includes(elementName)) {
-      ignoredElement = true
+    if (!isNative && defaultIgnoredElements.includes(elementName)) {
+      ignoredElement = true;
+    } else if (isNative && defaultIgnoredElementsNative.includes(elementName)) {
+      ignoredElement = true;
     } else {
       openingElement.node.attributes.push(
         t.jSXAttribute(
@@ -232,19 +240,23 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, attri
     componentName
     && !ignoredComponentFromOptions
     && !hasNodeNamed(openingElement, componentAttributeName)) {
-    openingElement.node.attributes.push(
-      t.jSXAttribute(
-        t.jSXIdentifier(componentAttributeName),
-        t.stringLiteral(componentName)
-      )
-    )
+      if (isNative && defaultIgnoredComponentsNative.includes(componentName)) {
+        ignoredComponent = true;
+      } else { 
+        openingElement.node.attributes.push(
+          t.jSXAttribute(
+            t.jSXIdentifier(componentAttributeName),
+            t.stringLiteral(componentName)
+          )
+        )
+      }
   }
 
   // Add a stable attribute for the source file name (absent for non-root elements)
   if (
     sourceFileName
     && !ignoredComponentFromOptions
-    && (componentName || ignoredElement === false)
+    && (componentName && !ignoredElement && !ignoredComponent)
     && !hasNodeNamed(openingElement, sourceFileAttributeName)
   ) {
     openingElement.node.attributes.push(
@@ -256,7 +268,7 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, attri
   }
 }
 
-function processJSX(annotateFragments, t, jsxNode, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption) {
+function processJSX(annotateFragments, t, jsxNode, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption, isNative) {
   if (!jsxNode) {
     return
   }
@@ -264,7 +276,7 @@ function processJSX(annotateFragments, t, jsxNode, componentName, sourceFileName
   // only a JSXElement contains openingElement
   const openingElement = jsxNode.get('openingElement')
 
-  applyAttributes(t, openingElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption)
+  applyAttributes(t, openingElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption, isNative)
 
   const children = jsxNode.get('children')
   if (children && children.length) {
@@ -274,15 +286,15 @@ function processJSX(annotateFragments, t, jsxNode, componentName, sourceFileName
       // Children don't receive the data-component attribute so we pass null for componentName unless it's the first child of a Fragment with a node and `annotateFragments` is true
       if (shouldSetComponentName && child.get('openingElement') && child.get('openingElement').node) {
         shouldSetComponentName = false
-        processJSX(annotateFragments, t, child, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption)
+        processJSX(annotateFragments, t, child, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption, isNative)
       } else {
-        processJSX(annotateFragments, t, child, null, sourceFileName, attributeNames, ignoreComponentsFromOption)
+        processJSX(annotateFragments, t, child, null, sourceFileName, attributeNames, ignoreComponentsFromOption, isNative)
       }
     }
   }
 }
 
-function functionBodyPushAttributes(annotateFragments, t, path, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption) {
+function functionBodyPushAttributes(annotateFragments, t, path, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption, isNative) {
   let jsxNode = null
   const functionBody = path.get('body').get('body')
   if (functionBody.parent &&
@@ -310,7 +322,7 @@ function functionBodyPushAttributes(annotateFragments, t, path, componentName, s
     jsxNode = arg
   }
   if (!jsxNode) return
-  processJSX(annotateFragments, t, jsxNode, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption)
+  processJSX(annotateFragments, t, jsxNode, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption, isNative)
 }
 
 function matchesIgnoreRule(rule, name) {
@@ -345,4 +357,20 @@ const defaultIgnoredElements = [
   'u', 'ul',
   'var', 'video',
   'wbr'
-]
+];
+
+const defaultIgnoredComponentsNative = [
+  'renderSceneContent', // React Navigation
+  'AnimatedComponent',
+  'GestureHandlerRootView',
+  'SafeAreaProvider'
+];
+
+const defaultIgnoredElementsNative = [
+  'NativeSafeAreaProvider',
+  'AnimatedNativeScreen',
+  'unknown',
+  'View',
+  'Component',
+  'NativeText'
+];
