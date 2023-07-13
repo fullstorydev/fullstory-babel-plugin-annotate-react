@@ -10,7 +10,7 @@ function App() {
         <Text/>
         <Redirect href={"https://github.com/fullstorydev/fullstory-babel-plugin-annotate-react"} text={"View the source code"}/>
         <br/>
-        <Redirect href={"https://developer.fullstory.com/"} text={"Visit the FullStory Developer Center"}/>
+        <Redirect href={"https://developer.fullstory.com/"} text={"Visit the FullStory Developer Guide"}/>
       </header>
     </div>
   );

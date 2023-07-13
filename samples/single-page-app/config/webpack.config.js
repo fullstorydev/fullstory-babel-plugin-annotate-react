@@ -419,7 +419,6 @@ module.exports = function (webpackEnv) {
                     },
                   ],
                 ],
-                
                 plugins: [
                    // This is the local reference @fullstory/babel-plugin-annotate-react
                   // To use in your projects you would replace '../..' with '@fullstory/babel-plugin-annotate-react'

@@ -3,6 +3,6 @@ import App from './App';
 
 test('renders learn more link', () => {
   render(<App />);
-  const linkElement = screen.getByText("Visit the FullStory developer center");
+  const linkElement = screen.getByText("Visit the FullStory Developer Guide");
   expect(linkElement).toBeInTheDocument();
 });
