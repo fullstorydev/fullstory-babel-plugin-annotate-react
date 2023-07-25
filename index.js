@@ -157,10 +157,12 @@ function isKnownIncompatiblePluginFromState(state) {
 }
 
 function attributeNamesFromState(state) {
-  if (state.opts[nativeOptionName] === true) {
-    return [nativeComponentName, nativeElementName, nativeSourceFileName]
-  }
-  return [webComponentName, webElementName, webSourceFileName]
+  const native = state.opts.native === true;
+  return [
+    state.opts.componentAttribute || native ? nativeComponentName : webComponentName,
+    state.opts.elementAttribute || native ? nativeElementName : webElementName,
+    state.opts.sourceFileAttribute || native ? nativeSourceFileName : webSourceFileName
+  ]
 }
 
 function isReactFragment(openingElement) {

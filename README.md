@@ -4,6 +4,7 @@
 This is a Babel plugin that annotates React components with stable attributes that can be used to search and select using [FullStory](https://www.fullstory.com/). This is most useful when using a React system that generates dynamic names for Components or rearranges elements.
 
 For React on the web the attributes are `data-component`, `data-element`, and `data-source-file`. For React Native the attributes are `dataComponent`, `dataElement`, and `dataSourceFile`.
+These attribute names may be customized by setting the `componentAttribute`, `elementAttribute`, and `sourceFileAttribute` configuration options.
 
 The component attribute names the `React.Component` and the element attribute names the original native elements like `View` or `Image` or an emitter of DOM elements like `Fragment`.
 
@@ -42,6 +43,13 @@ To activate React Native support you must pass in a `native` plugin option like 
       ["@fullstory/babel-plugin-annotate-react", { native: true }]
     ]
 
+When using this library with [FullStory for Mobile Apps](https://www.fullstory.com/platform/mobile-apps/), we recommend setting `componentAttribute: 'fsTagName'` to generate better privacy selectors. 
+(Important note: you may need to update or add to pre-existing privacy selectors and defined elements after making this change.)
+<!-- todo: write up a KB article to walk customers through transitioning from `dataComponent` to `fsTagName` if they have pre-existing privacy selectors or defined elements and link to it here -->
+
+    plugins: [
+      ["@fullstory/babel-plugin-annotate-react", { native: true, componentAttribute: 'fsTagName' }]
+    ]
 
 By default, the plugin does not annotate `React.Fragment`s because they may or may not contain a child that ends up being an HTML element.
 
