@@ -37,19 +37,29 @@ Final render:
       <h1>Hello world</h1>
     </div>
 
+## React Native
+
 To activate React Native support you must pass in a `native` plugin option like so:
 
     plugins: [
       ["@fullstory/babel-plugin-annotate-react", { native: true }]
     ]
 
-When using this library with [FullStory for Mobile Apps](https://www.fullstory.com/platform/mobile-apps/), we recommend setting `componentAttribute: 'fsTagName'` to generate better privacy selectors. 
-(Important note: you may need to update or add to pre-existing privacy selectors and defined elements after making this change.)
+### React Native with FullStory 
+
+When using this library with [FullStory for Mobile Apps](https://www.fullstory.com/platform/mobile-apps/), we recommend setting the `componentAttribute` option to `'fsTagName'` to generate better privacy selectors. 
+
+⚠️ Important: Existing FullStory privacy selectors and defined elements may need to be updated if the app was previously published without `componentAttribute: 'fsTagName'`.
 <!-- todo: write up a KB article to walk customers through transitioning from `dataComponent` to `fsTagName` if they have pre-existing privacy selectors or defined elements and link to it here -->
 
     plugins: [
+      '@fullstory/react-native',
       ["@fullstory/babel-plugin-annotate-react", { native: true, componentAttribute: 'fsTagName' }]
     ]
+
+See [Getting Started with FullStory React Native Capture](https://help.fullstory.com/hc/en-us/articles/360052419133-Getting-Started-with-FullStory-React-Native-Capture) for more info.
+
+## Fragments
 
 By default, the plugin does not annotate `React.Fragment`s because they may or may not contain a child that ends up being an HTML element.
 
@@ -76,12 +86,14 @@ If you would like the plugin to attempt to annotate the first HTML element creat
       ["@fullstory/babel-plugin-annotate-react", { "annotate-fragments": true }]
     ]
 
+## Ignoring Components
+
 If you would like the plugin to skip the annotation for certain components, use the `ignoreComponents` option:
 
 ```javascript
   plugins: [
       [
-        '../..',
+        "@fullstory/babel-plugin-annotate-react",
         {
           ignoreComponents:[
             // each item must be a string array containing three items: file name, component name, element name
@@ -95,6 +107,8 @@ If you would like the plugin to skip the annotation for certain components, use 
       ],
   ]
 ```
+
+## Sample Apps
 
 We have a few samples to demonstrate this plugin:
 
