@@ -54,8 +54,14 @@ When using this library with [FullStory for Mobile Apps](https://www.fullstory.c
 
     plugins: [
       '@fullstory/react-native',
-      ["@fullstory/babel-plugin-annotate-react", { native: true, componentAttribute: 'fsTagName' }]
+      ["@fullstory/babel-plugin-annotate-react", {
+        native: true,
+        componentAttribute: 'fsTagName',
+        elementAttribute: 'fsTagName',
+      }]
     ]
+
+(Note: with this configuration, the component will take precedence over the element for views that have both.)
 
 See [Getting Started with FullStory React Native Capture](https://help.fullstory.com/hc/en-us/articles/360052419133-Getting-Started-with-FullStory-React-Native-Capture) for more info.
 

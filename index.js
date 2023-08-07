@@ -215,7 +215,9 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, attri
   // Add a stable attribute for the element name but only for non-DOM names
   if (
     !ignoredComponentFromOptions &&
-    !hasNodeNamed(openingElement, componentAttributeName)
+    !hasNodeNamed(openingElement, componentAttributeName) &&
+    // if componentAttributeName and elementAttributeName are set to the same thing (e.g. fsTagName), then only set the element attribute when we don't have a component attribute
+    (componentAttributeName !== elementAttributeName) || !componentName
   ) {
     if (defaultIgnoredElements.includes(elementName)) {
       ignoredElement = true
