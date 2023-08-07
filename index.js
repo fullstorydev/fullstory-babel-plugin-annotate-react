@@ -159,9 +159,9 @@ function isKnownIncompatiblePluginFromState(state) {
 function attributeNamesFromState(state) {
   const native = state.opts.native === true;
   return [
-    state.opts.componentAttribute || native ? nativeComponentName : webComponentName,
-    state.opts.elementAttribute || native ? nativeElementName : webElementName,
-    state.opts.sourceFileAttribute || native ? nativeSourceFileName : webSourceFileName
+    state.opts.componentAttribute || (native ? nativeComponentName : webComponentName),
+    state.opts.elementAttribute || (native ? nativeElementName : webElementName),
+    state.opts.sourceFileAttribute || (native ? nativeSourceFileName : webSourceFileName)
   ]
 }
 
