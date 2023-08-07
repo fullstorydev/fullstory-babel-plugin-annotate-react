@@ -217,7 +217,7 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, attri
     !ignoredComponentFromOptions &&
     !hasNodeNamed(openingElement, componentAttributeName) &&
     // if componentAttributeName and elementAttributeName are set to the same thing (e.g. fsTagName), then only set the element attribute when we don't have a component attribute
-    (componentAttributeName !== elementAttributeName) || !componentName
+    ((componentAttributeName !== elementAttributeName) || !componentName)
   ) {
     if (defaultIgnoredElements.includes(elementName)) {
       ignoredElement = true
