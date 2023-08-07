@@ -47,14 +47,14 @@ To activate React Native support you must pass in a `native` plugin option like 
 
 ### React Native with FullStory 
 
-When using this library with [FullStory for Mobile Apps](https://www.fullstory.com/platform/mobile-apps/), we recommend setting the `componentAttribute` option to `'fsTagName'` to generate better privacy selectors. 
+When using this library with [FullStory for Mobile Apps](https://www.fullstory.com/platform/mobile-apps/), we recommend setting the `componentAttribute` and `elementAttribute` options both to `'fsTagName'` to generate better privacy selectors. 
 
-⚠️ Important: Existing FullStory privacy selectors and defined elements may need to be updated if the app was previously published without `componentAttribute: 'fsTagName'`.
-<!-- todo: write up a KB article to walk customers through transitioning from `dataComponent` to `fsTagName` if they have pre-existing privacy selectors or defined elements and link to it here -->
+⚠️ Important: Existing FullStory privacy selectors and defined elements may need to be updated if the app was previously published without `componentAttribute` and `elementAttribute` set.
+<!-- todo: write up a KB article to walk customers through transitioning to `fsTagName` if they have pre-existing privacy selectors or defined elements; link to it here -->
 
     plugins: [
       '@fullstory/react-native',
-      ["@fullstory/babel-plugin-annotate-react", {
+      ["@fullstory/annotate-react", {
         native: true,
         componentAttribute: 'fsTagName',
         elementAttribute: 'fsTagName',
