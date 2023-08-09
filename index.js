@@ -6,7 +6,6 @@ const nativeComponentName = 'dataComponent';
 const nativeElementName = 'dataElement';
 const nativeSourceFileName = 'dataSourceFile';
 
-const nativeOptionName = 'native';
 const annotateFragmentsOptionName = 'annotate-fragments';
 const ignoreComponentsOptionName = 'ignoreComponents';
 
