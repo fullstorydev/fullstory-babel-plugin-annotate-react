@@ -47,7 +47,7 @@ To activate React Native support you must pass in a `native` plugin option like 
 
 ### React Native with FullStory 
 
-When using this library with [FullStory for Mobile Apps](https://www.fullstory.com/platform/mobile-apps/), we recommend setting the `componentAttribute` and `elementAttribute` options both to `'fsTagName'` to generate better privacy selectors. 
+When using this library with [FullStory for Mobile Apps](https://www.fullstory.com/platform/mobile-apps/), we recommend setting the `componentAttribute` and `elementAttribute` options both to [`'fsTagName'`](https://help.fullstory.com/hc/en-us/articles/360052419133-Getting-Started-with-FullStory-React-Native-Capture#01GRMBR5FK3R89ZQQ9F3V6Z5RB) to generate better privacy selectors. 
 
 ⚠️ Important: Existing FullStory privacy selectors and defined elements may need to be updated if the app was previously published without `componentAttribute` and `elementAttribute` set.
 <!-- todo: write up a KB article to walk customers through transitioning to `fsTagName` if they have pre-existing privacy selectors or defined elements; link to it here -->
