@@ -160,12 +160,8 @@ function isKnownIncompatiblePluginFromState(state) {
 }
 
 function attributeNamesFromState(state) {
-  const { native, setFSTagName } = state.opts;
-  if (setFSTagName && !native) {
-    throw new Error('`setFSTagName: true` is invalid unless `native: true` is also set in the configuration for @fullstory/babel-plugin-annotate-react')
-  }
-  if (native) {
-    if (setFSTagName) {
+  if (state.opts.native) {
+    if (state.opts.setFSTagName) {
       return [fsTagName, fsTagName, nativeSourceFileName];
     } else {
       return [nativeComponentName, nativeElementName, nativeSourceFileName];
