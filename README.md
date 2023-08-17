@@ -3,8 +3,7 @@
 
 This is a Babel plugin that annotates React components with stable attributes that can be used to search and select using [FullStory](https://www.fullstory.com/). This is most useful when using a React system that generates dynamic names for Components or rearranges elements.
 
-For React on the web the attributes are `data-component`, `data-element`, and `data-source-file`. For React Native the attributes are `dataComponent`, `dataElement`, and `dataSourceFile`.
-These attribute names may be customized by setting the `componentAttribute`, `elementAttribute`, and `sourceFileAttribute` configuration options.
+For React on the web the attributes are `data-component`, `data-element`, and `data-source-file`. For React Native the attributes are `dataComponent`, `dataElement`, and `dataSourceFile`, or [`fsTagName`](https://developer.fullstory.com/mobile/react-native/auto-capture/set-tag-name/) and `dataSourceFile` with `setFSTagName` enabled.
 
 The component attribute names the `React.Component` and the element attribute names the original native elements like `View` or `Image` or an emitter of DOM elements like `Fragment`.
 
@@ -48,7 +47,7 @@ To activate React Native support you must pass in a `native` plugin option like 
 ### React Native with FullStory 
 
 
-When using this library with [FullStory for Mobile Apps](https://www.fullstory.com/platform/mobile-apps/), we recommend setting `setFSTagName: true` to generate better privacy selectors. (See the [`fsTagName` docs](https://developer.fullstory.com/mobile/react-native/auto-capture/set-tag-name/) for more info.)
+When using this library with [FullStory for Mobile Apps](https://www.fullstory.com/platform/mobile-apps/), we recommend setting `setFSTagName: true` to generate better privacy selectors by setting [`fsTagName`](https://developer.fullstory.com/mobile/react-native/auto-capture/set-tag-name/) rather than `dataElement` and `dataComponent`.
 
 ⚠️ Important: Existing FullStory privacy selectors and defined elements may need to be updated if the app was previously published without `setFSTagName: true`.
 <!-- todo: write up a KB article to walk customers through transitioning to `fsTagName` if they have pre-existing privacy selectors or defined elements; link to it here -->
