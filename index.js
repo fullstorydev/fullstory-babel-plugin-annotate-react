@@ -5,6 +5,7 @@ const webSourceFileName = 'data-source-file';
 const nativeComponentName = 'dataComponent';
 const nativeElementName = 'dataElement';
 const nativeSourceFileName = 'dataSourceFile';
+const fsTagName = 'fsTagName'
 
 const annotateFragmentsOptionName = 'annotate-fragments';
 const ignoreComponentsOptionName = 'ignoreComponents';
@@ -51,6 +52,9 @@ module.exports = function ({ types: t }) {
   return {
     pre() {
       this.ignoreComponentsFromOption = this.opts[ignoreComponentsOptionName] || [];
+      if (this.opts.setFSTagName && !this.opts.native) {
+        throw new Error('`setFSTagName: true` is invalid unless `native: true` is also set in the configuration for @fullstory/babel-plugin-annotate-react')
+      }
     },
     visitor: {
       FunctionDeclaration(path, state) {
@@ -156,12 +160,18 @@ function isKnownIncompatiblePluginFromState(state) {
 }
 
 function attributeNamesFromState(state) {
-  const native = state.opts.native === true;
-  return [
-    state.opts.componentAttribute || (native ? nativeComponentName : webComponentName),
-    state.opts.elementAttribute || (native ? nativeElementName : webElementName),
-    state.opts.sourceFileAttribute || (native ? nativeSourceFileName : webSourceFileName)
-  ]
+  const { native, setFSTagName } = state.opts;
+  if (setFSTagName && !native) {
+    throw new Error('`setFSTagName: true` is invalid unless `native: true` is also set in the configuration for @fullstory/babel-plugin-annotate-react')
+  }
+  if (native) {
+    if (setFSTagName) {
+      return [fsTagName, fsTagName, nativeSourceFileName];
+    } else {
+      return [nativeComponentName, nativeElementName, nativeSourceFileName];
+    }
+  }
+  return [webComponentName, webElementName, webSourceFileName]
 }
 
 function isReactFragment(openingElement) {
@@ -215,7 +225,7 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, attri
   if (
     !ignoredComponentFromOptions &&
     !hasNodeNamed(openingElement, componentAttributeName) &&
-    // if componentAttributeName and elementAttributeName are set to the same thing (e.g. fsTagName), then only set the element attribute when we don't have a component attribute
+    // if componentAttributeName and elementAttributeName are set to the same thing (fsTagName), then only set the element attribute when we don't have a component attribute
     ((componentAttributeName !== elementAttributeName) || !componentName)
   ) {
     if (defaultIgnoredElements.includes(elementName)) {

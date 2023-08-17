@@ -1157,33 +1157,7 @@ class Bananas extends Component {
 }"
 `;
 
-const BananasStandardOutputWithCustomAttributes = `
-"import React, { Component } from 'react';
-import { Image } from 'react-native';
-
-class Bananas extends Component {
-  render() {
-    let pic = {
-      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
-    };
-    return /*#__PURE__*/React.createElement(Image, {
-      source: pic,
-      style: {
-        width: 193,
-        height: 110,
-        marginTop: 10
-      },
-      fsClass: \\"test-class\\",
-      testElement: \\"Image\\",
-      testComponent: \\"Bananas\\",
-      testSourceFile: \\"filename-test.js\\"
-    });
-  }
-
-}"
-`;
-
-const BananasStandardOutputWithFSAttributes = `
+const BananasStandardOutputWithFSTagName = `
 "import React, { Component } from 'react';
 import { Image } from 'react-native';
 
@@ -1201,7 +1175,7 @@ class Bananas extends Component {
       },
       fsClass: \\"test-class\\",
       fsTagName: \\"Bananas\\",
-      testSourceFile: \\"filename-test.js\\"
+      dataSourceFile: \\"filename-test.js\\"
     });
   }
 
@@ -2525,7 +2499,7 @@ it('Bananas incompatible plugin @react-navigation source snapshot matches', () =
   expect(code).toMatchInlineSnapshot(BananasStandardOutputNoAttributes);
 });
 
-it('Bananas custom attribute names matches', () => {
+it('Bananas custom attribute names let component override element with setFSTagName', () => {
   const { code } = babel.transform(
     BananasStandardInput,
     {
@@ -2534,31 +2508,10 @@ it('Bananas custom attribute names matches', () => {
       plugins: [
         [plugin, {
           native: true,
-          componentAttribute: 'testComponent',
-          elementAttribute: 'testElement',
-          sourceFileAttribute: 'testSourceFile'
+          setFSTagName: true,
         }]
       ]
     },
   );
-  expect(code).toMatchInlineSnapshot(BananasStandardOutputWithCustomAttributes);
-});
-
-it('Bananas custom attribute names let component override element', () => {
-  const { code } = babel.transform(
-    BananasStandardInput,
-    {
-      filename: "filename-test.js",
-      presets: ["@babel/preset-react"],
-      plugins: [
-        [plugin, {
-          native: true,
-          componentAttribute: 'fsTagName',
-          elementAttribute: 'fsTagName',
-          sourceFileAttribute: 'testSourceFile'
-        }]
-      ]
-    },
-  );
-  expect(code).toMatchInlineSnapshot(BananasStandardOutputWithFSAttributes);
+  expect(code).toMatchInlineSnapshot(BananasStandardOutputWithFSTagName);
 });

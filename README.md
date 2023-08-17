@@ -47,17 +47,17 @@ To activate React Native support you must pass in a `native` plugin option like 
 
 ### React Native with FullStory 
 
-When using this library with [FullStory for Mobile Apps](https://www.fullstory.com/platform/mobile-apps/), we recommend setting the `componentAttribute` and `elementAttribute` options both to [`'fsTagName'`](https://help.fullstory.com/hc/en-us/articles/360052419133-Getting-Started-with-FullStory-React-Native-Capture#01GRMBR5FK3R89ZQQ9F3V6Z5RB) to generate better privacy selectors. 
 
-⚠️ Important: Existing FullStory privacy selectors and defined elements may need to be updated if the app was previously published without `componentAttribute` and `elementAttribute` set.
+When using this library with [FullStory for Mobile Apps](https://www.fullstory.com/platform/mobile-apps/), we recommend setting `setFSTagName: true` to generate better privacy selectors. (See the [`fsTagName` docs](https://developer.fullstory.com/mobile/react-native/auto-capture/set-tag-name/) for more info.)
+
+⚠️ Important: Existing FullStory privacy selectors and defined elements may need to be updated if the app was previously published without `setFSTagName: true`.
 <!-- todo: write up a KB article to walk customers through transitioning to `fsTagName` if they have pre-existing privacy selectors or defined elements; link to it here -->
 
     plugins: [
       '@fullstory/react-native',
       ["@fullstory/annotate-react", {
         native: true,
-        componentAttribute: 'fsTagName',
-        elementAttribute: 'fsTagName',
+        setFSTagName: true,
       }]
     ]
 
@@ -99,7 +99,7 @@ If you would like the plugin to skip the annotation for certain components, use 
 ```javascript
   plugins: [
       [
-        "@fullstory/babel-plugin-annotate-react",
+        "@fullstory/annotate-react",
         {
           ignoreComponents:[
             // each item must be a string array containing three items: file name, component name, element name
