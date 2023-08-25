@@ -2499,7 +2499,7 @@ it('Bananas incompatible plugin @react-navigation source snapshot matches', () =
   expect(code).toMatchInlineSnapshot(BananasStandardOutputNoAttributes);
 });
 
-it('Bananas custom attribute names let component override element with setFSTagName', () => {
+it('setFSTagName sets fsTagName on component with its dataComponent value', () => {
   const { code } = babel.transform(
     BananasStandardInput,
     {
