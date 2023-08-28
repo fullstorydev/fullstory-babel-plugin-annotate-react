@@ -3,7 +3,7 @@
 
 This is a Babel plugin that annotates React components with stable attributes that can be used to search and select using [FullStory](https://www.fullstory.com/). This is most useful when using a React system that generates dynamic names for Components or rearranges elements.
 
-For React on the web the attributes are `data-component`, `data-element`, and `data-source-file`. For React Native the attributes are `dataComponent`, `dataElement`, and `dataSourceFile`, or [`fsTagName`](https://developer.fullstory.com/mobile/react-native/auto-capture/set-tag-name/) and `dataSourceFile` with `setFSTagName` enabled.
+For React on the web the attributes are `data-component`, `data-element`, and `data-source-file`. For React Native the attributes are `dataComponent`, `dataElement`, and `dataSourceFile`.
 
 The component attribute names the `React.Component` and the element attribute names the original native elements like `View` or `Image` or an emitter of DOM elements like `Fragment`.
 
@@ -44,25 +44,29 @@ To activate React Native support you must pass in a `native` plugin option like 
       ["@fullstory/babel-plugin-annotate-react", { native: true }]
     ]
 
-### React Native with FullStory 
+See [Getting Started with FullStory React Native Capture](https://help.fullstory.com/hc/en-us/articles/360052419133-Getting-Started-with-FullStory-React-Native-Capture) for more info.
 
+### `setFSTagName` setting
 
-When using this library with [FullStory for Mobile Apps](https://www.fullstory.com/platform/mobile-apps/), we recommend setting `setFSTagName: true` to generate better privacy selectors by setting [`fsTagName`](https://developer.fullstory.com/mobile/react-native/auto-capture/set-tag-name/) rather than `dataElement` and `dataComponent`.
+When using this library with [FullStory for Mobile Apps](https://www.fullstory.com/platform/mobile-apps/), we recommend setting `setFSTagName: true` to generate better privacy selectors. This setting will automatically set [`fsTagName`](https://developer.fullstory.com/mobile/react-native/auto-capture/set-tag-name/) with the value of `dataElement` or `dataComponent`, which will truncate the privacy selector and avoid duplicate naming.
+
+Example:
+* Before `RCTSafeAreaView[data-source-file="App.tsx"][data-element="SafeAreaView"][data-component="App"]`
+* After `App[data-source-file="App.tsx"]`
+
+```
+plugins: [
+  '@fullstory/react-native',
+  ["@fullstory/annotate-react", {
+    native: true,
+    setFSTagName: true,
+  }]
+]
+```
 
 ⚠️ Important: Existing FullStory privacy selectors and defined elements may need to be updated if the app was previously published without `setFSTagName: true`.
 <!-- todo: write up a KB article to walk customers through transitioning to `fsTagName` if they have pre-existing privacy selectors or defined elements; link to it here -->
 
-    plugins: [
-      '@fullstory/react-native',
-      ["@fullstory/annotate-react", {
-        native: true,
-        setFSTagName: true,
-      }]
-    ]
-
-(Note: with this configuration, the component will take precedence over the element for views that have both.)
-
-See [Getting Started with FullStory React Native Capture](https://help.fullstory.com/hc/en-us/articles/360052419133-Getting-Started-with-FullStory-React-Native-Capture) for more info.
 
 ## Fragments
 
