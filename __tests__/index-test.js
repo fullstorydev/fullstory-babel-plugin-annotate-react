@@ -1157,6 +1157,31 @@ class Bananas extends Component {
 }"
 `;
 
+const BananasStandardOutputWithFSTagName = `
+"import React, { Component } from 'react';
+import { Image } from 'react-native';
+
+class Bananas extends Component {
+  render() {
+    let pic = {
+      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
+    };
+    return /*#__PURE__*/React.createElement(Image, {
+      source: pic,
+      style: {
+        width: 193,
+        height: 110,
+        marginTop: 10
+      },
+      fsClass: \\"test-class\\",
+      fsTagName: \\"Bananas\\",
+      dataSourceFile: \\"filename-test.js\\"
+    });
+  }
+
+}"
+`;
+
 it('unknown-element snapshot matches', () => {
   const { code } = babel.transform(
     `import React, { Component } from 'react';
@@ -2472,4 +2497,75 @@ it('Bananas incompatible plugin @react-navigation source snapshot matches', () =
     },
   );
   expect(code).toMatchInlineSnapshot(BananasStandardOutputNoAttributes);
+});
+
+it('setFSTagName sets fsTagName on component with its dataComponent value', () => {
+  const { code } = babel.transform(
+    BananasStandardInput,
+    {
+      filename: "filename-test.js",
+      presets: ["@babel/preset-react"],
+      plugins: [
+        [plugin, {
+          native: true,
+          setFSTagName: true,
+        }]
+      ]
+    },
+  );
+  expect(code).toMatchInlineSnapshot(BananasStandardOutputWithFSTagName);
+});
+
+it('Bananas custom attribute names let component override element with setFSTagName', () => {
+  const BananasInputCustomFSTagName = `import React, { Component } from 'react';
+import { Image } from 'react-native';
+
+class Bananas extends Component {
+  render() {
+    let pic = {
+      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
+    };
+    return <Image source={pic} style={{ width: 193, height: 110, marginTop: 10 }} fsClass="test-class" fsTagName="CustomTagName" />;
+  }
+}`;
+
+  const BananasOutputCustomFSTagName = `
+"import React, { Component } from 'react';
+import { Image } from 'react-native';
+
+class Bananas extends Component {
+  render() {
+    let pic = {
+      uri: 'https://upload.wikimedia.org/wikipedia/commons/d/de/Bananavarieties.jpg'
+    };
+    return /*#__PURE__*/React.createElement(Image, {
+      source: pic,
+      style: {
+        width: 193,
+        height: 110,
+        marginTop: 10
+      },
+      fsClass: \\"test-class\\",
+      fsTagName: \\"CustomTagName\\",
+      dataSourceFile: \\"filename-test.js\\"
+    });
+  }
+
+}"
+`;
+
+  const { code } = babel.transform(
+    BananasInputCustomFSTagName,
+    {
+      filename: "filename-test.js",
+      presets: ["@babel/preset-react"],
+      plugins: [
+        [plugin, {
+          native: true,
+          setFSTagName: true,
+        }]
+      ]
+    },
+  );
+  expect(code).toMatchInlineSnapshot(BananasOutputCustomFSTagName);
 });

@@ -5,8 +5,8 @@ const webSourceFileName = 'data-source-file';
 const nativeComponentName = 'dataComponent';
 const nativeElementName = 'dataElement';
 const nativeSourceFileName = 'dataSourceFile';
+const fsTagName = 'fsTagName'
 
-const nativeOptionName = 'native';
 const annotateFragmentsOptionName = 'annotate-fragments';
 const ignoreComponentsOptionName = 'ignoreComponents';
 
@@ -52,6 +52,9 @@ module.exports = function ({ types: t }) {
   return {
     pre() {
       this.ignoreComponentsFromOption = this.opts[ignoreComponentsOptionName] || [];
+      if (this.opts.setFSTagName && !this.opts.native) {
+        throw new Error('`setFSTagName: true` is invalid unless `native: true` is also set in the configuration for @fullstory/babel-plugin-annotate-react')
+      }
     },
     visitor: {
       FunctionDeclaration(path, state) {
@@ -157,8 +160,12 @@ function isKnownIncompatiblePluginFromState(state) {
 }
 
 function attributeNamesFromState(state) {
-  if (state.opts[nativeOptionName] === true) {
-    return [nativeComponentName, nativeElementName, nativeSourceFileName]
+  if (state.opts.native) {
+    if (state.opts.setFSTagName) {
+      return [fsTagName, fsTagName, nativeSourceFileName];
+    } else {
+      return [nativeComponentName, nativeElementName, nativeSourceFileName];
+    }
   }
   return [webComponentName, webElementName, webSourceFileName]
 }
@@ -213,7 +220,9 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, attri
   // Add a stable attribute for the element name but only for non-DOM names
   if (
     !ignoredComponentFromOptions &&
-    !hasNodeNamed(openingElement, componentAttributeName)
+    !hasNodeNamed(openingElement, componentAttributeName) &&
+    // if componentAttributeName and elementAttributeName are set to the same thing (fsTagName), then only set the element attribute when we don't have a component attribute
+    ((componentAttributeName !== elementAttributeName) || !componentName)
   ) {
     if (defaultIgnoredElements.includes(elementName)) {
       ignoredElement = true
