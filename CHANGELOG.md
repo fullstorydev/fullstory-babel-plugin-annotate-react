@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.3.0
+
+- Add [setFSTagName](./README.md#setfstagname-setting) configuration for React Native.
+
 ## 2.2.2
 
 - Fixed annotating short syntax Fragments when enabled.
