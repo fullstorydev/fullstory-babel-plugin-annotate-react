@@ -28,8 +28,8 @@ All types of contributions are encouraged and valued. See the [Table of Contents
 
 If you then still feel the need to ask a question and need clarification, we recommend:
 
-- Create a new [GitHub issue](https://github.com/fullstorydev/fullstory-babel-plugin-annotate-react/issues/new?template=ask_a_question.md) with our ask a question template.
-	- Alternatively, you can submitting your questions to our [Community](https://community.fullstory.com/).
+- Creating a new [GitHub issue](https://github.com/fullstorydev/fullstory-babel-plugin-annotate-react/issues/new?template=ask_a_question.md) with our ask a question template.
+	- Alternatively, you can submit your questions to our [Community](https://community.fullstory.com/).
 - Please provide as much context as you can about what you're running into.
 - Provide project and platform versions (nodejs, npm, etc), depending on what seems relevant to your issue.
 
@@ -52,7 +52,7 @@ Before getting started, it is important to configure your development environmen
 
 We use Jest as our test runner to verify changes and behaviors in our package. We use both unit tests and snapshot tests to prevent regressions in our code base. In order to run the jest tests you must have prepared your [local environment](#preparing-your-environment).
 
-You can run the tests from the project root directory using `npm run test`
+You can run the tests from the project root directory using `npm run test`.
 
 ### Reporting Bugs
 
@@ -78,8 +78,7 @@ Please complete the following steps in advance to help us fix any potential bugs
 
 If you run into an issue with the project:
 - Create a new [GitHub issue](https://github.com/fullstorydev/fullstory-babel-plugin-annotate-react/issues/new?&template=bug_report.md) with our bug report template.
-	- Alternatively you can submitting your request through the [FullStory Help Center](https://help.fullstory.com/hc/en-us/requests/new) with details about the error you're running into.
-- Explain the behavior you would expect and the current behavior.
+	- Alternatively you can submit your request through the [FullStory Help Center](https://help.fullstory.com/hc/en-us/requests/new) with details about the error you're running into.
 - Provide the information you collected in the previous section. 
 - For faster remediation you should isolate the problem and create a reduced test case or provide a minimal reproducible example.
 - A team member will try to reproduce the issue with your provided steps. If there are no reproduction steps or no obvious way to reproduce the issue, the team will ask you for those steps.
@@ -93,6 +92,8 @@ This section guides you through submitting an enhancement suggestion such as a c
 - Make sure that you are using the latest version.
 - Find out if the functionality is already covered.
 - Find out whether your idea fits with the scope and aims of the project. It's up to you to convince the maintainers of the merits of this feature. We want features that will be useful to the majority of users.
+
+#### Creating a Feature Request
 
 Enhancements are suggested by creating a new [GitHub issue](https://github.com/fullstorydev/fullstory-babel-plugin-annotate-react/issues/new?&template=feature_request.md) with our feature request template.
 
