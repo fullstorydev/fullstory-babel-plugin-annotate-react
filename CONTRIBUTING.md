@@ -19,7 +19,7 @@ All types of contributions are encouraged and valued. See the [Table of Contents
 - [I Want To Contribute](#i-want-to-contribute)
     - [Making Code Changes](#making-code-changes)
     - [Reporting Bugs](#reporting-bugs)
-	- [Suggesting Enhancements](#suggesting-enhancements)
+    - [Suggesting Enhancements](#suggesting-enhancements)
 - [Pull Request Process](#pull-request-process)
 
 ## I Have a Question
