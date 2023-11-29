@@ -4,10 +4,10 @@ Thanks for taking the time to contribute!
 
 Here are some important resources to consider:
 
-  * [FullStory's Annotate React plugin for Web & Native](https://help.fullstory.com/hc/en-us/articles/360049493054-FullStory-s-Annotate-React-plugin-for-Web-Native)
-  * [Getting Started with FullStory React Native Capture](https://help.fullstory.com/hc/en-us/articles/360052419133)
-  * [README.md](./README.md)
-  * [FullStory Help Center](https://www.fullstory.com/)
+  * [README](./README.md)
+  * [FullStory's Annotate React plugin for Web & Native](https://help.fullstory.com/hc/articles/360049493054-FullStory-s-Annotate-React-plugin-for-Web-Native)
+  * [Getting Started with FullStory React Native Capture](https://help.fullstory.com/hc/articles/360052419133)
+  * [FullStory Help Center](https://help.fullstory.com/)
   * [FullStory Community](https://community.fullstory.com/)
   * [FullStory Developer Guide](https://developer.fullstory.com/)
 
@@ -24,13 +24,13 @@ All types of contributions are encouraged and valued. See the [Table of Contents
 
 ## I Have a Question
 
-> Search for similar questions in our [Community Portal](https://community.fullstory.com/) and browse through our [Help Center](https://help.fullstory.com/hc/en-us) before asking a question.
+> Search for similar questions in our [Community Portal](https://community.fullstory.com/) and browse through our [Help Center](https://help.fullstory.com/) before asking a question.
 
 If you then still feel the need to ask a question and need clarification, we recommend:
 
-- Creating a new [GitHub issue](https://github.com/fullstorydev/fullstory-babel-plugin-annotate-react/issues/new?template=ask_a_question.md) with our ask a question template.
+- Creating a new [GitHub issue](https://github.com/fullstorydev/fullstory-babel-plugin-annotate-react/issues/new?template=ask_a_question.md), filling in the templated description.
 	- Alternatively, you can submit your questions to our [Community](https://community.fullstory.com/).
-- Please provide as much context as you can about what you're running into.
+- Please provide as much context as you can with your question.
 - Provide project and platform versions (nodejs, npm, etc), depending on what seems relevant to your issue.
 
 ## I Want To Contribute
@@ -62,7 +62,7 @@ Please complete the following steps in advance to help us fix any potential bugs
 
 - Make sure that you are using the latest version.
 - Determine if your bug is really a bug and not an error on your side e.g. using incompatible environment components/versions. (If you are looking for support, you might want to check [this section](#i-have-a-question)).
-- Check if other users have experienced (and potentially already solved) the same issue you are having, check if there is not already a bug report existing for your bug or error in the [bug tracker](https://github.com/fullstorydev/fullstory-babel-plugin-annotate-react/issues?q=is%3Aopen+is%3Aissue+label%3Abug).
+- Check if there is already an [open issue](https://github.com/fullstorydev/fullstory-babel-plugin-annotate-react/issues?q=is%3Aopen+is%3Aissue+label%3Abug) for the problem you're encountering.
 - Also make sure to search the internet (including Stack Overflow) to see if other users have discussed the issue.
 - Collect information about the bug and create a minimal reproducible example.
     - Include sample source code or other data files and document the expected behavior.
