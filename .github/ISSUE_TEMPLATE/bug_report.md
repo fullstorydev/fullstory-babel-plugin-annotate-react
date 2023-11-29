@@ -26,7 +26,7 @@ A clear and concise description of what actually happened.
  - NPM version (`npm -v`) [e.g. `8.12.1`]
 
 **Additional comments**
-Add any other comments about the issue, or the reason and use case for this.
+Add any other comments about the issue.
 
 **Logs**
 If applicable, add any relevant errors or logs to help explain your problem.

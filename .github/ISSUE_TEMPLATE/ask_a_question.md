@@ -17,4 +17,4 @@ A broader context in which you’re asking the question. Please provide any cont
 Any attempts you've made to try to answer the question.
 
 **Additional comments**
-Add any other comments about the issue, or the reason and use case for this.
+Add any other comments about the issue.
