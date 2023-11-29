@@ -105,7 +105,7 @@ Enhancements are suggested by creating a new [GitHub issue](https://github.com/f
 
 ## Pull Request Process
 
-All pull requests should include a clear list of your changes (read more about [pull requests](http://help.github.com/pull-requests/)). Any pull request that makes functional changes to the library should also include unit tests. We can always use more test coverage. 
+All pull requests should include a clear list of your changes (read more about [pull requests](https://docs.github.com/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests)). Any pull request that makes functional changes to the library should also include unit tests. We can always use more test coverage. 
 
 Always write a clear log message for your commits. One-line messages are fine for small changes, but bigger changes should look like this:
 
