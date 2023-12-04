@@ -56,7 +56,7 @@ You can run the tests from the project root directory using `npm run test`.
 
 #### Sample Projects
 
-Use one of the available [sample apps](/samples/) if you would like to see your changes reflected in a live application. Run `npm i` in the sample application folder before running the development process. For more information on available commands for a sample application, read the scripts section of the corresponding application's `package.json` file.
+Use one of the available [sample apps](/samples/) if you would like to see your changes reflected in a live application. Run `npm i` in the sample application folder before serving the application. For more information on available commands for a sample application, read the scripts section of the corresponding application's `package.json` file.
 
 1. [React Native App](/samples/react-native-app/package.json)
 2. [Single Page App](/samples/single-page-app/package.json)
