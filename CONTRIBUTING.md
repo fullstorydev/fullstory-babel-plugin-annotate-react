@@ -54,6 +54,14 @@ We use Jest as our test runner to verify changes and behaviors in our package. W
 
 You can run the tests from the project root directory using `npm run test`.
 
+#### Sample Projects
+
+Use one of the available [sample apps](/samples/) if you would like to see your changes reflected in a live application. Run `npm i` in the sample application folder before serving the application. For more information on available commands for a sample application, read the scripts section of the corresponding application's `package.json` file.
+
+1. [React Native App](/samples/react-native-app/package.json)
+2. [Single Page App](/samples/single-page-app/package.json)
+3. [Styled Components](/samples/styled-components/package.json)
+
 ### Reporting Bugs
 
 #### Before Submitting a Bug Report
