@@ -54,6 +54,8 @@ We use Jest as our test runner to verify changes and behaviors in our package. W
 
 You can run the tests from the project root directory using `npm run test`.
 
+If you would like to see your changes reflected in a live application, use one of the available sample apps. Run `npm i` in the sample application folder before running the development process. For more information on available commands for a sample application, read the scripts section of the corresponding application's `package.json` file.
+
 ### Reporting Bugs
 
 #### Before Submitting a Bug Report
