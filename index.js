@@ -7,6 +7,7 @@ const nativeElementName = 'dataElement';
 const nativeSourceFileName = 'dataSourceFile';
 const fsTagName = 'fsTagName'
 
+const reactNativeWebOptionName = 'react-native-web';
 const annotateFragmentsOptionName = 'annotate-fragments';
 const ignoreComponentsOptionName = 'ignoreComponents';
 
@@ -61,6 +62,7 @@ module.exports = function ({ types: t }) {
         if (!path.node.id || !path.node.id.name) return
         if (isKnownIncompatiblePluginFromState(state)) return
         functionBodyPushAttributes(
+          state.opts[reactNativeWebOptionName] === true,
           state.opts[annotateFragmentsOptionName] === true,
           t,
           path,
@@ -74,6 +76,7 @@ module.exports = function ({ types: t }) {
         if (!path.parent.id || !path.parent.id.name) return
         if (isKnownIncompatiblePluginFromState(state)) return
         functionBodyPushAttributes(
+          state.opts[reactNativeWebOptionName] === true,
           state.opts[annotateFragmentsOptionName] === true,
           t,
           path,
@@ -104,6 +107,7 @@ module.exports = function ({ types: t }) {
 
             if (!arg.isJSXElement() && !arg.isJSXFragment()) return
             processJSX(
+              state.opts[reactNativeWebOptionName] === true,
               state.opts[annotateFragmentsOptionName] === true,
               t,
               arg,
@@ -197,70 +201,138 @@ function isReactFragment(openingElement) {
   )
 }
 
-function applyAttributes(t, openingElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption) {
-  if (!openingElement
-    || isReactFragment(openingElement)
-    || !openingElement.node
-    || !openingElement.node.name
-  ) {
-    return
-  }
-  if (!openingElement.node.attributes) openingElement.node.attributes = {}
-
-  const elementName = openingElement.node.name.name || 'unknown'
-
-  const ignoredComponentFromOptions = ignoreComponentsFromOption && !!ignoreComponentsFromOption.find(component =>
-    matchesIgnoreRule(component[0], sourceFileName) &&
-    matchesIgnoreRule(component[1], componentName) &&
-    matchesIgnoreRule(component[2], elementName)
-  )
+function applyAttributes(t, openingElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption, isReactNativeWeb) {
+  if (isReactNativeWeb) {
+    if (!openingElement
+      || isReactFragment(openingElement)
+      || !openingElement.node
+      || !openingElement.node.name
+    ) {
+      return
+    }
+    if (!openingElement.node.attributes) openingElement.node.attributes = {}
   
-  // Add a stable attribute for the component name (absent for non-root elements)
-  if (
-    !ignoredComponentFromOptions
-    && !hasNodeNamed(openingElement, "dataSet")) {
-
-    const attributes = [];
-
-    if (elementName) {
-      attributes.push(
-        t.objectProperty(
-          t.stringLiteral('element'),
-          t.stringLiteral(elementName)
+    const elementName = openingElement.node.name.name || 'unknown'
+  
+    const ignoredComponentFromOptions = ignoreComponentsFromOption && !!ignoreComponentsFromOption.find(component =>
+      matchesIgnoreRule(component[0], sourceFileName) &&
+      matchesIgnoreRule(component[1], componentName) &&
+      matchesIgnoreRule(component[2], elementName)
+    )
+    
+    // Add a stable attribute for the component name (absent for non-root elements)
+    if (
+      !ignoredComponentFromOptions
+      && !hasNodeNamed(openingElement, "dataSet")) {
+  
+      const attributes = [];
+  
+      if (elementName) {
+        attributes.push(
+          t.objectProperty(
+            t.stringLiteral('element'),
+            t.stringLiteral(elementName)
+          )
+        )
+      }
+      
+      if (componentName) {
+        attributes.push(
+          t.objectProperty(
+            t.stringLiteral('component'),
+            t.stringLiteral(componentName)
+          )
+        )
+      }
+      if (
+        sourceFileName) {
+          attributes.push(
+            t.objectProperty(
+              t.stringLiteral('source-file'),
+              t.stringLiteral(sourceFileName)
+            )
+          )
+        }
+  
+      openingElement.node.attributes.push(
+        t.jSXAttribute(
+          t.jsxIdentifier("dataSet"),
+          t.jsxExpressionContainer(
+            t.objectExpression(attributes),
+          ),
         )
       )
     }
-    
-    if (componentName) {
-      attributes.push(
-        t.objectProperty(
-          t.stringLiteral('component'),
+  } else {
+    const [componentAttributeName, elementAttributeName, sourceFileAttributeName] = attributeNames;
+    if (!openingElement
+      || isReactFragment(openingElement)
+      || !openingElement.node
+      || !openingElement.node.name
+    ) {
+      return
+    }
+    if (!openingElement.node.attributes) openingElement.node.attributes = {}
+  
+    const elementName = openingElement.node.name.name || 'unknown'
+  
+    const ignoredComponentFromOptions = ignoreComponentsFromOption && !!ignoreComponentsFromOption.find(component =>
+      matchesIgnoreRule(component[0], sourceFileName) &&
+      matchesIgnoreRule(component[1], componentName) &&
+      matchesIgnoreRule(component[2], elementName)
+    )
+  
+    let ignoredElement = false
+    // Add a stable attribute for the element name but only for non-DOM names
+    if (
+      !ignoredComponentFromOptions &&
+      !hasNodeNamed(openingElement, componentAttributeName) &&
+      // if componentAttributeName and elementAttributeName are set to the same thing (fsTagName), then only set the element attribute when we don't have a component attribute
+      ((componentAttributeName !== elementAttributeName) || !componentName)
+    ) {
+      if (defaultIgnoredElements.includes(elementName)) {
+        ignoredElement = true
+      } else {
+        openingElement.node.attributes.push(
+          t.jSXAttribute(
+            t.jSXIdentifier(elementAttributeName),
+            t.stringLiteral(elementName)
+          )
+        )
+      }
+    }
+  
+    // Add a stable attribute for the component name (absent for non-root elements)
+    if (
+      componentName
+      && !ignoredComponentFromOptions
+      && !hasNodeNamed(openingElement, componentAttributeName)) {
+      openingElement.node.attributes.push(
+        t.jSXAttribute(
+          t.jSXIdentifier(componentAttributeName),
           t.stringLiteral(componentName)
         )
       )
     }
+  
+    // Add a stable attribute for the source file name (absent for non-root elements)
     if (
-      sourceFileName) {
-        attributes.push(
-          t.objectProperty(
-            t.stringLiteral('source-file'),
-            t.stringLiteral(sourceFileName)
-          )
+      sourceFileName
+      && !ignoredComponentFromOptions
+      && (componentName || ignoredElement === false)
+      && !hasNodeNamed(openingElement, sourceFileAttributeName)
+    ) {
+      openingElement.node.attributes.push(
+        t.jSXAttribute(
+          t.jSXIdentifier(sourceFileAttributeName),
+          t.stringLiteral(sourceFileName)
         )
-      }
-
-    openingElement.node.attributes.push(
-      t.jSXAttribute(
-        t.jsxIdentifier("dataSet"),
-        t.jsxExpressionContainer(
-          t.objectExpression(attributes),
-        ),
       )
-    )
+    }    
   }
 }
 
-function processJSX(annotateFragments, t, jsxNode, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption) {
+function processJSX(isReactNativeWeb, annotateFragments, t, jsxNode, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption) {
   if (!jsxNode) {
     return
   }
@@ -268,7 +340,7 @@ function processJSX(annotateFragments, t, jsxNode, componentName, sourceFileName
   // only a JSXElement contains openingElement
   const openingElement = jsxNode.get('openingElement')
 
-  applyAttributes(t, openingElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption)
+  applyAttributes(t, openingElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption, isReactNativeWeb)
 
   const children = jsxNode.get('children')
   if (children && children.length) {
@@ -278,15 +350,15 @@ function processJSX(annotateFragments, t, jsxNode, componentName, sourceFileName
       // Children don't receive the data-component attribute so we pass null for componentName unless it's the first child of a Fragment with a node and `annotateFragments` is true
       if (shouldSetComponentName && child.get('openingElement') && child.get('openingElement').node) {
         shouldSetComponentName = false
-        processJSX(annotateFragments, t, child, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption)
+        processJSX(isReactNativeWeb, annotateFragments, t, child, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption)
       } else {
-        processJSX(annotateFragments, t, child, null, sourceFileName, attributeNames, ignoreComponentsFromOption)
+        processJSX(isReactNativeWeb, annotateFragments, t, child, null, sourceFileName, attributeNames, ignoreComponentsFromOption)
       }
     }
   }
 }
 
-function functionBodyPushAttributes(annotateFragments, t, path, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption) {
+function functionBodyPushAttributes(isReactNativeWeb, annotateFragments, t, path, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption) {
   let jsxNode = null
   const functionBody = path.get('body').get('body')
   if (functionBody.parent &&
@@ -314,7 +386,7 @@ function functionBodyPushAttributes(annotateFragments, t, path, componentName, s
     jsxNode = arg
   }
   if (!jsxNode) return
-  processJSX(annotateFragments, t, jsxNode, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption)
+  processJSX(isReactNativeWeb, annotateFragments, t, jsxNode, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption)
 }
 
 function matchesIgnoreRule(rule, name) {
