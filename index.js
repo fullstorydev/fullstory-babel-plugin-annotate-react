@@ -198,7 +198,6 @@ function isReactFragment(openingElement) {
 }
 
 function applyAttributes(t, openingElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption) {
-  const [componentAttributeName, elementAttributeName, sourceFileAttributeName] = attributeNames;
   if (!openingElement
     || isReactFragment(openingElement)
     || !openingElement.node
@@ -215,51 +214,47 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, attri
     matchesIgnoreRule(component[1], componentName) &&
     matchesIgnoreRule(component[2], elementName)
   )
-
-  let ignoredElement = false
-  // Add a stable attribute for the element name but only for non-DOM names
+  
+  // Add a stable attribute for the component name (absent for non-root elements)
   if (
-    !ignoredComponentFromOptions &&
-    !hasNodeNamed(openingElement, componentAttributeName) &&
-    // if componentAttributeName and elementAttributeName are set to the same thing (fsTagName), then only set the element attribute when we don't have a component attribute
-    ((componentAttributeName !== elementAttributeName) || !componentName)
-  ) {
-    if (defaultIgnoredElements.includes(elementName)) {
-      ignoredElement = true
-    } else {
-      openingElement.node.attributes.push(
-        t.jSXAttribute(
-          t.jSXIdentifier(elementAttributeName),
+    !ignoredComponentFromOptions
+    && !hasNodeNamed(openingElement, "dataSet")) {
+
+    const attributes = [];
+
+    if (elementName) {
+      attributes.push(
+        t.objectProperty(
+          t.stringLiteral('element'),
           t.stringLiteral(elementName)
         )
       )
     }
-  }
-
-  // Add a stable attribute for the component name (absent for non-root elements)
-  if (
-    componentName
-    && !ignoredComponentFromOptions
-    && !hasNodeNamed(openingElement, componentAttributeName)) {
-    openingElement.node.attributes.push(
-      t.jSXAttribute(
-        t.jSXIdentifier(componentAttributeName),
-        t.stringLiteral(componentName)
+    
+    if (componentName) {
+      attributes.push(
+        t.objectProperty(
+          t.stringLiteral('component'),
+          t.stringLiteral(componentName)
+        )
       )
-    )
-  }
+    }
+    if (
+      sourceFileName) {
+        attributes.push(
+          t.objectProperty(
+            t.stringLiteral('source-file'),
+            t.stringLiteral(sourceFileName)
+          )
+        )
+      }
 
-  // Add a stable attribute for the source file name (absent for non-root elements)
-  if (
-    sourceFileName
-    && !ignoredComponentFromOptions
-    && (componentName || ignoredElement === false)
-    && !hasNodeNamed(openingElement, sourceFileAttributeName)
-  ) {
     openingElement.node.attributes.push(
       t.jSXAttribute(
-        t.jSXIdentifier(sourceFileAttributeName),
-        t.stringLiteral(sourceFileName)
+        t.jsxIdentifier("dataSet"),
+        t.jsxExpressionContainer(
+          t.objectExpression(attributes),
+        ),
       )
     )
   }
