@@ -3,7 +3,39 @@
 
 This is a Babel plugin that annotates React components with stable attributes that can be used to search and select using [FullStory](https://www.fullstory.com/). This is most useful when using a React system that generates dynamic names for Components or rearranges elements.
 
-For React on the web the attributes are `data-component`, `data-element`, and `data-source-file`. For React Native the attributes are `dataComponent`, `dataElement`, and `dataSourceFile`.
+# Getting started
+
+## with npm
+
+```
+npm i @fullstory/babel-plugin-annotate-react --save
+```
+
+## with yarn
+
+```
+yarn add @fullstory/babel-plugin-annotate-react
+```
+
+## Babel configuration
+
+Add the `@fullstory/babel-plugin-annotate-react` plugin to your babel plugin configuration (e.g., **babel.config.js**).
+
+```
+module.exports = {
+  /* ... */
+  plugins: [
+    /* ... */
+    "@fullstory/babel-plugin-annotate-react"
+  ]
+};
+```
+
+# Description
+
+For React on the web, the attributes `data-component`, `data-element`, and `data-source-file` are added to each element. For React Native, the attributes added are `dataComponent`, `dataElement`, and `dataSourceFile`.
+
+> Note that for both web and native, these attributes will appear as ***kebab-case*** in the Fullstory application due to backend processing. End users of Fullstory should create search filters (i.e. segments, metrics, etc) using ***kebab-case***.
 
 The component attribute names the `React.Component` and the element attribute names the original native elements like `View` or `Image` or an emitter of DOM elements like `Fragment`.
 
@@ -35,6 +67,8 @@ Final render:
     <div data-component="HelloComponent" data-file-source="hello-component.js">
       <h1>Hello world</h1>
     </div>
+
+# Configuration options
 
 ## React Native
 
