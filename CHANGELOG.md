@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.3.1
+- Update some dependencies
+
 ## 2.3.0
 
 - Add [setFSTagName](./README.md#setfstagname-setting) configuration for React Native.
@@ -45,7 +48,7 @@
 
 - Added an npm ignore list so that samples and tests aren't installed by npm.
 - Tweaked the explanation of `data-element` in the main README.
-- Stopped Jest from runing sample tests when testing the plugin. 
+- Stopped Jest from runing sample tests when testing the plugin.
 
 ## 1.0.0
 
