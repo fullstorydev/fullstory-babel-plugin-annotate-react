@@ -1,5 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`MemberExpression snapshot matches 1`] = `
+"import React, { Component } from 'react';
+import Styled from 'styled-components';
+
+class SampleComponent extends Component {
+  render() {
+    return /*#__PURE__*/React.createElement(Styled.Foo.Bar, {
+      dataElement: \\"Styled.Foo.Bar\\",
+      dataComponent: \\"SampleComponent\\",
+      dataSourceFile: \\"filename-test.js\\"
+    }, /*#__PURE__*/React.createElement(\\"h1\\", null, \\"Hello world\\"));
+  }
+
+}
+
+export default SampleComponent;"
+`;
+
 exports[`arrow snapshot matches 1`] = `
 "import React, { Component } from 'react';
 

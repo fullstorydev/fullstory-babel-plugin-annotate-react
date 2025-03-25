@@ -2569,3 +2569,29 @@ class Bananas extends Component {
   );
   expect(code).toMatchInlineSnapshot(BananasOutputCustomFSTagName);
 });
+
+it('MemberExpression snapshot matches', () => {
+  const { code } = babel.transform(
+    `import React, { Component } from 'react';
+import Styled from 'styled-components';
+
+class SampleComponent extends Component {
+  render() {
+    return <Styled.Foo.Bar>
+      <h1>Hello world</h1>
+    </Styled.Foo.Bar>;
+  }
+}
+
+export default SampleComponent;
+`,
+    {
+      filename: "./filename-test.js",
+      presets: ["@babel/preset-react"],
+      plugins: [[plugin, {
+        native: true,
+      }]]
+    },
+  );
+  expect(code).toMatchSnapshot();
+});

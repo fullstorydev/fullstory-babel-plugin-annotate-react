@@ -197,6 +197,14 @@ function isReactFragment(openingElement) {
   )
 }
 
+function getElementName(node) {
+  if (!node) return 'unknown';
+  if (node.type === 'JSXMemberExpression') {
+    return `${getElementName(node.object)}.${node.property.name}`;
+  }
+  return node.name || 'unknown';
+}
+
 function applyAttributes(t, openingElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption) {
   const [componentAttributeName, elementAttributeName, sourceFileAttributeName] = attributeNames;
   if (!openingElement
@@ -208,7 +216,7 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, attri
   }
   if (!openingElement.node.attributes) openingElement.node.attributes = {}
 
-  const elementName = openingElement.node.name.name || 'unknown'
+  const elementName = getElementName(openingElement.node.name)
 
   const ignoredComponentFromOptions = ignoreComponentsFromOption && !!ignoreComponentsFromOption.find(component =>
     matchesIgnoreRule(component[0], sourceFileName) &&
