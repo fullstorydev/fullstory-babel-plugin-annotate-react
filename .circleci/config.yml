@@ -21,13 +21,13 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
       - run:
           name: Audit
-          command: npm audit --audit-level=low
+          command: npm audit --audit-level=low --omit=dev
       - run:
           name: Test
           command: npm run test
       - persist_to_workspace:
           root: .
-          paths: .
+          paths: [.]
   deploy-babel-plugin:
     executor: browser-executor
     steps:
