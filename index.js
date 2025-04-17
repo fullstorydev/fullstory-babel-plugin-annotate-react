@@ -15,6 +15,10 @@ const knownIncompatiblePlugins = [
   'react-native-testfairy',
   // This module checks for unexpected property keys and throws an exception.
   '@react-navigation',
+  // Annotations on this module may cause unexpected UI behavior. VAL-9242
+  'react-native-navigation',
+  // This module is incompatible with our ref rewrites on iOS.
+  'expo-router',
   // The victory* modules use `dataComponent` and we get a collision.
   'victory',
   'victory-area',
