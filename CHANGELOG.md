@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.3.2
+- Added react-native-navigation and expo-router to incompatible node modules list.
+
 ## 2.3.1
 - Update some dependencies
 
