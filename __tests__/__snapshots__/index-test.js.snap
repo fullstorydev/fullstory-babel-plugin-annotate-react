@@ -530,6 +530,7 @@ export default componentName;"
 
 exports[`react-compiler-deeply-extracted-jsx snapshot matches 1`] = `
 "import React from 'react';
+
 const App = () => {
   let t0, t1, t2, t3, t4;
   const t5 = /*#__PURE__*/React.createElement(View, {
@@ -572,28 +573,35 @@ const App = () => {
   }, t1, t2);
   return t0;
 };
+
 export default App;"
 `;
 
 exports[`react-compiler-extracted-jsx snapshot matches 1`] = `
 "import React from 'react';
+
 function MyComponent() {
   let t0;
+
   if (t0 === Symbol.for(\\"react.memo_cache_sentinel\\")) {
     t0 = /*#__PURE__*/React.createElement(\\"div\\", {
       \\"data-component\\": \\"MyComponent\\",
       \\"data-source-file\\": \\"filename-test.js\\"
     }, \\"Hello world\\");
   }
+
   return t0;
 }
+
 export default MyComponent;"
 `;
 
 exports[`react-compiler-inner-function-jsx-not-annotated-with-outer-name 1`] = `
 "import React from 'react';
+
 const App = () => {
   let t0;
+
   if (t0 === Symbol.for(\\"react.memo_cache_sentinel\\")) {
     const renderItem = item => /*#__PURE__*/React.createElement(View, {
       dataElement: \\"View\\",
@@ -603,6 +611,7 @@ const App = () => {
       dataElement: \\"Text\\",
       dataSourceFile: \\"filename-test.js\\"
     }, item.name));
+
     t0 = /*#__PURE__*/React.createElement(FlatList, {
       renderItem: renderItem,
       dataElement: \\"FlatList\\",
@@ -610,15 +619,19 @@ const App = () => {
       dataSourceFile: \\"filename-test.js\\"
     });
   }
+
   return t0;
 };
+
 export default App;"
 `;
 
 exports[`react-compiler-multiple-extracted-jsx snapshot matches 1`] = `
 "import React from 'react';
+
 const App = () => {
   let t0, t1, t2;
+
   if (t0 === Symbol.for(\\"react.memo_cache_sentinel\\")) {
     t1 = /*#__PURE__*/React.createElement(Pressable, {
       onPress: onPress,
@@ -643,8 +656,10 @@ const App = () => {
       dataSourceFile: \\"filename-test.js\\"
     }, t1, t2);
   }
+
   return t0;
 };
+
 export default App;"
 `;
 

@@ -322,8 +322,8 @@ function functionBodyPushAttributes(annotateFragments, t, path, componentName, s
     if (!arg) {
       return
     }
-    if (!arg.isJSXFragment() && !arg.isJSXElement() && !reactCompiler) {
-      return
+    if (!arg.isJSXFragment() && !arg.isJSXElement()) {
+      if (!reactCompiler) return
     } else {
       jsxNode = arg
     }
