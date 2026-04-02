@@ -129,6 +129,39 @@ If you would like the plugin to attempt to annotate the first HTML element creat
       ["@fullstory/babel-plugin-annotate-react", { "annotate-fragments": true }]
     ]
 
+## React Compiler
+
+If your project uses the [React Compiler](https://react.dev/learn/react-compiler), enable the `reactCompiler` option:
+
+```javascript
+plugins: [
+  ["@fullstory/babel-plugin-annotate-react", { reactCompiler: true }]
+]
+```
+
+The React Compiler optimizes function components by extracting JSX subtrees out of `return` statements into intermediate cached variables. This means a compiled component may look like:
+
+```javascript
+// Before React Compiler
+function MyComponent() {
+  return <div className="foo">Hello</div>;
+}
+
+// After React Compiler (simplified)
+function MyComponent() {
+  let t0;
+  if ($[0] === Symbol.for("react.memo_cache_sentinel")) {
+    t0 = <div className="foo">Hello</div>;
+    $[0] = t0;
+  }
+  return t0;
+}
+```
+
+Without `reactCompiler: true`, the plugin would see a non-JSX `return` statement and skip the component entirely, producing no annotations. With the option enabled, the plugin traverses the entire function body to find and annotate all JSX nodes, regardless of where they appear.
+
+⚠️ **Important:** Because the React Compiler restructures how JSX is emitted, enabling `reactCompiler: true` may change which JSX nodes get annotated. Selectors and named elements previously defined in Fullstory are not guaranteed to match after enabling this option. Review your existing segments, metrics, and defined elements after activating this setting.
+
 ## Ignoring Components
 
 If you would like the plugin to skip the annotation for certain components, use the `ignoreComponents` option:
