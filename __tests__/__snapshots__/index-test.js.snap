@@ -281,6 +281,27 @@ class componentName extends Component {
 export default componentName;"
 `;
 
+exports[`hoc-inner-class-component snapshot matches 1`] = `
+"import React, { Component } from 'react';
+
+function createAnimatedComponent(WrappedComponent) {
+  class AnimatedComponent extends Component {
+    render() {
+      return /*#__PURE__*/React.createElement(WrappedComponent, {
+        \\"data-element\\": \\"WrappedComponent\\",
+        \\"data-component\\": \\"AnimatedComponent\\",
+        \\"data-source-file\\": \\"filename-test.js\\"
+      });
+    }
+
+  }
+
+  return AnimatedComponent;
+}
+
+export default createAnimatedComponent;"
+`;
+
 exports[`nonJSX snapshot matches 1`] = `
 "import React, { Component } from 'react';
 
@@ -505,6 +526,126 @@ const componentName = () => {
 };
 
 export default componentName;"
+`;
+
+exports[`react-compiler-deeply-extracted-jsx snapshot matches 1`] = `
+"import React from 'react';
+const App = () => {
+  let t0, t1, t2, t3, t4;
+  const t5 = /*#__PURE__*/React.createElement(View, {
+    dataElement: \\"View\\",
+    dataComponent: \\"App\\",
+    dataSourceFile: \\"filename-test.js\\"
+  }, /*#__PURE__*/React.createElement(Text, {
+    dataElement: \\"Text\\",
+    dataSourceFile: \\"filename-test.js\\"
+  }, \\"Static\\"));
+  t3 = /*#__PURE__*/React.createElement(View, {
+    dataElement: \\"View\\",
+    dataSourceFile: \\"filename-test.js\\"
+  }, /*#__PURE__*/React.createElement(Text, {
+    fsClass: isMasked ? 'fs-mask' : 'fs-unmask',
+    dataElement: \\"Text\\",
+    dataSourceFile: \\"filename-test.js\\"
+  }, \\"Dynamic\\"));
+  t1 = /*#__PURE__*/React.createElement(Pressable, {
+    onPress: onPress,
+    dataElement: \\"Pressable\\",
+    dataSourceFile: \\"filename-test.js\\"
+  }, t5);
+  t4 = /*#__PURE__*/React.createElement(View, {
+    dataElement: \\"View\\",
+    dataSourceFile: \\"filename-test.js\\"
+  }, /*#__PURE__*/React.createElement(Text, {
+    fsClass: isMasked ? 'fs-mask' : 'fs-unmask',
+    dataElement: \\"Text\\",
+    dataSourceFile: \\"filename-test.js\\"
+  }, \\"Dynamic 2\\"));
+  t2 = /*#__PURE__*/React.createElement(Pressable, {
+    onPress: onPress,
+    dataElement: \\"Pressable\\",
+    dataSourceFile: \\"filename-test.js\\"
+  }, t3);
+  t0 = /*#__PURE__*/React.createElement(ScrollView, {
+    dataElement: \\"ScrollView\\",
+    dataSourceFile: \\"filename-test.js\\"
+  }, t1, t2);
+  return t0;
+};
+export default App;"
+`;
+
+exports[`react-compiler-extracted-jsx snapshot matches 1`] = `
+"import React from 'react';
+function MyComponent() {
+  let t0;
+  if (t0 === Symbol.for(\\"react.memo_cache_sentinel\\")) {
+    t0 = /*#__PURE__*/React.createElement(\\"div\\", {
+      \\"data-component\\": \\"MyComponent\\",
+      \\"data-source-file\\": \\"filename-test.js\\"
+    }, \\"Hello world\\");
+  }
+  return t0;
+}
+export default MyComponent;"
+`;
+
+exports[`react-compiler-inner-function-jsx-not-annotated-with-outer-name 1`] = `
+"import React from 'react';
+const App = () => {
+  let t0;
+  if (t0 === Symbol.for(\\"react.memo_cache_sentinel\\")) {
+    const renderItem = item => /*#__PURE__*/React.createElement(View, {
+      dataElement: \\"View\\",
+      dataComponent: \\"renderItem\\",
+      dataSourceFile: \\"filename-test.js\\"
+    }, /*#__PURE__*/React.createElement(Text, {
+      dataElement: \\"Text\\",
+      dataSourceFile: \\"filename-test.js\\"
+    }, item.name));
+    t0 = /*#__PURE__*/React.createElement(FlatList, {
+      renderItem: renderItem,
+      dataElement: \\"FlatList\\",
+      dataComponent: \\"App\\",
+      dataSourceFile: \\"filename-test.js\\"
+    });
+  }
+  return t0;
+};
+export default App;"
+`;
+
+exports[`react-compiler-multiple-extracted-jsx snapshot matches 1`] = `
+"import React from 'react';
+const App = () => {
+  let t0, t1, t2;
+  if (t0 === Symbol.for(\\"react.memo_cache_sentinel\\")) {
+    t1 = /*#__PURE__*/React.createElement(Pressable, {
+      onPress: onPress,
+      fsTagName: \\"FS_Pressable\\",
+      dataElement: \\"Pressable\\",
+      dataComponent: \\"App\\",
+      dataSourceFile: \\"filename-test.js\\"
+    }, /*#__PURE__*/React.createElement(View, {
+      dataElement: \\"View\\",
+      dataSourceFile: \\"filename-test.js\\"
+    }));
+    t2 = /*#__PURE__*/React.createElement(Pressable, {
+      onPress: onPress,
+      dataElement: \\"Pressable\\",
+      dataSourceFile: \\"filename-test.js\\"
+    }, /*#__PURE__*/React.createElement(View, {
+      dataElement: \\"View\\",
+      dataSourceFile: \\"filename-test.js\\"
+    }));
+    t0 = /*#__PURE__*/React.createElement(ScrollView, {
+      dataElement: \\"ScrollView\\",
+      dataSourceFile: \\"filename-test.js\\"
+    }, t1, t2);
+  }
+  return t0;
+};
+export default App;"
 `;
 
 exports[`tags snapshot matches 1`] = `

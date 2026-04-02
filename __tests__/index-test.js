@@ -2569,3 +2569,142 @@ class Bananas extends Component {
   );
   expect(code).toMatchInlineSnapshot(BananasOutputCustomFSTagName);
 });
+
+it('react-compiler-extracted-jsx snapshot matches', () => {
+  // Simulates output from React Compiler, which extracts JSX out of the return
+  // statement into a cached variable inside a conditional block.
+  const { code } = babel.transform(
+    `import React from 'react';
+
+function MyComponent() {
+  let t0;
+  if (t0 === Symbol.for("react.memo_cache_sentinel")) {
+    t0 = <div>Hello world</div>;
+  }
+  return t0;
+}
+
+export default MyComponent;
+`,
+    {
+      filename: "filename-test.js",
+      presets: ["@babel/preset-react"],
+      plugins: [[plugin, { reactCompiler: true }]],
+    },
+  );
+  expect(code).toMatchSnapshot();
+});
+
+it('react-compiler-multiple-extracted-jsx snapshot matches', () => {
+  // Simulates React Compiler output where multiple JSX subtrees are extracted into
+  // separate cached variables (e.g. two sibling Pressables in the same component).
+  // Each extracted JSX element should receive dataElement and dataSourceFile attributes.
+  const { code } = babel.transform(
+    `import React from 'react';
+
+const App = () => {
+  let t0, t1, t2;
+  if (t0 === Symbol.for("react.memo_cache_sentinel")) {
+    t1 = <Pressable onPress={onPress} fsTagName="FS_Pressable"><View /></Pressable>;
+    t2 = <Pressable onPress={onPress}><View /></Pressable>;
+    t0 = <ScrollView>{t1}{t2}</ScrollView>;
+  }
+  return t0;
+};
+
+export default App;
+`,
+    {
+      filename: "filename-test.js",
+      presets: ["@babel/preset-react"],
+      plugins: [[plugin, { native: true, reactCompiler: true }]],
+    },
+  );
+  expect(code).toMatchSnapshot();
+});
+
+it('react-compiler-deeply-extracted-jsx snapshot matches', () => {
+  // Simulates React Compiler output where children are ALSO extracted into separate
+  // variables (not just the top-level elements). This matches the real-world pattern
+  // where e.g. a View inside a Pressable is extracted because it has a dynamic child.
+  // The extracted View should still receive dataElement and dataSourceFile.
+  const { code } = babel.transform(
+    `import React from 'react';
+
+const App = () => {
+  let t0, t1, t2, t3, t4;
+  const t5 = <View><Text>Static</Text></View>;
+  t3 = <View><Text fsClass={isMasked ? 'fs-mask' : 'fs-unmask'}>Dynamic</Text></View>;
+  t1 = <Pressable onPress={onPress}>{t5}</Pressable>;
+  t4 = <View><Text fsClass={isMasked ? 'fs-mask' : 'fs-unmask'}>Dynamic 2</Text></View>;
+  t2 = <Pressable onPress={onPress}>{t3}</Pressable>;
+  t0 = <ScrollView>{t1}{t2}</ScrollView>;
+  return t0;
+};
+
+export default App;
+`,
+    {
+      filename: "filename-test.js",
+      presets: ["@babel/preset-react"],
+      plugins: [[plugin, { native: true, reactCompiler: true }]],
+    },
+  );
+  expect(code).toMatchSnapshot();
+});
+
+it('react-compiler-inner-function-jsx-not-annotated-with-outer-name', () => {
+  // JSX inside an inner arrow function (e.g. a renderItem callback) should not
+  // receive the outer component's name — the traversal must not descend into
+  // inner functions.
+  const { code } = babel.transform(
+    `import React from 'react';
+
+const App = () => {
+  let t0;
+  if (t0 === Symbol.for("react.memo_cache_sentinel")) {
+    const renderItem = (item) => <View><Text>{item.name}</Text></View>;
+    t0 = <FlatList renderItem={renderItem} />;
+  }
+  return t0;
+};
+
+export default App;
+`,
+    {
+      filename: "filename-test.js",
+      presets: ["@babel/preset-react"],
+      plugins: [[plugin, { native: true, reactCompiler: true }]],
+    },
+  );
+  // The FlatList gets dataComponent/dataElement/dataSourceFile.
+  // The View inside renderItem gets dataElement/dataSourceFile but NOT dataComponent.
+  expect(code).toMatchSnapshot();
+});
+
+it('hoc-inner-class-component snapshot matches', () => {
+  // An outer factory function (HOC) that defines and returns an inner class
+  // component. The inner component's JSX should be annotated with the inner
+  // component's name, not the outer factory function's name.
+  const { code } = babel.transform(
+    `import React, { Component } from 'react';
+
+function createAnimatedComponent(WrappedComponent) {
+  class AnimatedComponent extends Component {
+    render() {
+      return <WrappedComponent />;
+    }
+  }
+  return AnimatedComponent;
+}
+
+export default createAnimatedComponent;
+`,
+    {
+      filename: "filename-test.js",
+      presets: ["@babel/preset-react"],
+      plugins: [[plugin, { reactCompiler: true }]],
+    },
+  );
+  expect(code).toMatchSnapshot();
+});
