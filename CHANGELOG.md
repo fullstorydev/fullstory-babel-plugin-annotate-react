@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.4.0 
+- Added support for react compiler.
+
 ## 2.3.2
 - Added react-native-navigation and expo-router to incompatible node modules list.
 
