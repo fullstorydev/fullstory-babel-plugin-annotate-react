@@ -9,6 +9,7 @@ const fsTagName = 'fsTagName'
 
 const annotateFragmentsOptionName = 'annotate-fragments';
 const ignoreComponentsOptionName = 'ignoreComponents';
+const reactCompilerOptionName = 'reactCompiler';
 
 const knownIncompatiblePlugins = [
   // This module might be causing an issue preventing clicks. For safety, we won't run on this module.
@@ -70,6 +71,8 @@ module.exports = function ({ types: t }) {
           path,
           path.node.id.name,
           sourceFileNameFromState(state),
+          state.opts[reactCompilerOptionName] === true,
+          fullSourceFileNameFromState(state),
           attributeNamesFromState(state),
           this.ignoreComponentsFromOption,
         )
@@ -83,6 +86,8 @@ module.exports = function ({ types: t }) {
           path,
           path.parent.id.name,
           sourceFileNameFromState(state),
+          state.opts[reactCompilerOptionName] === true,
+          fullSourceFileNameFromState(state),
           attributeNamesFromState(state),
           this.ignoreComponentsFromOption,
         )
@@ -295,7 +300,7 @@ function processJSX(annotateFragments, t, jsxNode, componentName, sourceFileName
   }
 }
 
-function functionBodyPushAttributes(annotateFragments, t, path, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption) {
+function functionBodyPushAttributes(annotateFragments, t, path, componentName, sourceFileName, reactCompiler, fullSourceFileName, attributeNames, ignoreComponentsFromOption) {
   let jsxNode = null
   const functionBody = path.get('body').get('body')
   if (functionBody.parent &&
@@ -318,9 +323,48 @@ function functionBodyPushAttributes(annotateFragments, t, path, componentName, s
       return
     }
     if (!arg.isJSXFragment() && !arg.isJSXElement()) {
-      return
+      if (!reactCompiler) return
+    } else {
+      jsxNode = arg
     }
-    jsxNode = arg
+
+    // If no direct JSX return (e.g. React compiler extracted JSX into variables/conditionals),
+    // traverse the entire function body to find all top-level JSX elements or fragments.
+    // Only enabled when reactCompiler option is true, and skipped for node_modules to avoid
+    // annotating library internals that would shadow annotations from app code.
+    const isNodeModule = fullSourceFileName && (
+      fullSourceFileName.includes('/node_modules/') ||
+      fullSourceFileName.includes('\\node_modules\\')
+    )
+    if (!jsxNode && reactCompiler && !isNodeModule) {
+      // Collect all top-level JSX nodes in the function body (React Compiler may extract
+      // multiple JSX subtrees into separate cached variables). We annotate each one:
+      // the first gets componentName (it's the root), the rest get null (they're children).
+      const allJsxNodes = []
+      path.traverse({
+        // Do not descend into inner functions or classes — their JSX belongs to them, not this component
+        FunctionDeclaration(innerPath) { innerPath.skip() },
+        FunctionExpression(innerPath) { innerPath.skip() },
+        ArrowFunctionExpression(innerPath) { innerPath.skip() },
+        ClassDeclaration(innerPath) { innerPath.skip() },
+        ClassExpression(innerPath) { innerPath.skip() },
+        JSXElement(innerPath) {
+          allJsxNodes.push(innerPath)
+          innerPath.skip()
+        },
+        JSXFragment(innerPath) {
+          allJsxNodes.push(innerPath)
+          innerPath.skip()
+        },
+      })
+      if (allJsxNodes.length > 0) {
+        jsxNode = allJsxNodes[0]
+        // Annotate all additional extracted JSX nodes as children (no componentName)
+        for (let i = 1; i < allJsxNodes.length; i++) {
+          processJSX(annotateFragments, t, allJsxNodes[i], null, sourceFileName, attributeNames, ignoreComponentsFromOption)
+        }
+      }
+    }
   }
   if (!jsxNode) return
   processJSX(annotateFragments, t, jsxNode, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption)
