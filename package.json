@@ -1,6 +1,9 @@
 {
   "name": "@fullstory/babel-plugin-annotate-react",
   "version": "2.4.0",
+  "bugs": {
+    "url": "https://github.com/fullstorydev/fullstory-babel-plugin-annotate-react/issues"
+  },
   "description": "A Babel plugin that annotates React components, making them easier to target with FullStory search",
   "main": "index.js",
   "homepage": "https://github.com/fullstorydev/fullstory-babel-plugin-annotate-react",
