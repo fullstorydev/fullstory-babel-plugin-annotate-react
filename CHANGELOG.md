@@ -1,5 +1,8 @@
 # Changelog
 
+## Unreleased
+- Support Babel 8 by resolving JSX builders (`t.jsxAttribute`, `t.jsxIdentifier`) with a fallback to the Babel 7 names (`t.jSXAttribute`, `t.jSXIdentifier`). No breaking change for Babel 7 users.
+
 ## 2.4.0 
 - Added support for react compiler.
 
