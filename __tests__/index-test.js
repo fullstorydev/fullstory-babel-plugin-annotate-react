@@ -60,7 +60,6 @@ const BananasPizzaAppStandardOutputNoAttributes = `
 "import React, { Component } from 'react';
 import { StyleSheet, Text, TextInput, View, Image, UIManager } from 'react-native';
 UIManager.getViewManagerConfig('RCTView').NativeProps.fsClass = \\"String\\";
-
 class Bananas extends Component {
   render() {
     let pic = {
@@ -76,9 +75,7 @@ class Bananas extends Component {
       fsClass: \\"test-class\\"
     });
   }
-
 }
-
 class PizzaTranslator extends Component {
   constructor(props) {
     super(props);
@@ -86,7 +83,6 @@ class PizzaTranslator extends Component {
       text: ''
     };
   }
-
   render() {
     return /*#__PURE__*/React.createElement(View, {
       style: {
@@ -111,9 +107,7 @@ class PizzaTranslator extends Component {
       }
     }, this.state.text.split(' ').map(word => word && '🍕').join(' ')));
   }
-
 }
-
 export default function App() {
   return /*#__PURE__*/React.createElement(View, {
     style: styles.container
@@ -139,7 +133,6 @@ const BananasPizzaAppStandardOutputBananasPizzaAppAttributesNoBananasElements = 
 "import React, { Component } from 'react';
 import { StyleSheet, Text, TextInput, View, Image, UIManager } from 'react-native';
 UIManager.getViewManagerConfig('RCTView').NativeProps.fsClass = \\"String\\";
-
 class Bananas extends Component {
   render() {
     let pic = {
@@ -158,9 +151,7 @@ class Bananas extends Component {
       dataSourceFile: \\"filename-test.js\\"
     });
   }
-
 }
-
 class PizzaTranslator extends Component {
   constructor(props) {
     super(props);
@@ -168,7 +159,6 @@ class PizzaTranslator extends Component {
       text: ''
     };
   }
-
   render() {
     return /*#__PURE__*/React.createElement(View, {
       style: {
@@ -200,9 +190,7 @@ class PizzaTranslator extends Component {
       dataSourceFile: \\"filename-test.js\\"
     }, this.state.text.split(' ').map(word => word && '🍕').join(' ')));
   }
-
 }
-
 export default function App() {
   return /*#__PURE__*/React.createElement(View, {
     style: styles.container,
@@ -236,7 +224,6 @@ const BananasPizzaAppStandardOutputBananasPizzaAppAttributesNoPizzaElements = `
 "import React, { Component } from 'react';
 import { StyleSheet, Text, TextInput, View, Image, UIManager } from 'react-native';
 UIManager.getViewManagerConfig('RCTView').NativeProps.fsClass = \\"String\\";
-
 class Bananas extends Component {
   render() {
     let pic = {
@@ -255,9 +242,7 @@ class Bananas extends Component {
       dataSourceFile: \\"filename-test.js\\"
     });
   }
-
 }
-
 class PizzaTranslator extends Component {
   constructor(props) {
     super(props);
@@ -265,7 +250,6 @@ class PizzaTranslator extends Component {
       text: ''
     };
   }
-
   render() {
     return /*#__PURE__*/React.createElement(View, {
       style: {
@@ -297,9 +281,7 @@ class PizzaTranslator extends Component {
       dataSourceFile: \\"filename-test.js\\"
     }, this.state.text.split(' ').map(word => word && '🍕').join(' ')));
   }
-
 }
-
 export default function App() {
   return /*#__PURE__*/React.createElement(View, {
     style: styles.container,
@@ -333,7 +315,6 @@ const BananasPizzaAppStandardOutputBananasPizzaAppAttributesNoBananasPizzaElemen
 "import React, { Component } from 'react';
 import { StyleSheet, Text, TextInput, View, Image, UIManager } from 'react-native';
 UIManager.getViewManagerConfig('RCTView').NativeProps.fsClass = \\"String\\";
-
 class Bananas extends Component {
   render() {
     let pic = {
@@ -352,9 +333,7 @@ class Bananas extends Component {
       dataSourceFile: \\"filename-test.js\\"
     });
   }
-
 }
-
 class PizzaTranslator extends Component {
   constructor(props) {
     super(props);
@@ -362,7 +341,6 @@ class PizzaTranslator extends Component {
       text: ''
     };
   }
-
   render() {
     return /*#__PURE__*/React.createElement(View, {
       style: {
@@ -394,9 +372,7 @@ class PizzaTranslator extends Component {
       dataSourceFile: \\"filename-test.js\\"
     }, this.state.text.split(' ').map(word => word && '🍕').join(' ')));
   }
-
 }
-
 export default function App() {
   return /*#__PURE__*/React.createElement(View, {
     style: styles.container,
@@ -427,7 +403,6 @@ const BananasPizzaAppStandardOutputBananasPizzaAppAttributes = `
 "import React, { Component } from 'react';
 import { StyleSheet, Text, TextInput, View, Image, UIManager } from 'react-native';
 UIManager.getViewManagerConfig('RCTView').NativeProps.fsClass = \\"String\\";
-
 class Bananas extends Component {
   render() {
     let pic = {
@@ -446,9 +421,7 @@ class Bananas extends Component {
       dataSourceFile: \\"filename-test.js\\"
     });
   }
-
 }
-
 class PizzaTranslator extends Component {
   constructor(props) {
     super(props);
@@ -456,7 +429,6 @@ class PizzaTranslator extends Component {
       text: ''
     };
   }
-
   render() {
     return /*#__PURE__*/React.createElement(View, {
       style: {
@@ -488,9 +460,7 @@ class PizzaTranslator extends Component {
       dataSourceFile: \\"filename-test.js\\"
     }, this.state.text.split(' ').map(word => word && '🍕').join(' ')));
   }
-
 }
-
 export default function App() {
   return /*#__PURE__*/React.createElement(View, {
     style: styles.container,
@@ -527,7 +497,6 @@ const BananasPizzaAppStandardOutputBananasAttributes = `
 "import React, { Component } from 'react';
 import { StyleSheet, Text, TextInput, View, Image, UIManager } from 'react-native';
 UIManager.getViewManagerConfig('RCTView').NativeProps.fsClass = \\"String\\";
-
 class Bananas extends Component {
   render() {
     let pic = {
@@ -546,9 +515,7 @@ class Bananas extends Component {
       dataSourceFile: \\"filename-test.js\\"
     });
   }
-
 }
-
 class PizzaTranslator extends Component {
   constructor(props) {
     super(props);
@@ -556,7 +523,6 @@ class PizzaTranslator extends Component {
       text: ''
     };
   }
-
   render() {
     return /*#__PURE__*/React.createElement(View, {
       style: {
@@ -585,9 +551,7 @@ class PizzaTranslator extends Component {
       dataSourceFile: \\"filename-test.js\\"
     }, this.state.text.split(' ').map(word => word && '🍕').join(' ')));
   }
-
 }
-
 export default function App() {
   return /*#__PURE__*/React.createElement(View, {
     style: styles.container
@@ -621,7 +585,6 @@ const BananasPizzaAppStandardOutputPizzaAttributes = `
 "import React, { Component } from 'react';
 import { StyleSheet, Text, TextInput, View, Image, UIManager } from 'react-native';
 UIManager.getViewManagerConfig('RCTView').NativeProps.fsClass = \\"String\\";
-
 class Bananas extends Component {
   render() {
     let pic = {
@@ -637,9 +600,7 @@ class Bananas extends Component {
       fsClass: \\"test-class\\"
     });
   }
-
 }
-
 class PizzaTranslator extends Component {
   constructor(props) {
     super(props);
@@ -647,7 +608,6 @@ class PizzaTranslator extends Component {
       text: ''
     };
   }
-
   render() {
     return /*#__PURE__*/React.createElement(View, {
       style: {
@@ -679,9 +639,7 @@ class PizzaTranslator extends Component {
       dataSourceFile: \\"filename-test.js\\"
     }, this.state.text.split(' ').map(word => word && '🍕').join(' ')));
   }
-
 }
-
 export default function App() {
   return /*#__PURE__*/React.createElement(View, {
     style: styles.container
@@ -715,7 +673,6 @@ const BananasPizzaAppStandardOutputAppAttributes = `
 "import React, { Component } from 'react';
 import { StyleSheet, Text, TextInput, View, Image, UIManager } from 'react-native';
 UIManager.getViewManagerConfig('RCTView').NativeProps.fsClass = \\"String\\";
-
 class Bananas extends Component {
   render() {
     let pic = {
@@ -731,9 +688,7 @@ class Bananas extends Component {
       fsClass: \\"test-class\\"
     });
   }
-
 }
-
 class PizzaTranslator extends Component {
   constructor(props) {
     super(props);
@@ -741,7 +696,6 @@ class PizzaTranslator extends Component {
       text: ''
     };
   }
-
   render() {
     return /*#__PURE__*/React.createElement(View, {
       style: {
@@ -770,9 +724,7 @@ class PizzaTranslator extends Component {
       dataSourceFile: \\"filename-test.js\\"
     }, this.state.text.split(' ').map(word => word && '🍕').join(' ')));
   }
-
 }
-
 export default function App() {
   return /*#__PURE__*/React.createElement(View, {
     style: styles.container,
@@ -1111,7 +1063,6 @@ class Bananas extends Component {
 const BananasStandardOutputNoAttributes = `
 "import React, { Component } from 'react';
 import { Image } from 'react-native';
-
 class Bananas extends Component {
   render() {
     let pic = {
@@ -1127,14 +1078,12 @@ class Bananas extends Component {
       fsClass: \\"test-class\\"
     });
   }
-
 }"
 `;
 
 const BananasStandardOutputWithAttributes = `
 "import React, { Component } from 'react';
 import { Image } from 'react-native';
-
 class Bananas extends Component {
   render() {
     let pic = {
@@ -1153,14 +1102,12 @@ class Bananas extends Component {
       dataSourceFile: \\"filename-test.js\\"
     });
   }
-
 }"
 `;
 
 const BananasStandardOutputWithFSTagName = `
 "import React, { Component } from 'react';
 import { Image } from 'react-native';
-
 class Bananas extends Component {
   render() {
     let pic = {
@@ -1178,7 +1125,6 @@ class Bananas extends Component {
       dataSourceFile: \\"filename-test.js\\"
     });
   }
-
 }"
 `;
 
@@ -2532,7 +2478,6 @@ class Bananas extends Component {
   const BananasOutputCustomFSTagName = `
 "import React, { Component } from 'react';
 import { Image } from 'react-native';
-
 class Bananas extends Component {
   render() {
     let pic = {
@@ -2550,7 +2495,6 @@ class Bananas extends Component {
       dataSourceFile: \\"filename-test.js\\"
     });
   }
-
 }"
 `;
 
