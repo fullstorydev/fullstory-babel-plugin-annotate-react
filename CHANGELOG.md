@@ -1,15 +1,19 @@
 # Changelog
 
-## Unreleased
+## 2.4.1
+
 - Support Babel 8 by resolving JSX builders (`t.jsxAttribute`, `t.jsxIdentifier`) with a fallback to the Babel 7 names (`t.jSXAttribute`, `t.jSXIdentifier`). No breaking change for Babel 7 users.
 
-## 2.4.0 
+## 2.4.0
+
 - Added support for react compiler.
 
 ## 2.3.2
+
 - Added react-native-navigation and expo-router to incompatible node modules list.
 
 ## 2.3.1
+
 - Update some dependencies
 
 ## 2.3.0
