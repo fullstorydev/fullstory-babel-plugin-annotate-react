@@ -12,7 +12,8 @@
     "url": "git+https://github.com/fullstory-babel-plugin-annotate-react.git"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest && npm run test:babel8",
+    "test:babel8": "node scripts/test-babel8.js"
   },
   "author": "FullStory",
   "license": "MIT",
@@ -22,7 +23,9 @@
     ]
   },
   "devDependencies": {
+    "@babel/core-8": "npm:@babel/core@^8.0.0",
     "@babel/preset-react": "^7.9.4",
+    "@babel/preset-react-8": "npm:@babel/preset-react@^8.0.0",
     "babel-core": "^7.0.0-0",
     "jest": "^28.1.3"
   },
