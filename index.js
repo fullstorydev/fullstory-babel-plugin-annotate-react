@@ -208,6 +208,12 @@ function isReactFragment(openingElement) {
 
 function applyAttributes(t, openingElement, componentName, sourceFileName, attributeNames, ignoreComponentsFromOption) {
   const [componentAttributeName, elementAttributeName, sourceFileAttributeName] = attributeNames;
+  // Babel 8 renamed the auto-generated @babel/types builders for JSXAttribute
+  // and JSXIdentifier from t.jSXAttribute / t.jSXIdentifier to t.jsxAttribute /
+  // t.jsxIdentifier. Prefer the new names and fall back to the legacy ones so
+  // this plugin works on both Babel 7 and Babel 8.
+  const jsxAttribute = t.jsxAttribute || t.jSXAttribute;
+  const jsxIdentifier = t.jsxIdentifier || t.jSXIdentifier;
   if (!openingElement
     || isReactFragment(openingElement)
     || !openingElement.node
@@ -237,8 +243,8 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, attri
       ignoredElement = true
     } else {
       openingElement.node.attributes.push(
-        t.jSXAttribute(
-          t.jSXIdentifier(elementAttributeName),
+        jsxAttribute(
+          jsxIdentifier(elementAttributeName),
           t.stringLiteral(elementName)
         )
       )
@@ -251,8 +257,8 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, attri
     && !ignoredComponentFromOptions
     && !hasNodeNamed(openingElement, componentAttributeName)) {
     openingElement.node.attributes.push(
-      t.jSXAttribute(
-        t.jSXIdentifier(componentAttributeName),
+      jsxAttribute(
+        jsxIdentifier(componentAttributeName),
         t.stringLiteral(componentName)
       )
     )
@@ -266,8 +272,8 @@ function applyAttributes(t, openingElement, componentName, sourceFileName, attri
     && !hasNodeNamed(openingElement, sourceFileAttributeName)
   ) {
     openingElement.node.attributes.push(
-      t.jSXAttribute(
-        t.jSXIdentifier(sourceFileAttributeName),
+      jsxAttribute(
+        jsxIdentifier(sourceFileAttributeName),
         t.stringLiteral(sourceFileName)
       )
     )
